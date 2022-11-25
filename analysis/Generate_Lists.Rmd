@@ -357,13 +357,13 @@ saveRDS(Species_list_complete,paste0(path,"/output/Species_List_with_genome_and_
 
 
 ## Compare sample list and species list info
+
+Entries only found in sample table: `r setdiff(List_of_species$specie_name_cites,summary_species$specie_name_cites)`
+
+Entries only found in sample table:`r setdiff(summary_species$specie_name_cites,List_of_species$specie_name_cites)`
+
+
 ```{r}
-
-
-setdiff(List_of_species$specie_name_cites,summary_species$specie_name_cites)
-
-setdiff(summary_species$specie_name_cites,List_of_species$specie_name_cites)
-
 List_of_species %>% 
   select(specie_name_cites,samples,sample,sex,cell_line,i_psc) %>% 
   inner_join(summary_species) %>% 
@@ -382,7 +382,6 @@ sum<-List_of_species %>%
 table(sum$comp)
 
 ```
-Entries only found in one table: *Python breitensteini* (filtered from sample list as no sample entry was found)
 
 
 The final tables are:
