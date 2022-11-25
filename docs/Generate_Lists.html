@@ -509,13 +509,13 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrong41b334b">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrong095b51b">
 <span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Repository version:</strong> 41b334b
+aria-hidden="true"></span> <strong>Repository version:</strong> 095b51b
 </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrong41b334b"
+<div id="strongRepositoryversionstrong095b51b"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -524,7 +524,7 @@ and connecting the code version to the results is critical for
 reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version 41b334b.
+The results in this page were generated with repository version 095b51b.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -606,6 +606,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+095b51b
+</td>
+<td>
+Lucas Esteban Wange
+</td>
+<td>
+2022-11-25
+</td>
+<td>
+Start my new project
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+ee20528
+</td>
+<td>
+Lucas Esteban Wange
+</td>
+<td>
+2022-11-25
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1021,10 +1055,8 @@ saveRDS(Species_list_complete,paste0(path,&quot;/output/Species_List_with_genome
 <div id="compare-sample-list-and-species-list-info"
 class="section level2">
 <h2>Compare sample list and species list info</h2>
-<pre class="r"><code>setdiff(List_of_species$specie_name_cites,summary_species$specie_name_cites)</code></pre>
-<pre><code>character(0)</code></pre>
-<pre class="r"><code>setdiff(summary_species$specie_name_cites,List_of_species$specie_name_cites)</code></pre>
-<pre><code>character(0)</code></pre>
+<p>Entries only found in sample table:</p>
+<p>Entries only found in sample table:</p>
 <pre class="r"><code>List_of_species %&gt;% 
   select(specie_name_cites,samples,sample,sex,cell_line,i_psc) %&gt;% 
   inner_join(summary_species) %&gt;% 
@@ -1045,8 +1077,6 @@ class="section level2">
 <pre><code>
  more in sample list more in species list                 same 
                   11                    8                  168 </code></pre>
-<p>Entries only found in one table: <em>Python breitensteini</em>
-(filtered from sample list as no sample entry was found)</p>
 <p>The final tables are:</p>
 <pre class="r"><code>df_path&lt;-data.frame(Table=c(&quot;Species Table&quot;,
 &quot;Species Table + Genome Info&quot;,&quot;Species Table + Genome + Cell lines&quot;,&quot;Sample Table Mammals&quot;,&quot;Sample Table other&quot;,&quot;Sample Table All&quot;),
