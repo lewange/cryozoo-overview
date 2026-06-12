@@ -1,0 +1,292 @@
+---
+title: "N2/-80 stocks Cryozoo"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+Get information on availability of cryotubes from the google sheet
+```{r}
+library(googlesheets4)
+library(tidyverse)
+read_gsheet_allsheets <- function(filename, skip=0, tibble = FALSE) {
+  # I prefer straight data.frames
+  # but if you like tidyverse tibbles (the default with read_excel)
+  # then just pass tibble = TRUE
+  sheets <- googlesheets4::sheet_names(filename)[-skip]
+  x <- lapply(sheets, function(X) googlesheets4::read_sheet(filename, sheet = X))
+  if(!tibble) x <- lapply(x, as.data.frame)
+  names(x) <- make.names(sheets)
+  x
+}
+
+path<-here::here()
+
+```
+
+
+```{r}
+Nitrogen_and_80 <- read_gsheet_allsheets("https://docs.google.com/spreadsheets/d/1KXqtgJlJDcty5FJcYSzXUOvUDLCKLq7S76pwVlMa_-Y/edit?usp=sharing",
+                                         skip = c(1))
+
+Nitrogen_and_80<-Nitrogen_and_80[-which(names(Nitrogen_and_80)=="Template")]
+```
+
+
+```{r}
+box_names <- names(Nitrogen_and_80)
+
+infer_box_type <- function(x) {
+  case_when(
+    
+    # Pellets boxes
+    str_detect(x, regex("PELLETS", ignore_case = TRUE)) ~ "pellets",
+    
+    # IPSC
+    str_detect(x, regex("IPSC", ignore_case = TRUE)) ~ "ipsc",
+    
+    # Biopsy boxes (many variants)
+    str_detect(x, regex("BIOP|Biops?i", ignore_case = TRUE)) ~ "biopsy",
+    
+    # Extracted DNA or RNA
+    str_detect(x, regex("DNA\\.extracted|RNA\\.extracted", ignore_case = TRUE)) ~ "extracts",
+    
+    # ERGA
+    str_detect(x, regex("ERGA", ignore_case = TRUE)) ~ "ERGA",
+    
+    # Fibroblast boxes
+    str_detect(x, regex("^Fibro|Fibro\\.BOX", ignore_case = TRUE)) ~ "fibroblast",
+    
+    # Backup boxes:  
+    # any N2 boxes that are not biopsies/fibro/etc.
+    str_detect(x, regex("Bellaterra|to.go", ignore_case = TRUE)) ~ "backup",
+    
+    # Everything else
+    TRUE ~ "other"
+  )
+}
+
+fibro_bio <- data.frame(
+  box = box_names,
+  box_type = infer_box_type(box_names),
+  storage = if_else(str_detect(box_names,regex("80",ignore_case=TRUE)),"-80ºC",
+                    if_else(str_detect(box_names,regex("N2|TANK",ignore_case=TRUE)),"liquid-nitrogen","-80ºC")),
+  stringsAsFactors = FALSE)
+
+```
+
+
+```{r}
+
+ggplot(fibro_bio)+
+  geom_bar(aes(box_type,fill=box_type))+
+  facet_grid(~storage,scales="free")
+
+
+```
+
+## make long table
+```{r}
+rm(cryo_long)
+
+for (i in names(Nitrogen_and_80)[which(!(fibro_bio$box_type %in% c("extracts","pellets")))]){
+  print(i)
+    colnames(Nitrogen_and_80[[i]])[1]<-"row"
+    if (!exists("cryo_long")){
+    cryo_long<-Nitrogen_and_80[[i]] %>%
+      filter(!is.na(row)) %>%
+      mutate(across(everything(),as.character))%>% 
+      pivot_longer(cols = 2:ncol(.),names_to = "column",values_to = "cryotube") %>% 
+      mutate(box=i) %>% 
+      select("row","column","cryotube","box")
+    } else {
+    cryo_long<-bind_rows(cryo_long,
+                Nitrogen_and_80[[i]] %>%
+      filter(!is.na(row)) %>% 
+      mutate(across(everything(),as.character)) %>% 
+      pivot_longer(cols = 2:ncol(.),names_to = "column",values_to = "cryotube") %>% 
+      mutate(box=i)
+      ) %>% 
+      select("row","column","cryotube","box")
+    }
+}
+
+head(cryo_long)
+```
+
+
+```{r}
+
+
+cryo_full<-cryo_long %>% 
+  ungroup() %>% 
+  filter(!(cryotube=="NULL")) %>% 
+  mutate(column=as.numeric(str_extract(column,"\\d+"))) %>% 
+  mutate(row=as.numeric(str_extract(row,"\\d+"))) %>% 
+  mutate(type=if_else(str_detect(box,"N2"),"N2","-80")) %>% 
+  mutate(animal_id = str_to_upper(str_extract(cryotube, "[Aa]\\d+"))) %>% 
+  mutate(passage=str_extract(cryotube,pattern = "[Pp]\\d+")) %>%
+  left_join(fibro_bio) %>% 
+  mutate(type2=case_when(str_detect(box,"(?i)iPSC")~"iPSC",
+                        str_detect(box,"Fib")~"Fibroblast",
+                        str_detect(box,"(?i)Bio")~"Biopsy",
+                        .default ="other")) %>% 
+  mutate(type2=case_when(type2=="other"& str_detect(cryotube,"(?i)Bio")~"Biopsy",
+                         type2=="other"& str_detect(cryotube,"(?i)pbmc")~"PBMC",
+                         type2=="other"& str_detect(cryotube,"(?i)pmbc")~"PBMC",
+                         type2=="other"& str_detect(cryotube,"(?i)ipsc")~"iPSC",
+                         type2=="other"& str_detect(cryotube,"(?i)fibro")~"Fibroblast",
+                         T~type2)) %>% 
+  filter(!is.na(animal_id)) %>% 
+  mutate(type2=if_else(type2=="other"& !is.na(passage),"Fibroblast",type2)) %>% 
+  mutate(info=str_remove(cryotube,pattern=animal_id)) %>% 
+  mutate(passage=if_else(is.na(passage),"-1",passage)) %>% 
+  mutate(info =case_when(
+    passage=="NA" ~ info,
+    TRUE ~ str_remove(info, passage)))%>% 
+  mutate(passage=if_else(passage=="-1",NA_character_,passage)) %>%
+  mutate(passage=as.numeric(str_remove(passage,pattern = "[Pp]")))%>% 
+  mutate(passage=if_else(is.na(passage)& type2 %in% c("Biopsy","other"),-1, passage)) %>% 
+  mutate(passage=if_else(is.na(passage)& type2=="PBMC",0, passage)) %>% 
+  mutate(passage=if_else(is.na(passage)& type2=="Fibroblast",0, passage)) %>% 
+  filter(!is.na(cryotube)) %>% 
+  filter(cryotube!="NULL")
+
+
+table(cryo_full$box,cryo_full$type2)
+
+```
+
+```{r}
+
+cryo_full %>% 
+  ggplot()+
+  geom_bar(aes(box,fill=type2))+
+  facet_grid(~paste0(box_type,"\n(",storage,")"),scales="free",space="free")+
+  theme(axis.text.x = element_text(angle=90,vjust=0.5),
+        legend.position = "top")+
+  ggsci::scale_fill_bmj()
+
+
+```
+
+
+```{r}
+cryo_summary<-cryo_full %>% 
+  filter(!is.na(animal_id)) %>% 
+  group_by(animal_id,type2) %>% 
+  summarize(n_passages=length(unique(passage)),max_passage=max(passage)) 
+  
+
+cryo_summary<-cryo_full %>% 
+  filter(!is.na(animal_id)) %>% 
+  filter(!is.na(passage)) %>% 
+  group_by(animal_id,type2,passage) %>% 
+  summarize(CT_per_passage=n()) %>% 
+  pivot_wider(id_cols = c(animal_id,type2),names_from = passage,values_from = CT_per_passage,values_fill = 0) %>% 
+  ungroup() %>% 
+  mutate(CT_total=rowSums(across(3:11))) %>% 
+  left_join(cryo_summary)
+ 
+ggplot(cryo_summary) +
+  geom_histogram(aes(max_passage,fill=type2))
+```
+
+
+```{r}
+ggplot(cryo_summary)+
+  geom_vline(xintercept = c(2,5,10),col="grey",lty="dashed") +
+  geom_histogram(aes(CT_total,fill=type2),binwidth = 1)
+
+```
+
+
+```{r}
+saveRDS(cryo_full,paste0(path,"/data/Cryo_stocks_long.rds"))
+saveRDS(cryo_summary,paste0(path,"/data/Cryo_stocks_summary.rds"))
+
+write_sheet(cryo_full,"https://docs.google.com/spreadsheets/d/1Vmbhsa0_075VgdC3F2f-5lZdB_RSTkgse3xdM-XbSGE/edit?usp=sharing","Cryo_stocks_long")
+
+write_sheet(cryo_summary,"https://docs.google.com/spreadsheets/d/1Vmbhsa0_075VgdC3F2f-5lZdB_RSTkgse3xdM-XbSGE/edit?usp=sharing","Cryo_stocks_summary")
+
+```
+
+
+```{r}
+ggplot(cryo_full)+
+  geom_bar(aes(box,fill=type2))+
+  facet_grid(type~.,scales = "free",space = "free")+
+  coord_flip()
+
+ggplot(cryo_full)+
+  geom_bar(aes(type,fill=type2))+
+  coord_flip()
+
+cryo_full %>% 
+  filter(box=="Fibro.BOX.14.N2") %>% 
+
+ggplot()+
+  geom_raster(aes(column,row,fill=type2))+
+  geom_hline(yintercept = 0.5:10.5)+
+  geom_vline(xintercept = 0.5:10.5)+
+  scale_y_reverse(breaks=1:10)+
+  scale_x_continuous(breaks=1:12,position = "top")+
+  geom_text(aes(column,row,label=animal_id))
+```
+
+
+```{r}
+ggplot(cryo_full)+
+  geom_bar(aes(passage,fill=type2))+
+  xlim(NA,10)
+```
+
+
+```{r}
+cryo_full %>% 
+  filter(type2!="Biopsy") %>% 
+ggplot()+
+  geom_bar(aes(animal_id,fill=factor(passage)))+
+  ylim(NA,20)+
+  theme(axis.text.x = element_text(angle=90,vjust=0.2))+
+  theme(legend.position = "bottom")+
+  facet_grid(~type2,scales="free",space="free")
+
+```
+
+
+
+
+```{r}
+
+if(exists("extr_long")) {rm(extr_long)}
+
+for (i in names(Nitrogen_and_80)[which(fibro_bio$box_type=="extracts")]){
+  print(i)
+    colnames(Nitrogen_and_80[[i]])[1]<-"row"
+    if (!exists("extr_long")){
+    extr_long<-Nitrogen_and_80[[i]] %>%
+      filter(!is.na(row)) %>%
+      mutate(across(everything(),as.character))%>% 
+      pivot_longer(cols = 2:ncol(.),names_to = "column",values_to = "cryotube") %>% 
+      mutate(box=i) 
+    } else {
+    extr_long<-bind_rows(extr_long,
+                Nitrogen_and_80[[i]] %>%
+      filter(!is.na(row)) %>% 
+      mutate(across(everything(),as.character)) %>% 
+      pivot_longer(cols = 2:ncol(.),names_to = "column",values_to = "cryotube") %>% 
+      mutate(box=i)
+      )
+    }
+}
+
+extr_long<-extr_long %>% 
+  mutate(type=str_extract(box,pattern="^[^.]*")) %>% 
+  filter(!is.na(cryotube))
+
+saveRDS(extr_long,paste0(path,"/data/Extractions_long.rds"))
+
+
+write_sheet(extr_long,"https://docs.google.com/spreadsheets/d/1Vmbhsa0_075VgdC3F2f-5lZdB_RSTkgse3xdM-XbSGE/edit?usp=sharing","Extractions_long")
+```

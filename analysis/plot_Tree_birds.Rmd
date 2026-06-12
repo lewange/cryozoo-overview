@@ -1,0 +1,365 @@
+---
+title: "5.2 Cryozoo - trees birds"
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+##
+library(tidyverse)
+library(cowplot)
+library(treedataverse)
+library(magrittr)
+library(RColorBrewer)
+library(readxl)
+
+## plotting options
+theme_set(theme_bw())
+
+
+here::here()
+
+path<-here::here()
+
+```
+
+
+
+## Bird tree (vertlife.org)
+```{r}
+bird_tree<-read.nexus(paste0(path,"/data/all_birds_tree.nex"))[[42]]# select one random tree out of 100
+
+summary_species<-readRDS(paste0(path,"/output/Species_List_with_genome_and_cl_info2.rds")) %>%
+  filter(superclass=="Birds") %>% 
+  mutate(selected=if_else(cat=="Both","selected","FALSE"))
+
+
+tree_meta <- data.frame(label=bird_tree$tip.label) %>%
+  rownames_to_column(var="index")
+```
+
+
+```{r}
+
+table(summary_species$species_%in%tree_meta$label)
+
+# replace incorrect species names in tree
+Wrong_Species_names2 <- read_excel(paste0(path,"/data/Wrong_Species_names2.xlsx")) %>% 
+  filter(superclass=="Birds")
+
+tree_meta<-tree_meta %>% 
+  left_join(Wrong_Species_names2,by=c("label"="mammal_tree_name")) %>% 
+  mutate(label=if_else(is.na(species_name_),label,species_name_)) %>% 
+  select(-c(species_name_,superclass))
+
+summary_species$tree_MD<-summary_species$species_%in%tree_meta$label
+
+table(summary_species$tree_MD)
+
+#replace incorect species names in species list
+summary_species %<>%
+  mutate(species=if_else(tree_MD,species,alternative_name),
+         species_=gsub(species,pattern = " ",replacement = "_"))
+
+summary_species$tree_MD<-summary_species$species_%in%tree_meta$label
+
+table(summary_species$tree_MD)
+
+summary_species[!(summary_species$species_%in%tree_meta$label),]
+```
+
+
+```{r}
+### match with Goat info to get taxonomic information
+
+GOAT_info <- read_delim(paste0(path,"/data/GenomeOnATree_Vertebrata1.tsv"), 
+    delim = "\t", escape_double = FALSE, 
+    col_types = cols(taxon_id = col_character()), 
+    trim_ws = TRUE) %>% 
+  mutate(common_name=str_replace_all(common_name, c('\\[\"'="",'\"\\]'=""))) %>% 
+  mutate(synonym=str_replace_all(synonym, c('\\[\"'="",'\"\\]'=""))) %>% 
+  mutate(tolid_prefix=str_replace_all(tolid_prefix, c('\\[\"'="",'\"\\]'=""))) %>% 
+  mutate(species_=str_replace(species,pattern= " ",replacement = "_")) %>% 
+  mutate(synonym_=str_replace(synonym,pattern= " ",replacement = "_"))
+
+tree_meta$g_spec<-tree_meta$label %in% GOAT_info$species_
+tree_meta$g_syn<-tree_meta$label %in% GOAT_info$synonym_
+
+table(tree_meta$g_spec,tree_meta$g_syn)
+
+goat_short<-GOAT_info %>% 
+select(c(1:which(colnames(GOAT_info)=="class"),"species_","synonym_"))
+
+tree_meta1<-tree_meta %>% 
+  filter(g_spec) %>%
+  left_join(goat_short,by=c("label"="species_")) 
+
+tree_meta2<-tree_meta %>% 
+  filter(g_syn & ! g_spec) %>% 
+  left_join(goat_short,by=c("label"="synonym_"))
+
+tree_meta3<-tree_meta %>% 
+  filter(!g_syn & ! g_spec)
+ 
+tree_meta<-bind_rows(tree_meta1 ,tree_meta2,tree_meta3) %>% 
+  mutate(species_=label) %>% 
+  arrange(as.numeric(index))
+
+head(tree_meta)
+
+table(is.na(tree_meta$taxon_id))
+```
+
+
+
+```{r}
+summary_species2<-summary_species %>% 
+  select(-c(family,order)) %>% 
+  inner_join(tree_meta,by="species_") %>% 
+  select(-label)
+
+
+pos<-which(colnames(summary_species)=="species_")
+summary_species<-summary_species[,c(pos,1:(pos-1),(pos+1):ncol(summary_species))]
+
+### Label by order
+
+groupInfo<-tree_meta %>% 
+  filter(!is.na(order)) %>% 
+  select(order,species_) %>%
+  pivot_wider(names_from = "order",values_from = "species_") %>% 
+  as.list() %>% 
+  flatten()
+
+
+tree <-groupOTU(bird_tree,groupInfo)
+
+cols<-c("grey75",colorRampPalette(ggsci::pal_aaas()(10))(length(names(groupInfo))+1))
+
+names(cols)<-c("0",names(groupInfo))
+
+# library(scales)
+# 
+# show_col(cols)
+
+p.tree<-ggtree(tree,aes(color=group),lwd=0.5,layout = "circular")+
+  scale_color_manual(values=cols,na.value = NA)
+
+p.tree %<+% summary_species2+
+  geom_tippoint(aes(shape=cat),size=3,color="grey25")
+
+```
+
+
+## subset for 1 species per family
+
+
+```{r}
+
+tree_meta2<-tree_meta %>% 
+  filter(!is.na(order)) %>% 
+  group_by(family) %>% 
+  slice_head(n=1) %>% 
+  ungroup() %>% 
+  filter(!(family%in%summary_species$family))
+  
+
+tree_meta_fam<-bind_rows(tree_meta2,subset(tree_meta,species_ %in% summary_species$species_))
+
+summary_species2<-summary_species %>% 
+  full_join(tree_meta_fam)  %>% 
+  select(-label)
+
+## remove other species
+remove <-
+  !(tree_meta$species_ %in% summary_species2$species_)
+
+table(remove)
+
+sub_tree2 <- drop.tip(bird_tree, tree_meta$species_[remove])
+
+groupInfo<-summary_species2 %>% 
+  select(order,species_) %>%
+  pivot_wider(names_from = "order",values_from = "species_") %>% 
+  as.list() %>% 
+  flatten()
+
+
+sub_tree2 <-groupOTU(sub_tree2,groupInfo)
+
+
+cols<-c("grey75",colorRampPalette(ggsci::pal_aaas()(10))(length(names(groupInfo))+1))
+
+names(cols)<-c("0",names(groupInfo))
+
+
+keep <-
+  (tree_meta$species_ %in% summary_species2$species_)
+
+tree_meta3 <- tree_meta[keep, ]
+
+```
+
+
+```{r}
+table(sub_tree2$tip.label == tree_meta3$species_)
+
+sub_tree2$tip.label[!(sub_tree2$tip.label %in% summary_species2$species_)]
+
+summary_species2 <-summary_species2[na.omit(match(sub_tree2$tip.label, summary_species2$species_)), ]
+
+pos <- which(colnames(summary_species2) == "species_")
+
+summary_species2 <-
+  summary_species2[, c(pos, 1:(pos - 1), (pos + 1):ncol(summary_species2))]
+
+p.tree3 <- ggtree(sub_tree2, aes(color = group), lwd = 0.5,mrsd = "01/08/2023",layout = "circular")
+
+
+
+p.tree4 <- p.tree3 %<+% summary_species2 +
+  geom_tippoint(aes(shape=cat), size = 3,color="#6987b5") +
+  scale_color_manual(values=cols,na.value = NA)
+p.tree4
+```
+
+
+
+```{r}
+p.tree5 <- ggtree(sub_tree2, aes(color = group), lwd = 0.5,mrsd = "01/08/2023",layout = "rectangular")
+
+mat_sel2<-summary_species2 %>% 
+  select(-1) %>% 
+   ungroup() %>% 
+   filter(!(duplicated(species_))) %>% 
+   mutate(fibroblasts=fibro_l,
+          replicates=individuals>1) %>% 
+   dplyr::select(species_,fibroblasts,genome,replicates,annotation) %>%
+   column_to_rownames("species_") %>% 
+   as.matrix
+ 
+
+heatmap.colours <- c("purple","darkblue","grey75","red")
+
+names(heatmap.colours) <- c("selected","TRUE","FALSE","Zoonomia")
+
+
+ tree_map2<-gheatmap(p.tree5,mat_sel2, width=.05, colnames=T,legend_title = "",
+          colnames_position = "top",font.size = 3,colnames_angle =90,colnames_offset_y = 10,offset = 2)   +
+   scale_fill_manual(values=heatmap.colours,
+                     #breaks=c("Chromosome","Contig","Scaffold",2,4,6,8,10),
+                     na.value = "grey75",limits=force)+
+   scale_color_manual(values=cols)+
+   ylim(NA,280)+
+   labs(colour="",fill="",shape="")+
+   theme(legend.direction = "horizontal")+
+   guides(fill="none")+
+   theme_tree2()
+   
+tree_map2
+
+gc()
+```
+
+## only cryozoo species
+
+
+```{r}
+
+## remove other species
+remove <-
+  !(tree_meta$species_ %in% summary_species$species_)
+
+table(remove)
+
+sub_tree3 <- drop.tip(bird_tree, tree_meta$species_[remove])
+
+groupInfo<-summary_species %>% 
+  select(order,species_) %>%
+  pivot_wider(names_from = "order",values_from = "species_") %>% 
+  as.list() %>% 
+  flatten()
+
+
+sub_tree3 <-groupOTU(sub_tree3,groupInfo)
+
+
+cols<-c("grey75",colorRampPalette(ggsci::pal_futurama()(12))(length(names(groupInfo))+1))
+
+names(cols)<-c("0",names(groupInfo))
+
+
+keep <-
+  (tree_meta$species_ %in% summary_species$species_)
+
+tree_meta3 <- tree_meta[keep, ]
+
+```
+
+
+```{r}
+table(sub_tree3$tip.label == tree_meta3$species_)
+
+sub_tree3$tip.label[!(sub_tree3$tip.label %in% summary_species$species_)]
+
+summary_species2 <-summary_species[na.omit(match(sub_tree2$tip.label, summary_species$species_)), ]
+
+pos <- which(colnames(summary_species2) == "species_")
+
+summary_species2 <-
+  summary_species2[, c(pos, 1:(pos - 1), (pos + 1):ncol(summary_species2))]
+
+p.tree3 <- ggtree(sub_tree3, aes(color = group), lwd = 0.5,mrsd = "01/08/2023",layout = "circular")
+
+
+
+p.tree4 <- p.tree3 %<+% summary_species2 +
+  geom_tippoint(aes(shape=cat), size = 2,color="grey55") +
+  scale_color_manual(values=cols,na.value = NA)
+p.tree4
+```
+
+
+
+```{r}
+
+
+p.tree5 <- ggtree(sub_tree3, aes(color = group), lwd = 0.5,mrsd = "01/08/2023",layout = "rectangular")
+
+mat_sel2<-summary_species2 %>% 
+  select(-1) %>% 
+   ungroup() %>% 
+   filter(!(duplicated(species_))) %>% 
+   mutate(fibroblasts=fibro_l,
+          replicates=individuals>1) %>% 
+   dplyr::select(species_,fibroblasts,genome,replicates,annotation) %>%
+   column_to_rownames("species_") %>% 
+   as.matrix
+ 
+
+heatmap.colours <- c("purple","darkblue","grey75","red")
+
+names(heatmap.colours) <- c("selected","TRUE","FALSE","Zoonomia")
+
+
+ tree_map2<-gheatmap(p.tree5,mat_sel2, width=.05, colnames=T,legend_title = "",
+          colnames_position = "top",font.size = 3,colnames_angle =90,colnames_offset_y = 5,offset = 2)   +
+   scale_fill_manual(values=heatmap.colours,
+                     #breaks=c("Chromosome","Contig","Scaffold",2,4,6,8,10),
+                     na.value = "grey75",limits=force)+
+   scale_color_manual(values=cols)+
+   ylim(NA,100)+
+   labs(colour="",fill="",shape="")+
+   theme(legend.direction = "horizontal")+
+   guides(fill="none")+
+   theme_tree2()
+   
+tree_map2
+
+gc()
+```

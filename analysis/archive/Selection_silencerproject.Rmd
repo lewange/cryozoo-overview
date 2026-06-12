@@ -1,0 +1,419 @@
+---
+title: "3.1 Silencer Species"
+output: html_notebook
+---
+
+
+
+```{r}
+##
+library(readxl)
+library(tidyverse)
+library(cowplot)
+library(treedataverse)
+library(magrittr)
+library(RColorBrewer)
+
+## plotting options
+theme_set(theme_bw())
+here::here()
+path <- here::here()
+```
+
+This script aims to select species for the silencer project. Run the script "Cryo_zoo_summary.Rmd" before
+
+```{r}
+
+summary_species <-  readRDS(paste0(path, "/output/Species_List_with_genome_and_cl_info2.rds")) %>%
+  filter(superclass == "Mammalia") %>% 
+  filter(!duplicated(species_)) %>% 
+  mutate(
+    orders_num = as.integer(as.factor(order)),
+    species_=str_replace(species,pattern=" ",replacement="_"),
+    alternative_name_ = str_replace(alternative_name, replacement = "_",pattern= " ")
+  )
+
+best20 <- summary_species %>%
+  filter(cat == "Both") %>%
+  group_by(order) %>%
+  slice_max(fibro, prop = 10) %>% 
+  slice_max(scaffold_n50, n=5)
+
+summary_species <- summary_species %>%
+  mutate(top20 = if_else(
+    species_ %in% best20$species_,
+    "selected",
+    "FALSE"
+  ))
+
+table(summary_species$top20, summary_species$order)
+
+select(best20,species_,order,family) %>% 
+  filter(order=="Primates")
+
+## add the gorilla to have all great apes
+summary_species<-summary_species %>%
+  mutate(top20 = if_else(family=="Hominidae",
+    "selected",
+    top20
+  ))
+
+summary_species %>% 
+  filter(order=="Primates") %>% 
+  filter(top20=="selected")
+
+```
+
+## Compare to previous selection
+
+```{r}
+selected_species<-readRDS(paste0(path,"/output/selection_silencer_project.rds"))
+
+## in old not new
+setdiff(selected_species$species,best20$species)
+
+## in new not old
+setdiff(best20$species,selected_species$species)
+
+```
+
+
+```{r}
+big_tree <-
+  drop.tip(read.nexus(
+    paste0(
+      path,
+      "/data/MamPhy_fullPosterior_BDvr_DNAonly_4098sp_topoFree_NDexp_MCC_v2_target.tre"
+    )
+  ), "_Anolis_carolinensis")
+
+tree_meta <- data.frame(label = big_tree$tip.label) %>%
+  separate(
+    col = label,
+    sep = "_",
+    into = c("s1", "s2", "family", "order"),
+    remove = F
+  ) %>%
+  unite(c(s1, s2), col = "species_", sep = "_") %>%
+  mutate(family = str_to_title(family),
+         order = str_to_title(order))
+
+table(summary_species$species_ %in% tree_meta$species_)
+
+summary_species <- summary_species %>%
+  mutate(
+    alternative_name_=str_replace(alternative_name,pattern=" ",replacement="_"),
+    species_ = if_else(
+      alternative_name_ %in% tree_meta$species_,
+      alternative_name_,
+      species_
+    )
+  )
+
+table(summary_species$species_ %in% tree_meta$species_)
+
+summary_species[!(summary_species$species_ %in% tree_meta$species_), ]$species_
+
+```
+
+
+```{r}
+# replace incorrect species names in tree
+Wrong_Species_names2 <- read_excel(paste0(path,"/data/Wrong_Species_names2.xlsx")) %>% 
+  filter(superclass=="Mammals")
+
+tree_meta<-tree_meta %>% 
+  left_join(Wrong_Species_names2,by=c("species_"="mammal_tree_name")) %>% 
+  mutate(species_=if_else(is.na(species_name_),species_,species_name_)) %>% 
+  select(-c(species_name_,superclass))
+
+# finally all names match
+table(summary_species$species_ %in% tree_meta$species_)
+#big_tree$tip.label<-paste(tree_meta$scientific_name_,toupper(tree_meta$family),toupper(tree_meta$order),sep="_")
+```
+
+
+## Subset for species in df
+```{r}
+remove <-
+  !(tree_meta$species_ %in% summary_species$species_)
+
+table(remove)
+
+sub_tree <- drop.tip(big_tree, tree_meta$label[remove])
+
+keep <-
+  (tree_meta$species_ %in% summary_species$species_)
+
+tree_meta2 <- tree_meta[keep, ]
+
+# tree_meta <- data.frame(label=sub_tree$tip.label) %>%
+#   separate(col = label,sep = "_",into = c("s1","s2","family","order"),remove = F) %>%
+#   unite(c(s1,s2),col = "scientific_name_",sep = "_") %>%
+#   mutate(family=str_to_title(family),
+#          order=str_to_title(order))
+```
+
+
+## Plot tree
+```{r}
+table(sub_tree$tip.label == tree_meta2$species_)
+
+sub_tree$tip.label <- tree_meta2$species_
+
+sub_tree$tip.label[!(sub_tree$tip.label %in% summary_species$species_)]
+
+summary_species <-
+  summary_species[na.omit(match(sub_tree$tip.label, summary_species$species_)), ]
+
+pos <- which(colnames(summary_species) == "species_")
+
+summary_species <-
+  summary_species[, c(pos, 1:(pos - 1), (pos + 1):ncol(summary_species))]
+
+p.tree <- ggtree(sub_tree, color = "grey60", lwd = 0.5,mrsd = "01/08/2023")
+
+cols<-colorRampPalette(ggsci::pal_futurama()(12))(length(unique(summary_species$order)))
+names(cols)<-unique(summary_species$order)
+
+p.tree2 <- p.tree %<+% summary_species +
+  geom_tippoint(aes(color = order), size = 2) +
+  #guides(color="none")+
+  scale_colour_manual(values=cols)+
+  theme_tree2()
+p.tree2
+
+
+```
+
+
+## add heatmap
+
+```{r}
+mat_sel2 <- summary_species %>%
+  ungroup() %>%
+  filter(!(duplicated(species_))) %>%
+  mutate(fibro = fibro_l,
+         replicates = individuals > 1) %>%
+  dplyr::select(species_, fibro, genome, top20) %>%
+  column_to_rownames("species_") %>%
+  as.matrix
+
+heatmap.colours <- c("purple", "darkblue", "grey75")
+
+names(heatmap.colours) <- c("selected", "TRUE", "FALSE")
+
+tree_map2 <-
+  gheatmap(
+    p.tree2,
+    mat_sel2,
+    width = .2,
+    colnames = T,
+    legend_title = "",
+    colnames_position = "top",
+    font.size = 4,
+    colnames_angle = 90,
+    colnames_offset_y = 7,
+    offset = 2
+  )   +
+  scale_fill_manual(values = heatmap.colours,
+                    #breaks=c("Chromosome","Contig","Scaffold",2,4,6,8,10),
+                    na.value = "grey75",
+                    limits = force) +
+  ylim(NA, 110) +
+  labs(colour = "",
+       fill = "",
+       shape = "") +
+  theme(legend.position = c(0.4, 0.9)) +
+  theme(legend.direction = "horizontal") +
+  guides(fill = "none")+
+  scale_x_continuous(breaks = seq(from=-150, to=0,by=50),labels=seq(from=150, to=0,by=-50))+
+  labs(x= "divergence time (mya)")
+tree_map2
+
+
+```
+
+#plot only selected species
+
+```{r}
+remove <-
+  !(tree_meta$species_ %in% summary_species[which(summary_species$top20=="selected"),]$species_)
+
+table(remove)
+
+sub_tree2 <- drop.tip(big_tree, tree_meta$label[remove])
+
+
+keep <-
+  (tree_meta$species_ %in% summary_species[which(summary_species$top20=="selected"),]$species_)
+
+tree_meta3 <- tree_meta[keep, ]
+
+# tree_meta <- data.frame(label=sub_tree$tip.label) %>%
+#   separate(col = label,sep = "_",into = c("s1","s2","family","order"),remove = F) %>%
+#   unite(c(s1,s2),col = "scientific_name_",sep = "_") %>%
+#   mutate(family=str_to_title(family),
+#          order=str_to_title(order))
+```
+
+
+## Plot tree
+```{r}
+
+selected_species <-summary_species %>% 
+  filter(top20=="selected")
+
+table(sub_tree2$tip.label == tree_meta3$label)
+
+sub_tree2$tip.label <- tree_meta3$species_
+
+sub_tree2$tip.label[!(sub_tree2$tip.label %in% selected_species$species_)]
+
+
+selected_species <-selected_species[na.omit(match(sub_tree2$tip.label, selected_species$species_)), ]
+
+pos <- which(colnames(selected_species) == "species_")
+
+summary_species <-
+  summary_species[, c(pos, 1:(pos - 1), (pos + 1):ncol(summary_species))]
+
+p.tree3 <- ggtree(sub_tree2, color = "grey60", lwd = 0.5,mrsd = "01/08/2023")
+
+
+cols<-colorRampPalette(ggsci::pal_futurama()(12))(length(unique(summary_species$order)))
+names(cols)<-unique(summary_species$order)
+
+p.tree4 <- p.tree3 %<+% selected_species +
+  geom_tippoint(aes(color = order), size = 2) +
+  #guides(color="none")+
+  scale_color_manual(values = cols)+
+  theme_tree2()+
+  geom_tiplab(offset = 2,size=2)+
+  xlim(NA,40)
+p.tree4
+```
+
+
+## Add heatmap
+
+```{r}
+mat_sel2 <- selected_species %>%
+  ungroup() %>%
+  filter(!(duplicated(species_))) %>%
+  #mutate(scaffold_n50_10M=scaffold_n50/10000000) %>% 
+  dplyr::select(species_,  c(assembly_level,annotation)) %>%
+  column_to_rownames("species_") %>%
+  as.matrix
+
+# heatmap.colours <- c("purple", "darkblue", "grey75")
+# 
+# names(heatmap.colours) <- c("selected", "TRUE", "FALSE")
+
+tree_map3 <-
+  gheatmap(
+    p.tree4,
+    mat_sel2,
+    width = 0.1,
+    colnames = T,
+    legend_title = "",
+    colnames_position = "top",
+    font.size = 2,
+    colnames_angle = 90,
+    colnames_offset_y = 2,
+    offset = 60
+  ) +
+  scale_fill_viridis_d()+
+  # scale_fill_manual(values = heatmap.colours,
+  #                   #breaks=c("Chromosome","Contig","Scaffold",2,4,6,8,10),
+  #                   na.value = "grey75",
+  #                   limits = force) +
+  ylim(NA, 30)  +
+  # theme(legend.position = c(0.45, 0.9)) +
+  # theme(legend.direction = "horizontal") +
+ # guides(fill = "none")+
+  scale_x_continuous(breaks = seq(from=-90, to=0,by=10),labels=seq(from=90, to=0,by=-10))+
+  labs(x= "divergence time (mya)",
+       colour = "",
+       fill = "",
+       shape = "")
+tree_map3
+
+#save_plot(plot = tree_map3,base_height =5,base_width = 5,filename = paste0(path,"/output/figures/selection_tree_sil.pdf"))
+```
+
+```{r}
+library(ggbeeswarm)
+
+
+selected_species<-selected_species %>%
+  mutate(order=factor(order,
+                      levels=rev(c("Artiodactyla","Perissodactyla","Carnivora","Primates",
+                                   "Rodentia","Lagomorpha","Hyracoidea","Proboscidea","Pilosa"))))
+
+  ggplot(selected_species)+
+  geom_beeswarm(aes(x=order,y=scaffold_n50, col=order),show.legend = F)+
+  scale_color_manual(values = cols)+
+  scale_y_log10()+
+  coord_flip()+
+  xlab("")
+
+
+p.size<-ggplot(selected_species)+
+  geom_beeswarm(aes(x=order,y=genome_size/1e9, col=order),show.legend = F)+
+  scale_color_manual(values = cols)+
+  coord_flip()+
+    ylab("Genome Size (in Gb)")+
+    xlab("")
+  
+ p.chrom<-ggplot(selected_species)+
+  geom_beeswarm(aes(x=order,y=chromosome_number, col=order),show.legend = F)+
+  scale_color_manual(values = cols)+
+  coord_flip()+
+    ylab("Chromosome number (diploid)")+
+    xlab("")+
+    theme(axis.ticks.y = element_blank(),
+          axis.text.y=element_blank())
+
+
+
+save_plot(plot = p.size,base_height =4,base_width = 2,filename = paste0(path,"/output/selection_gsize_sil.pdf"))
+
+save_plot(plot = p.chrom,base_height =4,base_width = 1.2,filename = paste0(path,"/output/selection_chrom_sil.pdf"))
+
+# write_excel_csv(selected_species,paste0(path,"/output/selection_silencer_project.csv"))
+# saveRDS(selected_species,paste0(path,"/output/selection_silencer_project.rds"))
+
+```
+
+
+
+## Get pairwise divergence times from tree
+
+```{r}
+
+(cophenetic.phylo(sub_tree2)/2) %>% 
+  as.matrix() %>% 
+  as.data.frame() %>% 
+  rownames_to_column(var="species1") %>% 
+  pivot_longer(col=-species1,names_to="species2",values_to="pairwise_div") %>% 
+  filter(species1!=species2) %>% 
+  ggplot()+
+  geom_density(aes(x=pairwise_div))
+
+library(ComplexHeatmap)
+
+mat<-(cophenetic.phylo(sub_tree2)/2) %>% 
+  as.matrix()
+
+df<-mat %>% 
+  as.data.frame() %>% 
+  rownames_to_column(var="species_") %>% 
+  select(species_) %>% 
+  left_join(selected_species) %>% 
+  select(species_,order)
+
+ComplexHeatmap::pheatmap(mat,treeheight_col = 0,column_split=df$order)
+
+```
+

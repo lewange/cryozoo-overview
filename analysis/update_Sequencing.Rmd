@@ -1,0 +1,142 @@
+---
+title: "get sequencing information"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+
+```{r}
+
+library(googlesheets4)
+library(tidyverse)
+
+theme_set(theme_minimal())
+
+path<-"/Users/lucas/Library/CloudStorage/GoogleDrive-lucasesteban.wange@upf.edu/My Drive/Projects/Cryozoo/1.Species_selection/"
+
+```
+
+## get sequencing info from the tables
+
+```{r}
+RNA<-read_sheet("https://docs.google.com/spreadsheets/d/1y4QBygDAAi7GRdSAZ9N4S1k7vz2r0SjkLIdhfUAZ1XY/edit?usp=drive_link",range="Overview") %>% 
+  mutate(type="RNA-seq") %>% 
+  select(animal_id,library_id,species,type,cnag_id,status,qc_result)
+
+ATAC<-read_sheet("https://docs.google.com/spreadsheets/d/17EkSv-ar1xQumHspvQtgHWFV4OUAvJABfw217aFlFn8/edit?usp=drive_link",range="Overview") %>% 
+  mutate(type="ATAC-seq") %>% 
+  select(animal_id,library_id,species,type,cnag_id,status,qc_result)
+
+WGS<-read_sheet("https://docs.google.com/spreadsheets/d/1FLSAxeA95XpqretA-YMJ22CQ6GWfBqF3zS96Iq_H2IM/edit?usp=sharing",range="Overview") %>% 
+  filter(!is.na(animal_id)) %>% 
+  mutate(type="WG-Seq") %>% 
+  select(animal_id,library_id,species,type,cnag_id,status,qc_result)
+
+
+EM_samples<-read_sheet("https://docs.google.com/spreadsheets/d/14O9dtpIFQuVLvrFL7TqqbnFM8Ko8Hy2VLFvDKbRacCY/edit?usp=sharing",range="potential_samples") %>% 
+  filter(!is.na(animal_id)) %>% 
+  mutate(type="EM-seq",
+         type2=2) %>% 
+  filter(!duplicated(animal_id)) %>% 
+  select(animal_id,species,type,cnag_id,status,type2)
+
+EM<-read_sheet("https://docs.google.com/spreadsheets/d/14O9dtpIFQuVLvrFL7TqqbnFM8Ko8Hy2VLFvDKbRacCY/edit?usp=sharing",range="Overview") %>% 
+  filter(!is.na(animal_id)) %>% 
+  mutate(type="EM-seq",
+         type2=1) %>% 
+  select(animal_id,library_id,species,type,cnag_id,status,type2)
+ 
+EM_full<-bind_rows(EM_samples,EM) %>% 
+  group_by(animal_id) %>% 
+  slice_min(type2) %>% 
+  select(-type2)
+  
+
+
+cryzoo_seq <- read_sheet("https://docs.google.com/spreadsheets/d/1YI-0bB7OFfjaUM4af9Lv3BAd1X0x9CoCTKZN3BQM4KA/edit?usp=sharing","Sequenced_CZ") %>% 
+  mutate(library_id=if_else(is.na(library_id),cnag_id,library_id),
+         library_id=if_else(is.na(cnag_id),"no_id",library_id)) %>% 
+  mutate(type=if_else(type=="WGS","WG-Seq","WG-Nanopore")) %>% 
+  select(animal_id,library_id,species,type,cnag_id,status) 
+
+bind_rows(RNA,WGS) %>% 
+  bind_rows(ATAC)%>% 
+  bind_rows(EM_full)%>% 
+  bind_rows(cryzoo_seq) %>% 
+write_sheet(ss="https://docs.google.com/spreadsheets/d/1YI-0bB7OFfjaUM4af9Lv3BAd1X0x9CoCTKZN3BQM4KA/edit?usp=sharing",sheet = "All_Sequenced")
+
+
+all_seq_wide<-bind_rows(RNA,WGS) %>% 
+  bind_rows(ATAC)%>%  
+  bind_rows(EM_full)%>% 
+  bind_rows(cryzoo_seq) %>%  
+  #filter(animal_id%in%Selected_Cell_Lines$animal_id) %>%
+  #mutate(library_id=paste(library_id,status)) %>% 
+  #select(-status) %>% 
+  select(-c(cnag_id,library_id)) %>% 
+  pivot_wider(names_from = type,values_from = status,
+              values_fn = ~ paste(.x, collapse = ", "))
+
+all_seq<-bind_rows(RNA,WGS) %>% 
+  bind_rows(ATAC)%>% 
+  bind_rows(EM_full)%>% 
+  bind_rows(cryzoo_seq) 
+
+
+saveRDS(all_seq,paste0(path,"/output/sequencing_summary.rds"))
+```
+
+
+
+## get main tables from cryozoo
+```{r}
+
+all_samples<-readRDS(paste0(path,"/output/Sample_List_all_species_clean.rds"))
+
+species_info<-readRDS(paste0(path,"/output/Species_List_with_genome_and_cl_info.rds"))
+
+table(species_info$superclass,species_info$project,useNA = "always")
+
+```
+
+## per sample table
+```{r}
+
+cryozoo_seq_l <- all_seq %>% 
+  mutate(status2=case_when(status%in% "sequenced" & qc_result=="Ok"~ "sequenced",
+                           status%in% "sequenced" & qc_result!="Ok"~ "qc_fail",
+                           status%in%c("extracted","tech_rep","repeat","ready to process","ready", "pending")~"pending",
+                           T~status)) %>% 
+  mutate(status2=factor(status2,levels=c("sequenced","submitted","pending","qc_fail"))) %>% 
+  select(any_of(c("animal_id", "species", "type","status2"))) %>% 
+  group_by(animal_id, species, type) %>% 
+  slice_min(status2,with_ties = F) 
+
+table(cryozoo_seq_l$status2,cryozoo_seq_l$type,useNA = "always")
+
+cryozoo_seq_w<- cryozoo_seq_l %>% 
+  pivot_wider(names_from = type, values_from = status2)
+
+
+
+```
+
+
+## per species table
+```{r}
+
+cryozoo_seq_w_sp <- cryozoo_seq_l %>% 
+  ungroup() %>% 
+  select(any_of(c( "species", "type","status2"))) %>% 
+  group_by(species, type) %>% 
+  slice_min(status2,with_ties = F) %>% 
+  pivot_wider(names_from = type, values_from = status2) %>% 
+  filter(!is.na(species)) 
+
+write_sheet(cryozoo_seq_w_sp,"https://docs.google.com/spreadsheets/d/1YI-0bB7OFfjaUM4af9Lv3BAd1X0x9CoCTKZN3BQM4KA/edit?usp=sharing",
+            "Sequencing_per_species")
+
+```
+
