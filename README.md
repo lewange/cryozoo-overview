@@ -49,8 +49,6 @@ shows no trees. Current output:
 **Fish**
 ![Fish tree](output/figures/trees/tree_nolabels_Fish.png)
 
-**IUCN status legend**
-![IUCN status legend](output/figures/trees/legend.png)
 
 ## Building the site
 
