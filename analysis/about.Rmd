@@ -7,4 +7,16 @@ editor_options:
   chunk_output_type: console
 ---
 
-Describe your project.
+This site documents the species-selection and inventory pipeline behind
+**CryoZoo**, a biobank of live Tetrapod (mammal and bird) cell lines profiled
+with a diverse set of genomics methods.
+
+The pipeline cleans and joins the master species list with several inventory
+sources (cryotube stocks, cell culture outcomes, nucleic-acid extractions,
+and sequencing status), summarises the resulting collection against IUCN
+status, genome availability, and TOGA annotation coverage, and places
+selected species on time-calibrated mammal and bird phylogenies.
+
+For a script-by-script description of each analysis and how they depend on
+one another, see [analysis/README.md](https://github.com/lewange/cryozoo-overview/blob/master/analysis/README.md)
+in the source repository, or start browsing from the [Home](index.html) page.

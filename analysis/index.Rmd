@@ -8,8 +8,31 @@ editor_options:
   chunk_output_type: console
 ---
 
-Welcome to my workflowR documentation of the CryoZoo project to profile Tetrapod cell lines using a diverse set of genomics methods.
+Welcome to my workflowR documentation of the CryoZoo project, a biobank of
+live Tetrapod cell lines profiled with a diverse set of genomics methods.
 
-Click on this [link](Generate_Lists.html) to see how I selected the species from the cryozoo inventory.
+This site walks through the species-selection and inventory pipeline, in
+order:
 
-Click on this [link](Cryo_zoo_summary.html) to see this information plotted.
+1. [Clean CryoZoo Lists](Clean_CryoZoo_Lists.html) — ingest and clean the
+   master species and sample lists.
+2. [Update Cryostock](update_Cryostock.html) — update the cryotube storage
+   inventory.
+3. [Update Cell Culture](update_Cell_culture.html) — summarise cell culture
+   and thawing outcomes.
+4. [Update Extractions](update_Extractions.html) — summarise nucleic-acid
+   extraction records.
+5. [Update Sequencing](update_Sequencing.html) — aggregate sequencing status
+   across library types.
+6. [Update Sample Table](Update_Sample_table.html) — join everything into a
+   master sample table.
+7. [CryoZoo Summary Plots](plot_Cryozoo_summary.html) — summary figures for
+   the collection.
+8. [Mammal Tree](plot_Tree_mammal.html) — phylogenetic tree of CryoZoo mammal
+   species.
+9. [Bird Tree](plot_Tree_birds.html) — phylogenetic tree of CryoZoo bird
+   species.
+
+See [analysis/README.md](https://github.com/lewange/cryozoo-overview/blob/master/analysis/README.md)
+for the full pipeline description, including inputs, outputs, and package
+dependencies for each step.
