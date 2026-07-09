@@ -6,9 +6,15 @@ output:
     df_print: paged
 ---
 
+This script summarizes and plots the species currently held in the CryoZoo
+collection. It is based on the species table produced by
+`Clean_CryoZoo_Lists.Rmd`, so make sure that script has been run first.
+
+## Setup
+
+### Load libraries and colour palettes
+
 ```{r,message=F,warning=F}
-
-
 library(tidyverse)
 library(cowplot)
 library(readxl)
@@ -20,11 +26,16 @@ here::here()
 path<-here::here()
 
 # load colour palettes
-
 source("https://raw.githubusercontent.com/mammalian-iPSCs/colour-palettes/main/palettes.R")
 
 ```
-This script aims to summarize and plot the species present in the cryozoo. It is based on lists from the "Clean_CryoZoo_Lists.Rmd" script so make sure to run this before.
+
+### Load species table
+
+Quick sanity checks on the species table before any plotting: how many
+species already have an established fibroblast line, and how species are
+distributed across the five superclasses (Mammalia, Birds, Amphibia,
+Reptiles, Fish).
 
 ```{r}
 List_of_species<-readRDS(paste0(path,"/output/Species_List_with_genome_and_cl_info.rds"))
@@ -32,8 +43,8 @@ List_of_species<-readRDS(paste0(path,"/output/Species_List_with_genome_and_cl_in
 
 table(List_of_species$fibro_l)
 
-sum_list<-List_of_species %>% 
-  group_by(superclass) %>% 
+sum_list<-List_of_species %>%
+  group_by(superclass) %>%
   summarize(nspecies=n())
 
 sum(sum_list$nspecies)
@@ -42,7 +53,13 @@ sum(sum_list$nspecies)
 table(List_of_species$superclass)
 
 ```
-## General Species level summary
+
+## Species overview
+
+### Species counts by class
+
+Overall species counts per superclass, and how many of those already have an
+established fibroblast line.
 
 ```{r, fig.dim=c(8,7)}
 
@@ -79,36 +96,41 @@ save_plot(plot = plot_grid(bar.all_spec,bar.fibro,nrow = 2,rel_heights = c(0.3,0
 
 ```
 
-## Cell lines per order
+### Cell lines per taxonomic order
+
+For each class, species are grouped by order if the order has more than 5
+species, otherwise they fall back to a class-level grouping (`taxlevel`).
+One bar plot per resulting taxon shows the number of species per family and
+whether a fibroblast line exists.
 
 ```{r}
 
-taxlevel<-List_of_species %>% 
-  group_by(order) %>% 
-  mutate(samples_per_taxlevel=n()) %>% 
-  group_by(class) %>% 
+taxlevel<-List_of_species %>%
+  group_by(order) %>%
+  mutate(samples_per_taxlevel=n()) %>%
+  group_by(class) %>%
   mutate(taxlevel=if_else(samples_per_taxlevel>5,"order","class"),
         samples_per_taxlevel=if_else(samples_per_taxlevel>5,samples_per_taxlevel,n()),
         taxon=if_else(taxlevel=="order",order,class),
-        taxon=if_else(is.na(taxon),superclass,taxon)) %>% 
-  select(order,class,samples_per_taxlevel,taxlevel,taxon) %>% 
+        taxon=if_else(is.na(taxon),superclass,taxon)) %>%
+  select(order,class,samples_per_taxlevel,taxlevel,taxon) %>%
   distinct()
-  
-  
+
+
 
 for (i in unique(taxlevel$taxon)) {
 
 print(i)
-tl<-taxlevel %>% 
-  filter(taxon==i) %>% 
-  select(taxlevel) %>% 
-  distinct() %>% 
+tl<-taxlevel %>%
+  filter(taxon==i) %>%
+  select(taxlevel) %>%
+  distinct() %>%
   pull(taxlevel)
 
-filt <- List_of_species %>% 
+filt <- List_of_species %>%
   filter(if (tl == "order") order == i else class == i)
 
-filt %>% 
+filt %>%
 ggplot()+
   geom_bar(aes(x=family,fill=superclass,alpha=fibro_l))+
   labs(x="",y="Number of species",fill="",alpha="Fibroblasts?")+
@@ -120,13 +142,14 @@ ggplot()+
   guides(fill="none")+
   scale_fill_manual(values=class_col,limits=force)+
   ggtitle(paste(i,"Species with Fibroblast lines"))->p
-  
+
 print(p)
 }
 
 ```
 
-## Species by IUCN status
+### IUCN conservation status by class
+
 ```{r}
 
 
@@ -134,10 +157,10 @@ names(IUCN_COLOURS) <- c("LEAST CONCERN", "NEAR THREATENED", "VULNERABLE", "ENDA
                           "CRITICALLY ENDANGERED", "EXTINCT IN THE WILD", "EXTINCT",
                           "DATA DEFICIENT", "NOT EVALUATED")
 
-bar.iucn<-List_of_species %>% 
-  filter(!is.na(iucn_category)) %>% 
+bar.iucn<-List_of_species %>%
+  filter(!is.na(iucn_category)) %>%
   mutate(iucn_category=factor(iucn_category,levels=c("EXTINCT IN THE WILD","CRITICALLY ENDANGERED","ENDANGERED","VULNERABLE","NEAR THREATENED","LEAST CONCERN","NA")
-                              )) %>% 
+                              )) %>%
   ggplot()+
   geom_bar(aes(x=superclass,fill=iucn_category),position=position_stack())+
   labs(x="",y="Number of species",fill="IUCN status")+
@@ -149,19 +172,21 @@ bar.iucn<-List_of_species %>%
   scale_fill_manual(values=IUCN_COLOURS)
 bar.iucn
 
-  
+
 save_plot(plot = bar.iucn,base_height = 5,base_width = 5,filename = paste0(path,"/output/figures/bar.iucn.png"))
 
 ```
 
-## IUCN status all
+### IUCN conservation status overall
+
+Same breakdown as above, collapsed across all classes.
 
 ```{r}
 
-List_of_species %>% 
-  filter(!is.na(iucn_category)) %>% 
+List_of_species %>%
+  filter(!is.na(iucn_category)) %>%
   mutate(iucn_category=factor(iucn_category,levels=c("EXTINCT IN THE WILD","CRITICALLY ENDANGERED","ENDANGERED","VULNERABLE","NEAR THREATENED","LEAST CONCERN","NA")
-                              )) %>% 
+                              )) %>%
   ggplot()+
   geom_bar(aes(x="all",fill=iucn_category),position=position_stack())+
   labs(x="",y="Number of species",fill="IUCN status")+
@@ -172,7 +197,10 @@ table(List_of_species$iucn_category)
 
 ```
 
-## Replicates per Class
+### Replicates per species by class
+
+Distribution of the number of individuals sampled per species, faceted by
+class.
 
 ```{r,fig.dim=c(10,12)}
 
@@ -190,18 +218,21 @@ save_plot(plot = p.samples,base_height = 5,base_width = 5,filename = paste0(path
 
 ```
 
-## Replicates binned
+### Replicates per species, binned
+
+Same information as above, binned into one/two/three/more-than-three
+individuals per species for easier comparison across classes.
 
 ```{r}
 
-p.samples2<-List_of_species %>% 
+p.samples2<-List_of_species %>%
   mutate(samples_cat=case_when(individuals==1~ "one",
                                individuals==2~ "two",
                                individuals==3 ~ "three",
-                               individuals>3 ~ "more than three")) %>% 
-  mutate(samples_cat=factor(samples_cat,levels=rev(c("more than three","three","two","one")))) %>% 
-  mutate(superclass=forcats::fct_rev(superclass)) %>% 
-  
+                               individuals>3 ~ "more than three")) %>%
+  mutate(samples_cat=factor(samples_cat,levels=rev(c("more than three","three","two","one")))) %>%
+  mutate(superclass=forcats::fct_rev(superclass)) %>%
+
     ggplot()+
   geom_bar(aes(superclass,fill=samples_cat),position = position_dodge())+
   coord_flip()+
@@ -215,9 +246,13 @@ save_plot(plot = p.samples2,base_height = 5,base_width = 5,filename = paste0(pat
 
 ```
 
+## Representation relative to global mammal diversity
 
+This section compares CryoZoo's mammal coverage against the full known
+mammalian diversity (the "zoonomia" reference group) at the species, genus,
+and family level, per order.
 
-# representation of cryozoo species
+### Load global mammal diversity reference data
 
 ```{r}
 
@@ -225,7 +260,7 @@ all_species_summary<-readRDS(paste0(path,"/data/mammal_data_orders.rds"))
 
 ```
 
-
+### Species count by order
 
 ```{r}
 ggplot(all_species_summary)+
@@ -234,6 +269,7 @@ ggplot(all_species_summary)+
   coord_flip()
 ```
 
+### Genus count by order
 
 ```{r}
 ggplot(all_species_summary)+
@@ -242,6 +278,7 @@ ggplot(all_species_summary)+
   coord_flip()
 ```
 
+### Family count by order
 
 ```{r}
 ggplot(all_species_summary)+
@@ -250,23 +287,28 @@ ggplot(all_species_summary)+
   coord_flip()
 ```
 
+### Percent of species covered per order
+
+For each order, the CryoZoo and zoonomia counts are expressed as a percentage
+of the total (all-mammal) count, so coverage can be compared directly across
+orders of very different sizes.
 
 ```{r}
-all_mammals<-all_species_summary %>% 
-  filter(group=="all_mammals") %>% 
-  ungroup() %>% 
-  select(-c(group)) %>% 
+all_mammals<-all_species_summary %>%
+  filter(group=="all_mammals") %>%
+  ungroup() %>%
+  select(-c(group)) %>%
   rename(total_genera=ngenera,
          total_species=nspecies,
          total_families=nfamily)
-  
- all_species_summary<-all_species_summary %>% 
-   filter(group!="all_mammals") %>% 
-   left_join(all_mammals) %>% 
+
+ all_species_summary<-all_species_summary %>%
+   filter(group!="all_mammals") %>%
+   left_join(all_mammals) %>%
    mutate(p_species=(nspecies/total_species)*100,
           p_genera=(ngenera/total_genera)*100,
           p_families=(nfamily/total_families)*100)
-    
+
   ggplot()+
     ggbeeswarm::geom_beeswarm(data=all_species_summary,aes(x=reorder(order,total_species),col=group,y=p_species,size=total_species))+
     coord_flip()+
@@ -275,11 +317,15 @@ all_mammals<-all_species_summary %>%
       labs(x="mammalian orders\n (sorted by number of species)",y="percent of all species covered")
 ```
 
+### Percent covered by taxonomic level
+
+The same coverage comparison, split by taxonomic level (species / genera /
+families) and shown side by side for CryoZoo vs. zoonomia.
 
 ```{r}
-sum_long<-all_species_summary %>% 
-  pivot_longer(cols=c(p_species,p_genera,p_families),names_to = c("P","tax_level"),values_to = "percent",names_sep = "_") %>% 
-  select(-P) %>% 
+sum_long<-all_species_summary %>%
+  pivot_longer(cols=c(p_species,p_genera,p_families), names_to = c("P","tax_level"),values_to = "percent",names_sep = "_") %>%
+  select(-P) %>%
   mutate(tax_level=factor(tax_level,levels=rev(c("families","genera","species"))))
 
 ggplot()+
@@ -289,9 +335,13 @@ ggplot()+
       scale_colour_manual(values=c("zoonomia"="#e63946","cryozoo"="#6987b5"))+
       labs(x="mammalian orders\n (sorted by number of species)",y="percent of all taxonomic units covered") +
   facet_grid(~tax_level)
-  
+
 ```
 
+### CryoZoo-only breakdown by taxonomic level
+
+Same as above, restricted to the CryoZoo collection, to see within-order
+patterns without the zoonomia reference.
 
 ```{r}
 
@@ -301,10 +351,10 @@ taxlevel_colours<- c(
     "families"  = "#9490C3"
   )
 
-sum_long<-all_species_summary %>% 
-  filter(group=="cryozoo") %>% 
-  pivot_longer(cols=c(p_species,p_genera,p_families),names_to = c("P","tax_level"),values_to = "percent",names_sep = "_") %>% 
-  select(-P) %>% 
+sum_long<-all_species_summary %>%
+  filter(group=="cryozoo") %>%
+  pivot_longer(cols=c(p_species,p_genera,p_families), names_to = c("P","tax_level"),values_to = "percent",names_sep = "_") %>%
+  select(-P) %>%
   mutate(tax_level=factor(tax_level,levels=rev(c("families","genera","species"))))
 
 ggplot()+
@@ -313,50 +363,57 @@ ggplot()+
     theme_light()+
       scale_colour_manual(values=taxlevel_colours)+
       labs(x="mammalian orders\n (sorted by number of species)",y="percent of all taxonomic units covered")
-  
+
 ```
 
-# Summary plots genome
+## Genome sequencing, assembly, and annotation
 
-## Refgenome sequencing 
+This section tracks how far each species/order is along the genome pipeline:
+sequencing status, assembly quality, and annotation source (TOGA, RefSeq,
+Ensembl), alongside fibroblast line availability.
+
+### Reference genome sequencing status by class
+
 ```{r}
 # per superclass
 
-List_of_species%>% 
-  mutate(sequencing_status=factor(sequencing_status,levels=rev(c("sample_collected","sample_acquired","in_progress","open","insdc_open","published")))) %>% 
-  mutate(superclass=factor(superclass,levels=rev(c("Mammalia","Birds","Amphibia","Reptil","Fish")))) %>% 
+List_of_species%>%
+  mutate(sequencing_status=factor(sequencing_status,levels=rev(c("sample_collected","sample_acquired","in_progress","open","insdc_open","published")))) %>%
+  mutate(superclass=factor(superclass,levels=rev(c("Mammalia","Birds","Amphibia","Reptil","Fish")))) %>%
 
 ggplot()+
   geom_bar(aes(fill=sequencing_status,x=superclass))+
   coord_flip()
 ```
 
+### Reference genome sequencing status by order
 
 ```{r}
 # per order
 
-List_of_species %>% 
-  mutate(sequencing_status=factor(sequencing_status,levels=rev(c("sample_collected","sample_acquired","in_progress","open","insdc_open","published")))) %>% 
-   mutate(superclass=factor(superclass,levels=rev(c("Mammalia","Birds","Amphibia","Reptil","Fish")))) %>% 
+List_of_species %>%
+  mutate(sequencing_status=factor(sequencing_status,levels=rev(c("sample_collected","sample_acquired","in_progress","open","insdc_open","published")))) %>%
+   mutate(superclass=factor(superclass,levels=rev(c("Mammalia","Birds","Amphibia","Reptil","Fish")))) %>%
 ggplot()+
   geom_bar(aes(fill=sequencing_status,x=order))+
   coord_flip()+
-  facet_grid(superclass~genome,scales = "free",space = "free") 
+  facet_grid(superclass~genome,scales = "free",space = "free")
 
 
 
 ```
 
+### Fibroblast lines established, by order
 
-# Only Fibroblast cell lines:
+Restricted to species that already have a fibroblast line: how many species
+per order, and how many individuals were sampled per species.
 
-### Based on species table
 ```{r}
-List_of_cell_lines<-List_of_species %>% 
-  filter(fibro_l) %>% 
-  group_by(order) %>% 
-  mutate(nspecies=n()) %>% 
-  ungroup() %>% 
+List_of_cell_lines<-List_of_species %>%
+  filter(fibro_l) %>%
+  group_by(order) %>%
+  mutate(nspecies=n()) %>%
+  ungroup() %>%
   arrange(nspecies)
 
 order_col <- scales::hue_pal()(length(unique(List_of_cell_lines$order)))
@@ -391,7 +448,12 @@ save_plot(plot = p.byorder,base_height = 8,base_width = 8,filename = paste0(path
 
 ```
 
+### Genome availability by class
 
+`make_shaded_palette()` takes the existing per-class colours and generates a
+lighter/darker shade for each level of a second variable (here: genome
+available vs. not), so the "available" bars stay visually tied to their
+class colour.
 
 ```{r}
 
@@ -401,15 +463,15 @@ library(colorspace)
 make_shaded_palette <- function(base_cols, shade_labels, amount = 0.3, name_sep=" ", direction=c("light_to_dark", "dark_to_light")) {
   direction <- match.arg(direction)
   n_shades <- length(shade_labels)
-  
+
   # spread shade amounts evenly from +amount (lightest) to -amount (darkest)
   # e.g. n=2 -> c(0.3, -0.3); n=3 -> c(0.3, 0, -0.3); n=5 -> c(0.3, 0.15, 0, -0.15, -0.3)
   shade_amounts <- seq(amount, -amount, length.out = n_shades)
-  
+
   if (direction == "dark_to_light") {
     shade_amounts <- rev(shade_amounts)
   }
-  
+
   shaded <- lapply(names(base_cols), function(nm) {
     sapply(shade_amounts, function(a) {
       if (a > 0) lighten(base_cols[[nm]], amount = a)
@@ -417,26 +479,26 @@ make_shaded_palette <- function(base_cols, shade_labels, amount = 0.3, name_sep=
       else base_cols[[nm]]
     })
   })
-  
-  
-  
+
+
+
   shaded_cols <- unlist(shaded)
   names(shaded_cols) <- as.vector(outer(shade_labels, names(base_cols),
                                          FUN = function(s, n) paste(n, s, sep = name_sep)))
-  
+
   # reorder so it's grouped by base colour, not by shade
   shaded_cols <- shaded_cols[order(rep(seq_along(base_cols), each = n_shades))]
-  
+
   shaded_cols
 }
 
-class_genome_cols <- make_shaded_palette(class_col, 
+class_genome_cols <- make_shaded_palette(class_col,
                                          shade_labels = c("Not Available","Available"),
                                          direction="light_to_dark")
 
-List_of_species %>% 
+List_of_species %>%
   mutate(genome_class=if_else(genome,paste(superclass, "Available"),paste(superclass,"Not Available")),
-         genome_class=factor(genome_class,levels = rev(c("Mammalia Available", "Mammalia Not Available","Birds Available","Birds Not Available","Amphibia Available","Amphibia Not Available","Reptil Available","Reptil Not Available","Fish Available","Fish Not Available")))) %>% 
+         genome_class=factor(genome_class,levels = rev(c("Mammalia Available", "Mammalia Not Available","Birds Available","Birds Not Available","Amphibia Available","Amphibia Not Available","Reptil Available","Reptil Not Available","Fish Available","Fish Not Available")))) %>%
 ggplot()+
   geom_bar(aes(fill=genome_class,x=superclass),position=position_fill())+
   coord_flip()+
@@ -448,7 +510,10 @@ ggplot()+
 
 ```
 
+### Genome match: reference vs. sequenced individual
 
+`genome_match` flags whether the available reference genome was sequenced
+from the same individual/population represented in the CryoZoo collection.
 
 ```{r}
 ggplot(List_of_species)+
@@ -461,6 +526,7 @@ ggplot(List_of_species)+
   guides(fill="none")
 ```
 
+### Genome assembly level
 
 ```{r}
 
@@ -481,6 +547,11 @@ save_plot(plot = p.genome,base_height = 5,base_width = 8,filename = paste0(path,
 
 ```
 
+### Genome and fibroblast status combined
+
+`cat` combines genome and fibroblast-line availability into a single status
+per species (e.g. "Both", genome only, fibroblast only, neither), used again
+later to build the selection shortlist.
 
 ```{r}
 p.genomefibro<-ggplot(List_of_species)+
@@ -498,11 +569,16 @@ save_plot(plot = p.genomefibro,base_height = 5,base_width = 8,filename = paste0(
 table(List_of_species$cat,List_of_species$superclass,useNA = "always")
 ```
 
-# TOGA overlap
+### TOGA annotation overlap, overall
+
+[TOGA](https://github.com/hillerlab/TOGA) provides comparative gene
+annotations projected from a reference genome; `TOGA_ref` records whether a
+species is covered by the toga1 and/or toga2 annotation runs.
+
 ```{r}
 toga_cols<-c("toga1/2"="#8fbd17","toga1"="#005b88","toga2"="#7852a2","not_in_toga"="grey75")
 
-List_of_species<-List_of_species %>% 
+List_of_species<-List_of_species %>%
   mutate(TOGA=factor(TOGA_ref,levels=rev(c("toga1/2","toga1","toga2","not_in_toga"))))
 
 TOGA_ol<-ggplot(List_of_species)+
@@ -516,12 +592,13 @@ TOGA_ol<-ggplot(List_of_species)+
 TOGA_ol
 ```
 
+### TOGA annotation overlap, mammals by order
 
 ```{r}
-TOGA_ol_mam<-List_of_species %>% 
+TOGA_ol_mam<-List_of_species %>%
   filter(class== "Mammalia") %>%
-  group_by(order) %>% 
-  mutate(nspec=n()) %>% 
+  group_by(order) %>%
+  mutate(nspec=n()) %>%
 ggplot()+
   geom_bar(aes(x=reorder(order,nspec),fill=TOGA),show.legend = F)+
   coord_flip()+
@@ -532,6 +609,12 @@ ggplot()+
 
 TOGA_ol_mam
 ```
+
+### Combined annotation sources
+
+Species can be annotated by TOGA, RefSeq, and/or Ensembl independently;
+`annotation_level` records every combination present so the genome assembly
+and annotation views can be stacked into one figure.
 
 ```{r}
 
@@ -546,8 +629,8 @@ annotation_cols <- c(
   "no_annotation"         = "grey80"
 )
 
-List_of_species<-List_of_species %>% 
-  mutate(TOGA= TOGA_species%in%c("toga1/2","toga1","toga2")) %>% 
+List_of_species<-List_of_species %>%
+  mutate(TOGA= TOGA_species%in%c("toga1/2","toga1","toga2")) %>%
   mutate(annotation_level = case_when(
     rowSums(across(c(TOGA, refseq, ensembl))) == 0 ~ "no_annotation",
     TRUE ~ pmap_chr(list(TOGA, refseq, ensembl), function(t, r, e) {
@@ -575,27 +658,45 @@ save_plot(plot = p.genome / p.annot ,base_height = 5,base_width = 8,filename = p
 
 ```
 
+## Species selection for method establishment
 
+This section narrows the full species list down to a shortlist of
+candidates for establishing new methods (e.g. ChIP-seq), based on genome
+availability, fibroblast lines, assembly quality, and replicate numbers.
+
+### Candidate pool: genome + fibroblast line available
+
+Only species where `cat == "Both"` (genome and fibroblast line both
+available) are considered. `to_process` flags whether more than one
+fibroblast line still needs processing.
 
 ```{r}
-selection<-List_of_species %>% 
-  filter(cat=="Both") %>% 
-  #filter(superclass != "Fish") %>% 
-  mutate(fibro2=if_else(fibro==0,1,as.double(fibro))) %>% 
-  mutate(to_process=if_else(fibro2>1,2,as.double(fibro2))) %>% 
-  group_by(order) %>% 
+selection<-List_of_species %>%
+  filter(cat=="Both") %>%
+  #filter(superclass != "Fish") %>%
+  mutate(fibro2=if_else(fibro==0,1,as.double(fibro))) %>%
+  mutate(to_process=if_else(fibro2>1,2,as.double(fibro2))) %>%
+  group_by(order) %>%
   mutate(nspecies=n(),
-         order2=if_else(nspecies>2,order,"Other")) %>% 
-  group_by(scientific_name) %>% 
+         order2=if_else(nspecies>2,order,"Other")) %>%
+  group_by(scientific_name) %>%
   mutate(assembly_level=factor(assembly_level,levels=c("Complete Genome","Chromosome","Scaffold","Contig")))
 
 table(selection$superclass) # species
 
 table(selection$to_process,selection$superclass)
 
+```
 
-p.genomequality<-selection %>% 
-  pivot_longer(cols=c(scaffold_n50,contig_n50), names_to="metric",values_to = "value") %>% 
+### Genome assembly quality of candidates
+
+Scaffold and contig N50 for the candidate pool, split by class and assembly
+level.
+
+```{r}
+
+p.genomequality<-selection %>%
+  pivot_longer(cols=c(scaffold_n50,contig_n50), names_to="metric",values_to = "value") %>%
 ggplot()+
   geom_boxplot(aes(x=superclass,y=value,col=assembly_level),outlier.shape = NA)+
   ggbeeswarm::geom_beeswarm(aes(x=superclass,y=value,group=assembly_level),col="grey45",show.legend = T,groupOnX = T,dodge.width = 0.7,alpha=0.5)+
@@ -613,11 +714,12 @@ save_plot(plot = p.genomequality,base_height = 5,base_width = 5,filename = paste
 
 ```
 
+### Genome size comparison
 
 ```{r}
-p.genome_size<-selection %>% 
-  group_by(superclass) %>% 
-  mutate(med_g_size=median(genome_size)) %>% 
+p.genome_size<-selection %>%
+  group_by(superclass) %>%
+  mutate(med_g_size=median(genome_size)) %>%
   ggplot()+
     geom_boxplot(aes(x=superclass,y=genome_size),col="grey75",outlier.shape = NA)+
     ggbeeswarm::geom_beeswarm(aes(x=superclass,y=genome_size,col=superclass),
@@ -638,6 +740,7 @@ save_plot(plot = p.genome_size,base_height = 5,base_width = 5,filename = paste0(
 
 Genome size between Mammals and Birds differs by a factor of ~ 2.3. for Chip-seq this might mean we need 2.3 times the number of cells for the same amount of chromatin input into the IP.
 
+### Candidate species counts by order
 
 ```{r}
 ggplot(selection) +
@@ -648,51 +751,61 @@ ggplot(selection) +
   scale_fill_manual(values=order_col)
 ```
 
-### Select species with best genome and most samples for method establishment
+### Export best-genome shortlist
+
+For mammals and birds separately, rank candidates by assembly quality
+(scaffold N50), preference for multiple fibroblast lines, and number of
+individuals sampled, then write the shortlist and the full/short selection
+tables to CSV.
+
 ```{r}
 
-best_genome_mammals<-selection %>% 
-  filter(superclass=="Mammalia") %>% 
-  #group_by(order) %>% 
-  slice_max(scaffold_n50,n=30) %>% 
-  ungroup() %>% 
-  slice_max(fibro>1,n=30) %>% 
-  slice_max(individuals,n=20) %>% 
+best_genome_mammals<-selection %>%
+  filter(superclass=="Mammalia") %>%
+  #group_by(order) %>%
+  slice_max(scaffold_n50,n=30) %>%
+  ungroup() %>%
+  slice_max(fibro>1,n=30) %>%
+  slice_max(individuals,n=20) %>%
   arrange(fibro)
 
 
-best_genome_Birds<-selection %>% 
-  filter(superclass=="Birds") %>% 
-  #group_by(order) %>% 
-  ungroup() %>% 
-  slice_max(fibro>1,n=10) %>% 
+best_genome_Birds<-selection %>%
+  filter(superclass=="Birds") %>%
+  #group_by(order) %>%
+  ungroup() %>%
+  slice_max(fibro>1,n=10) %>%
   slice_max(scaffold_n50,n=10)
 
-best_genome<-bind_rows(best_genome_mammals,best_genome_Birds) %>% 
+best_genome<-bind_rows(best_genome_mammals,best_genome_Birds) %>%
   write_excel_csv(file = paste0(path,"/selection_best_genomes.csv"))
 
-selection_final<-selection %>% 
-  filter(superclass!="Fish") %>% 
-  filter(!duplicated(scientific_name)) %>% 
+selection_final<-selection %>%
+  filter(superclass!="Fish") %>%
+  filter(!duplicated(scientific_name)) %>%
   mutate(selected=if_else(species%in%best_genome$species,T,F))
 
 write_excel_csv(selection_final, file = paste0(path,"/selected_species.csv"))
 
-selection_final%>% 
-  select(scientific_name,iucn_category,superclass,class,genus,individuals,fibro,tissue_of_origin,assembly_level,scaffold_n50,genome_size,genome_match,selected) %>% 
+selection_final%>%
+  select(scientific_name,iucn_category,superclass,class,genus,individuals,fibro,tissue_of_origin,assembly_level,scaffold_n50,genome_size,genome_match,selected) %>%
   write_excel_csv(file = paste0(path,"/selected_species_short.csv"))
 
 ```
 
+## Sample-level summary
 
-#Replicates
+The remaining sections switch from the species-level table to the
+sample-level table, to look at replicate counts and sample provenance.
+
+### Replicates vs. genome availability
 
 ```{r}
 
 
-List_of_species %>% 
-  mutate(reps=if_else(fibro>2,"3 or more",as.character(fibro))) %>% 
-  filter(reps!="0") %>% 
+List_of_species %>%
+  mutate(reps=if_else(fibro>2,"3 or more",as.character(fibro))) %>%
+  filter(reps!="0") %>%
 ggplot()+
   geom_bar(aes(x=reps,fill=genome))+
   ggsci::scale_fill_npg()+
@@ -700,10 +813,10 @@ ggplot()+
 
 ```
 
-## Sample Sources
+### Sample origin by institution type
 
 ```{r}
-sample_table<-readRDS(paste0(path,"/output/Sample_List_all_species_clean.rds")) %>% 
+sample_table<-readRDS(paste0(path,"/output/Sample_List_all_species_clean.rds")) %>%
   mutate(origin=case_when(origin=="U"~"UNKNOWN",
                           origin=="UNKOWN"~"UNKNOWN",
                           origin=="-"~"UNKNOWN",
@@ -714,10 +827,14 @@ ggplot(sample_table)+
   geom_bar(aes(x=superclass,fill=origin))
 ```
 
-# Plot the sample provenance
-#### make a color scale
+### Provenance colour palette
 
-from Sample table
+Each providing institution (`coming_from_clean`) is bucketed into Aquarium /
+Zoo / Other by name matching, then assigned a colour from a small palette
+per bucket (red-orange-yellow for zoos, blues for aquaria, greys for
+everything else) so the provenance plots below stay readable with many
+distinct providers.
+
 ```{r}
 library(scales)
 
@@ -743,7 +860,7 @@ aq_colors  <- scales::hue_pal(h = c(200, 260))(
 
 # Other colors: greys
 oth_colors <- gray.colors(
-  length(unique(df$name[df$category == "Other"])), 
+  length(unique(df$name[df$category == "Other"])),
   start = 0.2, end = 0.7
 )
 
@@ -755,11 +872,12 @@ color_map <- c(
 
 ```
 
-# plot sample provenance
+### Samples by class and provenance
+
 ```{r}
-sample_table %>% 
+sample_table %>%
   mutate(superclass=if_else(is.na(superclass),"Sample_discarded",superclass),
-         superclass=factor(superclass,levels=rev(c("Mammalia","Birds","Reptil","Amphibia","Fish","Sample_discarded")))) %>% 
+         superclass=factor(superclass,levels=rev(c("Mammalia","Birds","Reptil","Amphibia","Fish","Sample_discarded")))) %>%
   ggplot()+
   geom_bar(aes(x=superclass,fill=coming_from_clean))+
   scale_fill_manual(values= color_map)+
@@ -768,15 +886,15 @@ sample_table %>%
 
 ```
 
-# plot superclass per provider
+### Class breakdown per provider
 
 ```{r}
-sample_table %>% 
+sample_table %>%
   mutate(superclass=if_else(is.na(superclass),"Sample_discarded",superclass),
-         superclass=factor(superclass,levels=rev(c("Mammalia","Birds","Reptil","Amphibia","Fish","Sample_discarded")))) %>% 
-  group_by(coming_from_clean) %>% 
-  filter(!is.na(superclass)) %>% 
-  mutate(samples=n()) %>% 
+         superclass=factor(superclass,levels=rev(c("Mammalia","Birds","Reptil","Amphibia","Fish","Sample_discarded")))) %>%
+  group_by(coming_from_clean) %>%
+  filter(!is.na(superclass)) %>%
+  mutate(samples=n()) %>%
   ggplot()+
   geom_bar(aes(x=reorder(coming_from_clean,samples),fill=superclass))+
   scale_fill_manual(values = class_col,breaks = names(class_col))+
@@ -785,11 +903,11 @@ sample_table %>%
 
 ```
 
-# plot fibroblast generation per superclass
+### Fibroblast establishment rate by class
 
 ```{r}
 sample_table %>%
-  filter(cell_type!=c("PBMc","unclear")) %>% 
+  filter(cell_type!=c("PBMc","unclear")) %>%
   mutate(fibro_l=factor(if_else(cell_type=="Fibro", "Fibroblast line", "No fibroblast line"),
                         levels=c("No fibroblast line","Fibroblast line")),
          superclass=factor(superclass,
@@ -803,14 +921,13 @@ sample_table %>%
 
 ```
 
-
-## Save data
+## Save outputs
 
 ```{r}
 saveRDS(List_of_species,paste0(path,"/output/Species_List_with_genome_and_cl_info2.rds"))
 
-# write_excel_csv(filter(List_of_species,superclass=="Birds") %>% 
-#   ungroup() %>% 
+# write_excel_csv(filter(List_of_species,superclass=="Birds") %>%
+#   ungroup() %>%
 #   select(scientific_name),paste0(path,"/output/bird_names.csv"))
 
 
