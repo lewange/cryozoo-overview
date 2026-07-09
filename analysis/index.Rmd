@@ -36,6 +36,14 @@ order:
 A lighter-weight alternative to steps 8–9 is also available:
 [Simple Phylogenetic Trees](plot_trees_simple.html) — circular trees per
 taxonomic group built from the Open Tree of Life, with an IUCN status ring.
+The knitted notebook page does not display the trees inline (they are only
+written to file), so view the current output directly:
+[Mammalia](https://github.com/lewange/cryozoo-overview/blob/master/output/figures/trees/tree_nolabels_Mammalia.png) |
+[Aves](https://github.com/lewange/cryozoo-overview/blob/master/output/figures/trees/tree_nolabels_Aves.png) |
+[Reptilia](https://github.com/lewange/cryozoo-overview/blob/master/output/figures/trees/tree_nolabels_Reptilia.png) |
+[Amphibia](https://github.com/lewange/cryozoo-overview/blob/master/output/figures/trees/tree_nolabels_Amphibia.png) |
+[Fish](https://github.com/lewange/cryozoo-overview/blob/master/output/figures/trees/tree_nolabels_Fish.png) |
+[IUCN legend](https://github.com/lewange/cryozoo-overview/blob/master/output/figures/trees/legend.png)
 
 See [analysis/README.md](https://github.com/lewange/cryozoo-overview/blob/master/analysis/README.md)
 for the full pipeline description, including inputs, outputs, and package
