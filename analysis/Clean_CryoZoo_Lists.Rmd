@@ -1,0 +1,1542 @@
+---
+title: "1. Make Sample and Species Tables"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+In this script the tables from the Google sheet *List of Species* will be summarized into one species table and one sample table. The species table contains all the information on a species level such as, genome availability, iucn status, taxonomy and number and type of samples. The sample table will contain information about the individual samples such as sex, age, tissue of origin, storage location etc.
+
+Those tables will be generated for mammals as well as for the remaining tetrapods (Birds,Reptiles, Amphibians).
+
+final tables will be stored in the output folder as .rds files and can be loaded with readRDS() for further analysis.
+additionally they will be added to [Cryozoo_clean](https://docs.google.com/spreadsheets/d/1csFMpLFtTr1_-hF1Nncduzjl9uIjKHRh0w7kntRZM2A/edit?usp=drive_link)
+
+
+```{r,message=F,warning=F}
+library(tidyverse)
+library(cowplot)
+library(readxl)
+library(runner)
+library(janitor)
+library(udpipe)
+library(googlesheets4)
+library(taxize)
+theme_set(theme_classic())
+
+here::here()
+
+path<-here::here()
+```
+
+
+```{r,message=F,warning=F}
+read_xlsx_allsheets <- function(filename, skip=1, tibble = TRUE) {
+  # I prefer straight data.frames
+  # but if you like tidyverse tibbles (the default with read_excel)
+  # then just pass tibble = TRUE
+  sheets <- readxl::excel_sheets(filename)[-skip]
+  x <- lapply(sheets, function(X) readxl::read_excel(filename, sheet = X))
+  if(!tibble) x <- lapply(x, as.data.frame)
+  names(x) <- make.names(sheets)
+  x
+}
+
+```
+
+This script generates a summary of the Cryozoo based on the "List of Species Sheet" 
+
+This is the current status at : `r file.info(paste0(path,"/data/List of species.xlsx"))$ctime`
+
+# Getting Species level table
+## Load all species summary table
+
+This is currently not dynamic because I have not sufficient permissions to access the file.
+
+Table downloaded from https://docs.google.com/spreadsheets/d/1S5_jjbFXACdAjHzNRKXAgoeEsdcPWhXeEz_Fzvaz3ek/edit?usp=sharing
+
+r `print(paste0("downloaded from Drive ",file.info(paste0(path,"/data/List of species.xlsx"))$mtime))`
+
+File downloaded 
+
+Import table:
+```{r}
+
+List_of_species <- read_sheet("https://docs.google.com/spreadsheets/d/1S5_jjbFXACdAjHzNRKXAgoeEsdcPWhXeEz_Fzvaz3ek/edit?usp=sharing", 
+    sheet = "SPECIES LIST") %>% 
+  distinct()
+
+# rename ambiguous columns
+col_pos<-which(colnames(List_of_species)%in%c("SAMPLES","SAMPLE"))
+colnames(List_of_species)[col_pos]<-c("individuals","tissue_of_origin")
+colnames(List_of_species)<-janitor::make_clean_names(colnames(List_of_species))
+
+### replace NA names
+List_of_species[is.na(List_of_species$scientific_name),]$common_name
+List_of_species$scientific_name[is.na(List_of_species$scientific_name)]<-List_of_species[is.na(List_of_species$scientific_name),]$common_name
+
+```
+
+## Tidy up table:
+
+### 1. Replace problematic species names 
+
+This is very manual and unfortunately it changes, sometimes there are new misspelled names or names deleted etc.
+```{r}
+species_names<-read_sheet("https://docs.google.com/spreadsheets/d/1dvkCA5m_eM7SK288RcUOvhHobFeqrKx6XwfY1KF4Cbc/edit?usp=sharing",sheet = "wrong_species_names1")
+
+# Filter table to only include the entries that have a wrong name in the species table
+species_names_sample<-species_names[match(List_of_species$scientific_name[
+  which(List_of_species$scientific_name%in%species_names$scientific_name_species)],
+  species_names$scientific_name_species,
+  incomparables = F),] %>% 
+  mutate(scientific_name=scientific_name_species) %>% 
+  distinct()
+
+# Join with the list of species and replace with the new name, save the old name as alternative name
+List_of_species<-List_of_species %>% 
+  left_join(species_names_sample) %>% 
+  mutate(scientific_name=if_else(!(is.na(correct_name)),
+                                   correct_name,
+                                   scientific_name),
+         alternative_name=if_else(scientific_name==correct_name,
+                                   scientific_name_species,
+                                   scientific_name)) %>%
+  mutate(scientific_name=str_replace(scientific_name,pattern = "  ",replacement = " ")) %>% 
+  dplyr::select(-c(correct_name,scientific_name_sample,scientific_name_species,group,wrong_sample,wrong_species,wrong_both))
+```
+
+### make naming reproducible
+```{r}
+List_of_species<-List_of_species %>% 
+  rename(superclass=class) %>% 
+  mutate(superclass=str_to_title(superclass),
+         superclass=if_else(superclass=="Bird",
+                            "Birds",superclass)) %>% 
+  mutate(cell_line=str_replace(cell_line,pattern = "x",
+                               replacement = "Fibro")) %>% 
+  mutate(cell_line=str_replace(cell_line,pattern = "X",
+                               replacement = "Fibro")) %>% 
+  mutate(cell_line=str_replace(cell_line,pattern = "PBMc/Fibro",
+                               replacement = "Fibro/PBMc"))%>%
+  mutate(iucn_category=if_else(iucn_category %in% c(NA,"NOT APPLICABLE","DD","??"),"NA",iucn_category))%>% 
+  mutate(iucn_category=factor(iucn_category,levels=c("NA","LEAST CONCERN","VULNERABLE","NEAR THREATENED","ENDANGERED","CRITICALLY ENDANGERED","EXTINCT IN THE WILD"))) %>% 
+  mutate(individuals=as.numeric(individuals),
+         individuals=if_else(is.na(individuals),1,individuals)) %>% 
+  mutate(order=as.factor(order)) %>% 
+  mutate(scientific_name=str_replace(scientific_name,pattern = "\\?",replacement = ""),
+         scientific_name=str_to_sentence(scientific_name)) %>%  
+  separate(scientific_name,into=c("n1","n2","subspecies"),remove = F,convert=T) %>% 
+  mutate(n1=stringr::str_to_title(n1),
+         n2=tolower(n2)) %>% 
+  unite(c(n1,n2),col = "species",sep=" ") %>% 
+  arrange(order) 
+
+```
+
+
+
+### Check for duplicated names
+
+There are r `print(sum(duplicated(List_of_species$species)))` duplicated entries at the species level
+
+```{r}
+
+bind_rows(List_of_species[duplicated(List_of_species$species),],
+          List_of_species[duplicated(List_of_species$species,fromLast = T),]) %>% 
+  arrange(species)
+
+```
+
+Some of those are truly duplicate entries, some are subspecies that for our purpose will be merged
+
+There are r `print(sum(duplicated(List_of_species$scientific_name)))` duplicated entries at the species level
+
+```{r}
+
+bind_rows(List_of_species[duplicated(List_of_species$scientific_name),],
+          List_of_species[duplicated(List_of_species$scientific_name,fromLast = T),]) %>% 
+  arrange(species)
+
+```
+
+### remove real duplicate entries
+
+```{r}
+# get species names of duplicated entries
+dup_species<-List_of_species[duplicated(List_of_species$scientific_name),]$scientific_name
+
+# filter list of species for those and collapse the information to not loose anything, finally remove the duplicates
+dup_sum <-
+  List_of_species %>% 
+  filter(scientific_name%in% dup_species
+  ) %>%
+  group_by(scientific_name) %>% 
+  summarize(
+    species=unique(scientific_name),
+    subspecies = paste(
+      do::unique_no.NA(subspecies),collapse = ", "
+      ),
+    subfamily = paste(
+      do::unique_no.NA(subfamily), collapse= ", "
+      ),
+    family = paste(
+      do::unique_no.NA(family), collapse= ", "
+      ),
+    cites_annex = paste(
+      do::unique_no.NA(cites_annex), collapse= ", "
+      ),
+    sex = paste(
+      do::unique_no.NA(sex), collapse= ", "
+      ),
+    superclass = paste(
+      do::unique_no.NA(superclass), collapse= ", "
+      ),
+    alternative_name = paste(
+      do::unique_no.NA(alternative_name), collapse= ", "
+      ),
+    common_name = paste(
+      do::unique_no.NA(common_name), collapse= ", "
+      ),
+    cell_line = paste(
+      do::unique_no.NA(cell_line), collapse= ", "
+      ),
+    tissue_of_origin = paste(
+      do::unique_no.NA(tissue_of_origin), collapse= ", "
+      ),
+    iucn_category =  paste(
+      do::unique_no.NA(as.character(iucn_category)), collapse= ", "
+      ),
+    karyotype =  paste(
+      do::unique_no.NA(karyotype), collapse= ", "
+      ),
+    dna =  paste(
+      do::unique_no.NA(dna), collapse= ", "
+      ),
+    rna = paste(
+      do::unique_no.NA(rna), collapse= ", "
+      ),
+    wgs_sequencing =  paste(
+      do::unique_no.NA(wgs_sequencing), collapse= ", "
+      ),
+    rna_seq =  paste(
+      do::unique_no.NA(rna_seq), collapse= ", "
+      ),
+    i_psc =  paste(
+      do::unique_no.NA(i_psc), collapse= ", "
+      ),
+    order = paste(
+      do::unique_no.NA(as.character(order)), collapse= ", "
+      ),
+    individuals = sum(individuals)
+  ) %>% 
+  distinct()
+
+dup_sum[dup_sum == ""] <- NA
+
+# add this back to the main list
+List_of_species<-List_of_species %>% 
+  filter(!(scientific_name %in% dup_species)) %>% 
+  bind_rows(dup_sum) %>% 
+  mutate(order=as.character(order)) %>% 
+  mutate(iucn_category=if_else(iucn_category=="ENDANGERED, NA","ENDANGERED",iucn_category)) %>% 
+  mutate(species_=str_replace(species,pattern = " ",replacement = "_")) %>% 
+  mutate(cell_line=if_else(is.na(cell_line),"No cell line",cell_line))
+
+```
+
+
+
+```{r}
+head(List_of_species)
+
+saveRDS(List_of_species,paste0(path,"/output/Species_List.rds"))
+
+```
+
+```{r eval=FALSE, include=FALSE}
+# 0.  CONFIGURATION
+
+CACHE_DIR     <- "goat_cache"
+PAGE_SIZE     <- 500
+OUTPUT_RDS    <- "tetrapod_data.rds"
+OUTPUT_CSV    <- "tetrapod_data.csv"
+
+TETRAPOD_IDS <- c(
+  Amphibia   = 8292,
+  Reptilia   = 8504,     # Lepidosauria (lizards, snakes, tuatara)
+  Crocodylia = 1294634,  # explicitly added — not reachable via Reptilia orders
+  Testudines = 8459,     # explicitly added — not reachable via Reptilia orders
+  Aves       = 8782,
+  Mammalia   = 40674,
+  Actinopterygii = 186623,  # ray-finned fish
+  Chondrichthyes = 7777     # cartilaginous fish (sharks, rays)
+)
+
+source(paste0(path,"/code/goat_functions.R"))
+```
+
+
+```{r eval=FALSE, include=FALSE}
+
+# NOTE: delete stale taxon cache files before re-running if fields changed:
+#file.remove(list.files("goat_cache",pattern = "^(Amphibia|Reptilia|Aves|Mammalia|Testudines|Crocodylia|Chondrichthyes|Actinopterygii)_(asm|orders|order|fam|genus)",full.names = TRUE))
+# Assembly cache (_asm_order*) can be kept as-is.
+# =============================================================================
+
+message("=== Fetching taxon records ===")
+taxon_data <- map2_dfr(names(TETRAPOD_IDS), TETRAPOD_IDS, fetch_taxon_class)
+message("\nTotal taxon rows: ", nrow(taxon_data))
+
+message("\n=== Fetching assembly records ===")
+assembly_raw  <- map2_dfr(names(TETRAPOD_IDS), TETRAPOD_IDS, fetch_assembly_class)
+message("Assembly rows (before dedup): ", nrow(assembly_raw))
+
+assembly_best <- best_assembly_per_species(assembly_raw)
+message("Assembly rows (after dedup):  ", nrow(assembly_best))
+```
+
+
+```{r eval=FALSE, include=FALSE}
+#
+# JOIN files
+# Taxon endpoint now has most fields. Assembly endpoint adds:
+#   - genbank/refseq/wgs accessions
+#   - gc_percent, chromosome_count
+# Overlapping fields: prefer assembly endpoint values over taxon estimates.
+# =============================================================================
+
+OVERLAP_COLS <- c("assembly_level", "assembly_span", "contig_n50",
+                  "scaffold_n50", "busco_completeness", "gene_count","assembly_id")
+
+tetrapod_data <- taxon_data %>%
+  rename_with(~ paste0(.x, "_taxon"), all_of(OVERLAP_COLS)) %>%
+  left_join(assembly_best, by = "taxon_id") %>%
+  mutate(across(
+    all_of(OVERLAP_COLS),
+    ~ coalesce(.x, get(paste0(cur_column(), "_taxon")))
+  )) %>% 
+  select(-ends_with("_taxon")) %>%
+  select(
+    taxon_id, taxon_rank, scientific_name, common_name, synonym, tolid_prefix,
+    assembly_id, assembly_name, genbank_accession, refseq_accession, #wgs_accession,
+    species, genus, family, order, class, phylum, kingdom, superkingdom,
+    genome_size, genome_size_draft, c_value,
+    chromosome_number, haploid_number,
+    assembly_level, assembly_span, assembly_date,
+    contig_n50, scaffold_n50, chromosome_count, #gc_percent,
+    busco_completeness, gene_count, #ebp_standard_criteria,
+    sequencing_status, published
+  )
+
+message("\nFinal rows:    ", nrow(tetrapod_data))
+message("Final columns: ", paste(names(tetrapod_data), collapse = ", "))
+```
+
+
+```{r eval=FALSE, include=FALSE}
+
+saveRDS(tetrapod_data, paste0(path,"/data/",OUTPUT_RDS))
+```
+
+## Add annotation information and genome information
+
+```{r}
+## load list genomes from Goat
+#info <- file.info(paste0(path,"/data/GenomeOnATree_Chordata.tsv"))
+#mod_time <- info$mtime
+#print(paste0("downloaded from GOAT ",mod_time))
+
+GOAT_info <- read_rds(paste0(path,"/data/","tetrapod_data.rds")) %>% 
+  mutate(common_name=str_replace_all(common_name, c('\\[\"'="",'\"\\]'=""))) %>%
+  mutate(synonym=str_replace_all(synonym, c('\\[\"'="",'\"\\]'=""))) %>%
+  mutate(tolid_prefix=str_replace_all(tolid_prefix, c('\\[\"'="",'\"\\]'=""))) %>%
+  mutate(assembly_level=str_to_title(assembly_level))
+# %>%
+# group_by(species) %>%
+# mutate(best_asm=scaffold_n50==max(scaffold_n50,na.rm=T)) %>%
+# mutate(best_asm=if_else(is.na(best_asm),T,best_asm)) %>%
+# ungroup() %>%
+# filter(best_asm) %>%
+# select(-scientific_name,-best_asm) %>%
+# distinct()
+
+```
+
+### add TOGA annotation
+
+Read from preprocessing overview file https://docs.google.com/spreadsheets/d/1woHdlYmgVm_QoVDb5tokMboENvOTTF8fuGcoSOIJz0A/edit?usp=sharing
+```{r}
+Toga1<-read_sheet("https://docs.google.com/spreadsheets/d/1woHdlYmgVm_QoVDb5tokMboENvOTTF8fuGcoSOIJz0A/edit?usp=sharing",sheet = "Hiller_lab_TOGA1") %>%
+janitor::clean_names() %>%
+select(species,species_taxonomy_id,assembly_name,contig_n50_bp,scaffold_n50_bp,taxonomic_lineage) %>%
+mutate(class=str_split_fixed(string = taxonomic_lineage,pattern = ";",n=2)[,1]) %>% 
+  select(-taxonomic_lineage) %>% 
+mutate(toga1=T) %>%
+mutate(species_taxonomy_id=as.numeric(species_taxonomy_id))
+
+## some of the taxonomic ids in the TOGA table are not at the species level, so we need to get the correct taxonomic id for the species level to match with the GOAT database
+taxids_species <- Toga1$species_taxonomy_id %>%
+  set_names() %>%
+  map_dfr(function(tid) {
+    classification(tid, db = "ncbi")[[1]] %>%
+      as_tibble() %>%
+      filter(rank == "species") %>%
+      select(species_name = name, species_taxid = id)
+  }, .id = "original_taxid") %>%
+  mutate(original_taxid = as.integer(original_taxid))
+
+taxids_species
+
+Toga1<-Toga1 %>% 
+  left_join(taxids_species, by = c("species_taxonomy_id" = "original_taxid"))
+```
+
+
+```{r}
+Toga2<-read_sheet("https://docs.google.com/spreadsheets/d/1woHdlYmgVm_QoVDb5tokMboENvOTTF8fuGcoSOIJz0A/edit?usp=sharing",sheet = "Hiller_lab_TOGA2") %>%
+janitor::clean_names() %>%
+select(species,species_taxonomy_id,assembly_name,contig_n50_bp,scaffold_n50_bp,taxonomic_lineage) %>%
+mutate(class=str_split_fixed(string = taxonomic_lineage,pattern = ";",n=2)[,1]) %>% 
+  select(-taxonomic_lineage) %>% 
+mutate(toga2=T)
+
+
+taxids_species2 <- Toga2 %>%
+  filter(!(species_taxonomy_id %in% taxids_species$original_taxid)) %>%
+  pull(species_taxonomy_id) %>%
+  set_names() %>%
+  map_dfr(function(tid) {
+    classification(tid, db = "ncbi")[[1]] %>%
+      as_tibble() %>%
+      filter(rank == "species") %>%
+      select(species_name = name, species_taxid = id)
+  }, .id = "original_taxid") %>%
+  mutate(original_taxid = as.integer(original_taxid))
+
+taxids_species<-bind_rows(taxids_species, taxids_species2) %>% 
+  distinct()
+
+taxids_species[c(duplicated(taxids_species$species_taxid)|duplicated(taxids_species$species_taxid,fromLast = T)),] %>% 
+  arrange(species_taxid)
+
+Toga2<-Toga2 %>% 
+  left_join(taxids_species, by = c("species_taxonomy_id" = "original_taxid"))
+```
+
+
+```{r}
+
+TOGA_ann<-full_join(Toga2,Toga1) %>%
+  mutate(species=str_remove(species, "_[^_]+$")) %>% 
+group_by(species_taxid) %>% 
+mutate(toga1=sum(toga1,na.rm = T)>0) %>%
+mutate(toga2=sum(toga2,na.rm = T)>0) %>%
+slice_max(scaffold_n50_bp) %>%
+slice_max(contig_n50_bp,with_ties = F) %>%
+rename(toga_assembly_name=assembly_name) %>% 
+distinct() 
+
+table(TOGA_ann$class,useNA = "always")
+
+table(TOGA_ann$toga1,TOGA_ann$toga2,useNA = "always")
+
+TOGA_ann[(duplicated(TOGA_ann$species)|duplicated(TOGA_ann$species,fromLast = T)),] 
+
+write_sheet(TOGA_ann,"https://docs.google.com/spreadsheets/d/1woHdlYmgVm_QoVDb5tokMboENvOTTF8fuGcoSOIJz0A/edit?usp=sharing",sheet = "TOGA_combined")
+
+```
+
+### Join with info from GOAT
+
+```{r}
+# check if any TOGA and GOAT database match
+TOGA_ann[!(TOGA_ann$species_taxid %in% GOAT_info$taxon_id),]
+
+## join with genome 
+
+GOAT_info<-left_join(GOAT_info,select(TOGA_ann,c(species_taxid,toga1,toga2,toga_assembly_name)),by=c("taxon_id"="species_taxid")) %>% 
+  mutate(toga1=if_else(is.na(toga1),F,toga1),
+         toga2=if_else(is.na(toga2),F,toga2)) %>% 
+    mutate(TOGA=if_else(!toga2 & !toga1 ,
+                        "not_in_toga",
+                        if_else(toga2 & toga1,
+                              "toga1/2",
+                              if_else(toga1,
+                                      "toga1",
+                                      "toga2"))))
+
+# check if any species from the cryozoo is not in the GOAT database
+table((List_of_species$species %in% GOAT_info$species), List_of_species$superclass,useNA = "always")
+
+# if so, which?
+List_of_species[!(List_of_species$species %in% GOAT_info$species),]
+
+List_of_species_new<-left_join(select(List_of_species,-c(family,order)),select(GOAT_info,-scientific_name),by=c("species")) %>% 
+  mutate(common_name=case_when(is.na(common_name.x)~common_name.y,
+                               common_name.x==common_name.y~common_name.y,
+                               common_name.x!=common_name.y~paste(common_name.x,common_name.y,sep=","),
+                               T~NA_character_)#,
+         # family=case_when(is.na(family.y)~family.x,
+         #                  is.na(family.x)~family.y,
+         #                       family.x==family.y~family.y,
+         #                       family.x!=family.y~family.y,
+         #                       T~NA_character_),
+         # order=case_when(is.na(order.y)~order.x,
+         #                 is.na(order.x)~order.y,
+         #                       order.x==order.y~order.y,
+         #                       order.x!=order.y~order.y,
+         #                       T~NA_character_)
+         ) %>% 
+  select(-c(ends_with(".x"),ends_with(".y"),taxon_rank,toga1,toga2)) %>% 
+  mutate(taxon_id=if_else(is.na(taxon_id),"not in genome list",taxon_id)) %>% 
+  mutate(ploidy=chromosome_number/haploid_number)
+
+
+
+```
+
+
+### get Refgenie annotation info
+```{r}
+
+my_taxids<-List_of_species_new$taxon_id
+
+library(httr2)
+
+# Download NCBI assembly summary for eukaryotes (RefSeq)
+ncbi_assembly <- read_tsv(
+  "https://ftp.ncbi.nlm.nih.gov/genomes/refseq/assembly_summary_refseq.txt",
+  skip = 1,          # first line is a comment
+  quote = ""
+) 
+
+# Filter to your taxids
+refseq_hits <- ncbi_assembly %>%
+  filter(taxid %in% my_taxids) %>%
+  select(taxid, species_taxid, organism_name, 
+         assembly_level,        # Chromosome / Scaffold / Contig
+         annotation_name,       # NA if no annotation
+         refseq_category) %>%       # reference genome / representative genome
+  mutate(dup=duplicated(taxid)) %>% 
+  filter(refseq_category!="na") %>% 
+  mutate(refseq=T) %>% 
+  select(taxid,refseq) %>% 
+  distinct()
+
+
+```
+
+
+### get ENSEMBL annotation info
+```{r}
+
+ensembl_species <- request("https://rest.ensembl.org/info/species") %>%
+  req_headers(Accept = "application/json") %>%
+  req_perform() %>%
+  resp_body_json() %>%
+  pluck("species") %>%
+  map_dfr(function(sp) {
+    tibble(
+      taxon_id    = as.integer(sp$taxon_id),
+      name        = sp$name,
+      common_name = sp$common_name,
+      assembly    = sp$assembly,
+      accession   = sp$accession,
+      division    = sp$division,
+      release     = sp$release,
+      has_core    = "core"    %in% sp$groups,
+      has_rnaseq  = "rnaseq"  %in% sp$groups,
+      has_funcgen = "funcgen" %in% sp$groups
+    )
+  })
+
+ensembl_hits <- ensembl_species %>%
+  filter(taxon_id %in% my_taxids) %>% 
+  mutate(ensembl=has_core) %>% 
+  select(taxon_id,ensembl) %>% 
+  distinct() 
+
+```
+
+```{r}
+
+annotation_pub<-refseq_hits %>%
+  full_join(ensembl_hits,by=c("taxid"="taxon_id")) %>% 
+  mutate(across(2:3,~if_else(is.na(.x),F,.))) %>% 
+  mutate(taxid=as.character(taxid))
+
+table(annotation_pub$refseq,annotation_pub$ensembl)
+
+List_of_species_new<-List_of_species_new %>% 
+  left_join(annotation_pub,by=c("taxon_id"="taxid")) %>% 
+  mutate(across(c(refseq,ensembl),~if_else(is.na(.x),F,.)))
+
+table(List_of_species_new$refseq,List_of_species_new$ensembl)
+
+saveRDS(List_of_species_new,paste0(path,"/output/Species_List_with_genome_info.rds"))
+```
+
+
+### Match species that do not yet have a genome assembly to their closest genome
+
+```{r}
+# keep those columns that refer to the genome rather than the reference
+genome_columns<-c("species","genus","family","superclass","taxon_id","tolid_prefix","c_value","genome_size","chromosome_number","haploid_number","ploidy","refseq","ensembl")
+
+# keep those columns that refer to the assembly not the reference
+assembly_columns<-c("taxon_id","assembly_id","assembly_name","genbank_accession","refseq_accession",
+                    "species","genus","family","synonym","common_name","order","class",
+                    "phylum","kingdom","superkingdom","genome_size_draft","contig_n50",
+                    "gene_count","assembly_date","assembly_level","assembly_span","scaffold_n50",
+                    "busco_completeness","published","sequencing_status","toga_assembly_name","TOGA")
+```
+
+
+#### Match on the genus level
+```{r}
+## join the species with is.na(assembly_level) with GOAT by genus and select the genome of the same genus with the highest N50
+alt_genomes<-List_of_species_new %>% 
+  filter(is.na(assembly_level)) %>% 
+  select(all_of(genome_columns))%>% 
+  rename(taxon_id_sp=taxon_id) %>% 
+  left_join(subset(select(GOAT_info,assembly_columns),!is.na(assembly_level)),by="genus") %>% 
+  rename(taxon_id_ref=taxon_id,
+         taxon_id=taxon_id_sp) %>% 
+  group_by(species.x) %>% 
+  mutate(TOGA_lvl=if_else(TOGA=="not_in_toga",0,1)) %>% 
+  slice_max(TOGA_lvl) %>% 
+  slice_max(scaffold_n50) %>% 
+  mutate(genome_match=if_else(is.na(assembly_level),NA_character_,"genus")) %>% 
+  rename(ref_genome=species.y,
+         family=family.x,
+         species=species.x) %>% 
+  select(-family.y)
+```
+
+#### Match on the family level
+```{r}
+## join the species with is.na(assembly_level) with GOAT by family and select the genome of the same family with the highest N50
+alt_genomes2<-alt_genomes %>% 
+  filter(is.na(assembly_level)) %>% 
+  select(c(all_of(genome_columns),"TOGA_lvl")) %>% 
+  rename(taxon_id_sp=taxon_id) %>% 
+  left_join(subset(select(GOAT_info,assembly_columns,-genus),!is.na(assembly_level)),by="family") %>% 
+  rename(taxon_id_ref=taxon_id,
+         taxon_id=taxon_id_sp) %>% 
+  group_by(species.x) %>% 
+  slice_max(TOGA_lvl) %>%  
+  slice_max(scaffold_n50) %>% 
+  mutate(genome_match=if_else(is.na(assembly_level),NA_character_,"family"))  %>% 
+  rename(ref_genome=species.y,
+         species=species.x) 
+```
+
+#### combine genus level and family level matches
+```{r}
+
+alt_genomes_full<-rbind(subset(alt_genomes,!is.na(assembly_level)),subset(alt_genomes2,!is.na(assembly_level))) %>% 
+  select(-any_of(c("synonym", "genus", "phylum", "kingdom", "superkingdom", "common_name"))) %>% 
+  rename(TOGA_ref=TOGA,
+         toga_assembly_name_ref=toga_assembly_name)%>% 
+  select(-TOGA_lvl)
+
+genome_colnames<-c("taxon_rank","tolid_prefix","c_value","genome_size","genome_size_draft","contig_n50","gene_count","assembly_id","assembly_name","genbank_accession","refseq_accession","assembly_date","assembly_level","assembly_span","scaffold_n50","busco_completeness","chromosome_number","chromosome_count","haploid_number","ploidy","published","sequencing_status","toga_assembly_name","TOGA","refseq","ensembl")
+
+## for these species remove the reference genome info and replace it with the closest ref genome
+List_of_species_alt_genomes<-subset(List_of_species_new,species%in%alt_genomes_full$species) %>% 
+  select(-any_of(which(colnames(List_of_species_new)%in%genome_colnames))) %>% 
+  left_join(alt_genomes_full)
+
+## add the remaining sepcies with ref genomes back to the list 
+List_of_species_alt_genomes<-subset(List_of_species_new,!(species%in%alt_genomes_full$species)) %>% 
+  mutate(genome_match=if_else(is.na(assembly_level),"none","species"),
+         ref_genome=if_else(is.na(assembly_level),"none",species)) %>% 
+  bind_rows(List_of_species_alt_genomes)
+
+
+table(List_of_species_alt_genomes$genome_match,List_of_species_alt_genomes$superclass,useNA = "always")
+```
+
+
+### Add divergence times from time tree
+
+```{r}
+
+
+query_timetree<-List_of_species_alt_genomes %>%
+  filter(!(genome_match%in%c("species","none"))) %>% 
+  select(species,taxon_id,ref_genome,taxon_id_ref,genome_match)
+
+
+```
+
+#### get divergence times using the timetree API
+```{r}
+
+library(httr)
+library(purrr)
+
+get_divergence_time <- function(taxon_id, taxon_id_ref) {
+  #taxon_id<-query_timetree$taxon_id[5]
+  #taxon_id_ref<-query_timetree$taxon_id_ref[5]
+  url <- paste0("http://timetree.temple.edu/api/pairwise/", taxon_id, "/", taxon_id_ref)
+  res <- GET(url)
+  stop_for_status(res)
+  
+  txt <- content(res, as = "text", encoding = "UTF-8")
+  
+  if (txt == "" || !grepl("taxon_a_id", txt)) {
+    return(tibble(
+      taxon_a_id = taxon_id,
+      taxon_b_id = taxon_id_ref,
+      status = "No match"
+    ))
+  }
+  txt_clean <- paste0("taxon_a_id,", str_split_1(txt, "taxon_a_id,")[2])
+
+  df <- read_csv(txt_clean, show_col_types = FALSE) %>%
+    mutate(status = "OK") %>%
+    mutate(across(starts_with("taxon_"), as.character))
+  return(df)
+}
+
+
+
+```
+
+
+
+```{r}
+# Apply directly to dataframe
+results <- pmap_dfr(select(query_timetree,c(taxon_id,taxon_id_ref)), get_divergence_time)
+
+table(results$status)
+
+results<-select(results,c("taxon_a_id","taxon_b_id","precomputed_age","adjusted_age")) %>% 
+  rename(taxon_id=taxon_a_id,
+         taxon_id_ref=taxon_b_id)
+
+divergence_time<- query_timetree %>% 
+  left_join(results) %>% 
+  mutate(divergence_mya_adj=if_else(is.na(precomputed_age),
+                                    if_else(genome_match=="genus",10,20),
+                                    precomputed_age)) %>%  
+  inner_join(alt_genomes_full) %>% 
+  mutate()
+
+divergence_time%>% 
+  ggplot()+
+  geom_density(aes(x=divergence_mya_adj,col=genome_match))+
+  scale_x_log10()+
+  geom_vline(xintercept = 10,lty="dashed")+
+  facet_wrap(~superclass)
+
+table(divergence_time$divergence_mya_adj<10,divergence_time$genome_match)
+```
+
+
+### add genome info to main table for divergence times < 10 mya
+
+```{r}
+
+List_of_species_alt_genomes2<-subset(List_of_species_new,species%in%alt_genomes_full$species) %>%
+  select(-which(colnames(List_of_species_new)%in%genome_colnames)) %>%
+  left_join(divergence_time)
+
+List_of_species_alt_genomes2<-subset(List_of_species_new,!(species%in%alt_genomes_full$species)) %>% 
+  mutate(genome_match=if_else(is.na(assembly_level),"none","species"),
+         ref_genome=if_else(is.na(assembly_level),"none",species),
+         divergence_mya_adj=0.0001) %>% 
+  bind_rows(List_of_species_alt_genomes2) %>% 
+  mutate(toga_assembly_name_ref=if_else(genome_match=="species",toga_assembly_name,toga_assembly_name_ref),
+         TOGA_ref=if_else(genome_match=="species",TOGA,TOGA_ref)) %>%
+  rename(TOGA_species=TOGA) %>% 
+  select(-c(toga_assembly_name))
+
+ ggplot()+
+  geom_histogram(data=List_of_species_alt_genomes2,aes(x=divergence_mya_adj,fill=genome_match))+
+  geom_vline(xintercept = 10,lty="dashed")+
+  facet_wrap(~superclass)
+
+ 
+table(List_of_species_alt_genomes2$TOGA_ref,List_of_species_alt_genomes2$genome_match) 
+```
+
+
+### add zoonomia sequencing info
+
+```{r}
+
+Zoonomia_species_Table_S1 <- read_excel(paste0(path,"/data/Zoonomia_species_Table_S1.xlsx")) %>% 
+  separate(Species,into=c("n1","n2","subspecies"),remove = F,convert = T) %>% 
+  mutate(n1=stringr::str_to_title(n1),
+         n2=tolower(n2)) %>% 
+  unite(c(n1,n2),col = "scientific_name",sep=" ")
+  
+### some names have to be changed to be matched to GOAT
+
+Zoonomia_species_Table_S1 <- read_excel(paste0(path,"/data/Zoonomia_goat_names.xlsx")) %>% 
+  right_join(Zoonomia_species_Table_S1) %>% 
+  mutate(species=if_else(is.na(goat_name),scientific_name,goat_name)) %>% 
+  select(-goat_name)
+
+List_of_species_new_zoo<-List_of_species_alt_genomes2 %>%
+  mutate(zoonomia=species %in% Zoonomia_species_Table_S1$species)%>% 
+  mutate(genome=divergence_mya_adj<10,
+         genome=if_else(genome,genome,zoonomia),
+         annotation=zoonomia==T | !is.na(gene_count) | TOGA_species!="not_in_toga" | refseq | ensembl) 
+
+
+table(zoonomia=List_of_species_new_zoo$zoonomia,Annotation=List_of_species_new_zoo$annotation)
+
+```
+
+```{r}
+
+
+z<-Zoonomia_species_Table_S1%>% 
+  select(scientific_name) %>% 
+  rename(species=scientific_name) %>% 
+  left_join(GOAT_info) %>% 
+  select(species,genus,family,order,class,phylum) %>% 
+  filter(!is.na(order)) %>% 
+  mutate(group="zoonomia",
+         zoonomia=T) 
+
+
+a<-GOAT_info%>% 
+  filter(!is.na(order)) %>% 
+  select(species,genus,family,order,class,phylum) %>% 
+  mutate(group="all_mammals",
+         all_mammals=T)
+
+c<-List_of_species %>% 
+  select(species,cell_line) %>% 
+  left_join(GOAT_info[,c("species","genus","family","order","class","phylum")]) %>% 
+  select(species,genus,family,order,class,phylum,cell_line) %>% 
+  mutate(group="cryozoo",
+         cryozoo=T) %>% 
+  select(-cell_line)
+
+all_order_summary<-rbind(z[,1:7],a[,1:7],c[,1:7]) %>% 
+  filter(class=="Mammalia") %>% 
+  group_by(group,class,phylum,order) %>% 
+  summarize(nspecies=length(unique(species)),ngenera=length(unique(genus)),nfamily=length(unique(family)))
+```
+
+```{r}
+rbind(z[,1:7],a[,1:7],c[,1:7]) %>% 
+  filter(class=="Mammalia") %>% 
+saveRDS(paste0(path,"/data/mammal_data_species.rds"))
+
+
+saveRDS(all_order_summary,paste0(path,"/data/mammal_data_orders.rds"))
+
+```
+
+## Adding EDGE classification (skipped for now)
+
+```{r eval=FALSE, include=FALSE}
+library(janitor)
+
+edge_list<-read_xlsx_allsheets(filename = paste0(path,"/data/2024_EDGE_species_external.xlsx"),tibble = T)
+
+combined <- edge_list %>% 
+  map(clean_names) %>% 
+  map(~ .x %>% rename_with(~ str_replace(.x, "^common_names$", "common_name"))) %>%
+  map(~ .x %>% rename_with(~ str_replace(.x, "^kew_name$", "species"))) %>%
+  map(~ .x %>% rename_with(~ str_replace(.x, "^distribution_name$", "countries"))) %>%
+  map(~ .x %>% rename_with(~ str_replace(.x, "^distribution_code$", "country_code"))) %>%
+  bind_rows() %>% 
+  select(-c(genus,family,order,class,clade,suborder)) %>% 
+  mutate(scientific_name=str_replace(species,pattern=" ",replacement = "_"))
+```
+
+
+```{r eval=FALSE, include=FALSE}
+
+
+taxize::use_entrez()    
+# opens browser to register, then stores key in .Renviron
+usethis::edit_r_environ()
+```
+
+
+```{r eval=FALSE, include=FALSE}
+library(taxize)
+ncbi_ids <- combined$species %>%
+  map(~ get_uid(.x, db = "ncbi",messages = FALSE)) %>%
+  map_chr(~ as.character(.x[[1]]))
+
+# step 2: get NCBI taxon ids from scientific names
+ncbi_ids <- species_names %>%
+  map(~ get_uid(.x, db = "ncbi")) %>%
+  map_chr(~ as.character(.x[[1]]))
+
+# combine into a tidy tibble
+result <- tibble(
+  iucn_id = red_list_ids,
+  sci_name = species_names,
+  ncbi_taxon_id = ncbi_ids
+)
+
+taxize::get_(combined$rl_id, key = Sys.getenv("IUCN_KEY"), verbose = TRUE) %>% 
+  map_dfr(~ tibble(species = .x$scientific_name, iucn_category = .x$category)) %>% 
+  left_join(combined, by = "species") %>% 
+  saveRDS(paste0(path,"/data/edge_species.rds"))
+
+```
+
+
+# Getting Sample level tables
+## Sample table Mammals
+
+```{r}
+mammals_list <- read_sheet("https://docs.google.com/spreadsheets/d/1S5_jjbFXACdAjHzNRKXAgoeEsdcPWhXeEz_Fzvaz3ek/edit?usp=sharing", 
+    sheet = "MAMMALIA",
+    skip = 1,col_types = "c")[-1,-c(2)]  
+
+colnames(mammals_list)<-janitor::make_clean_names(colnames(mammals_list))
+
+colnames(mammals_list)[2]<-"scientific_name"
+
+##Make a clean tidy table for mammals
+ 
+
+mammals_list_clean<-mammals_list %>% 
+  mutate(x1=fill_run(x1,run_for_first = T),
+         scientific_name=fill_run(scientific_name),
+         common_name=fill_run(common_name),
+         family=fill_run(family),
+         iucn=fill_run(iucn)) %>% 
+  filter(!(is.na(zims_species360)&is.na(sample_id))) %>% 
+  mutate(sample_id=if_else(is.na(sample_id)& grepl(x = genetic_material,pattern = "^A"),
+                           genetic_material,sample_id)) %>%  
+  mutate(genetic_material=if_else(grepl(x = genetic_material,pattern = "^A"),
+                                  NA_character_,genetic_material)) %>%  
+  mutate(iPSC=grepl(genetic_material,pattern="iPSC")) %>% 
+  mutate(sample_id= str_replace(sample_id,pattern="\\(",replacement = "/")) %>% 
+  mutate(sample_id= str_replace(sample_id,pattern="\\)",replacement = "")) %>% 
+  mutate(sample_id= str_replace(sample_id,pattern="\\s",replacement = "/")) %>% 
+  separate(sample_id,sep = "/",into = c("line1","line2","line3"),remove = F) %>% 
+  mutate(sample_id=if_else(is.na(sample_id),paste0("no_ID",row_number()),sample_id)) %>% 
+  filter(!duplicated(sample_id)) %>% 
+  filter(!is.na(sample_id)) %>% 
+  pivot_longer(cols = c(line1,line2,line3),names_to = "dup",values_to = "animal_id") %>% 
+  filter(!is.na(animal_id)) %>% 
+  group_by(sample_id) %>% 
+   mutate(
+    individual_id = paste0("I_", first(animal_id)),
+    lines_per_individual=n()
+  ) %>%
+  ungroup() %>% 
+  select(-dup,-x1) %>% 
+  separate(genetic_material,sep = "/",into = c("cell_type","type1","type2","type3","type4")) %>% 
+  mutate(cell_type=case_when(cell_type=="C"~"Fibro",
+                             cell_type=="PBMC"~"PBMc",
+                             cell_type=="BLOOD"~"PBMc",
+                             cell_type=="PMBc isolation"~"PBMc",
+                             cell_type=="?"~"unclear",
+                             cell_type=="-"~"unclear",
+                             is.na(cell_type)~"Primary",
+                             T~"Primary")) %>% 
+  mutate(status=cell_type!="Primary") %>% 
+  mutate(scientific_name=str_replace(scientific_name,pattern = "\\?",replacement = ""),
+         scientific_name=str_to_sentence(scientific_name),
+         superclass="Mammalia") %>% 
+  distinct()
+  
+```
+
+### correct bad names
+```{r}
+
+species_names_mammals<-subset(species_names,group=="Mammals") %>% 
+  mutate(scientific_name_sample=str_to_sentence(scientific_name_sample))
+
+species_names_mammals<-species_names_mammals[match(mammals_list_clean$scientific_name[
+  which(mammals_list_clean$scientific_name%in%species_names_mammals$scientific_name_sample)],
+  species_names_mammals$scientific_name_sample,
+  incomparables = F),]
+
+mammals_list_clean$scientific_name[which(
+  mammals_list_clean$scientific_name%in%species_names_mammals$scientific_name_sample)
+  ]<-species_names_mammals$correct_name
+
+
+mammals_list_clean<-mammals_list_clean %>% 
+  separate(scientific_name,into=c("n1","n2","subspecies"),remove = F,convert = T) %>% 
+  mutate(n1=stringr::str_to_title(n1),
+         n2=tolower(n2)) %>% 
+  unite(c(n1,n2),col = "species",sep=" ") 
+
+
+saveRDS(mammals_list_clean,paste0(path,"/output/Sample_List_Mammal_clean.rds"))
+write_excel_csv(mammals_list_clean,paste0(path,"/output/Sample_List_Mammal_clean.csv"))
+
+
+```
+
+
+## Sample Table other Tetrapods
+
+```{r}
+
+tetra_list <-read_sheet("https://docs.google.com/spreadsheets/d/1S5_jjbFXACdAjHzNRKXAgoeEsdcPWhXeEz_Fzvaz3ek/edit?usp=sharing", 
+    sheet = "AMPHIBIAN",
+    skip = 1,col_types = "c")[-1,-c(2)] 
+
+tetra_list$superclass<-"Amphibian"
+
+tetra_list<-bind_rows(tetra_list,
+                      read_sheet("https://docs.google.com/spreadsheets/d/1S5_jjbFXACdAjHzNRKXAgoeEsdcPWhXeEz_Fzvaz3ek/edit?usp=sharing", 
+    sheet = "REPTIL",
+    skip = 1,col_types = "c")[-1,-c(2)])
+
+tetra_list$superclass[is.na(tetra_list$superclass)]<-"Reptiles"
+
+bird_list<- read_sheet("https://docs.google.com/spreadsheets/d/1S5_jjbFXACdAjHzNRKXAgoeEsdcPWhXeEz_Fzvaz3ek/edit?usp=sharing", 
+    sheet = "BIRD",
+    skip = 1,col_types = "c")[-1,-c(2)] %>% 
+   rename('CELL BARCODE'='CELL LINE BARCODE')
+
+tetra_list<-bind_rows(tetra_list,bird_list)
+
+
+tetra_list$superclass[is.na(tetra_list$superclass)]<-"Birds"
+
+colnames(tetra_list)<-janitor::make_clean_names(colnames(tetra_list))
+
+colnames(tetra_list)[2]<-"scientific_name"
+
+```
+
+```{r}
+tetra_list_clean<-tetra_list %>% 
+  mutate(x1=fill_run(x1,run_for_first = T),
+    scientific_name=fill_run(scientific_name),
+         common_name=fill_run(common_name),
+         family=fill_run(family),
+         iucn=fill_run(iucn)) %>% 
+  filter(!(is.na(zims_species360)&is.na(sample_id)&is.na(genetic_material))) %>% 
+  mutate(sample_id= str_replace(sample_id,pattern="\\(",replacement = "/")) %>% 
+  mutate(sample_id= str_replace(sample_id,pattern="\\)",replacement = "")) %>% 
+  mutate(sample_id= str_replace(sample_id,pattern="\\s",replacement = "/")) %>%  
+  ##### Erroneous data correcting ######
+  mutate(sample_id=case_match(sample_id,
+                              "756.0"~"A756",
+                              "C"~"A151",
+                              .default = sample_id)) %>% 
+  separate(sample_id,sep = "/",into = c("line1","line2","line3"),remove = F) %>%
+  filter(!duplicated(sample_id)) %>% 
+  mutate(sample_id=if_else(is.na(sample_id),paste0("no_ID",row_number()),sample_id)) %>% 
+  pivot_longer(cols = c(line1,line2,line3),names_to = "dup",values_to = "animal_id") %>% 
+  filter(!is.na(animal_id)) %>% 
+  group_by(sample_id) %>% 
+   mutate(
+    individual_id = paste0("I_", first(animal_id)),
+    lines_per_individual=n()
+  ) %>%
+  ungroup() %>% 
+  select(-dup,-x1) %>% 
+  mutate(iPSC=grepl(genetic_material,pattern="iPSC")) %>% 
+  separate(genetic_material,sep = "/",into = c("cell_type","type1","type2","type3","type4")) %>% 
+  mutate(cell_type=case_when(cell_type=="C"~"Fibro",
+                             cell_type=="PBMC"~"PBMc",
+                             cell_type=="BLOOD"~"PBMc",
+                             cell_type=="PMBc isolation"~"PBMc",
+                             cell_type=="?"~"unclear",
+                             cell_type=="-"~"unclear",
+                             is.na(cell_type)~"Primary",
+                             T~"Primary")) %>% 
+  mutate(status=cell_type!="Primary") %>% 
+  mutate(scientific_name=str_replace(scientific_name,pattern = "\\?",replacement = ""),
+         scientific_name=str_to_sentence(scientific_name)) %>% 
+  distinct()
+
+```
+
+
+```{r}
+### correct names
+species_names_tetra<-subset(species_names,group!="Mammals") %>% 
+  mutate(scientific_name_sample=str_to_sentence(scientific_name_sample))
+
+species_names_tetra<-species_names_tetra[match(tetra_list_clean$scientific_name[
+  which(tetra_list_clean$scientific_name%in%species_names_tetra$scientific_name_sample)],
+  species_names_tetra$scientific_name_sample,
+  incomparables = F),]
+
+tetra_list_clean$scientific_name[which(
+  tetra_list_clean$scientific_name%in%species_names_tetra$scientific_name_sample)
+  ]<-species_names_tetra$correct_name
+
+tetra_list_clean<-tetra_list_clean %>% 
+  separate(scientific_name,into=c("n1","n2","subspecies"),remove = F,convert = T) %>% 
+  mutate(n1=stringr::str_to_title(n1),
+         n2=tolower(n2)) %>% 
+  unite(c(n1,n2),col = "species",sep=" ") %>% 
+  filter(!duplicated(sample_id))
+
+saveRDS(tetra_list_clean,paste0(path,"/output/Sample_List_Tetrapod_clean.rds"))
+write_excel_csv(tetra_list_clean,paste0(path,"/output/Sample_List_Tetrapod_clean.csv"))
+
+```
+
+## Sample Table Fish
+
+
+```{r}
+
+fish_list <- read_sheet("https://docs.google.com/spreadsheets/d/1S5_jjbFXACdAjHzNRKXAgoeEsdcPWhXeEz_Fzvaz3ek/edit?usp=sharing", 
+    sheet = "FISH",
+    skip = 1,col_types = "c")[-1,-c(2)]
+
+fish_list$superclass<-"Fish"
+
+colnames(fish_list)<-janitor::make_clean_names(colnames(fish_list))
+colnames(fish_list)[2]<-"scientific_name"
+```
+
+```{r}
+fish_list_clean<-fish_list %>% 
+  mutate(x1=fill_run(x1,run_for_first = T),
+    scientific_name=fill_run(scientific_name),
+         common_name=fill_run(common_name),
+         family=fill_run(family),
+         iucn=fill_run(iucn)) %>% 
+  filter(!(is.na(zims_species360)&is.na(sample_id)&is.na(genetic_material))) %>% 
+  mutate(sample_id= str_replace(sample_id,pattern="\\(",replacement = "/")) %>% 
+  mutate(sample_id= str_replace(sample_id,pattern="\\)",replacement = "")) %>% 
+  mutate(sample_id= str_replace(sample_id,pattern="\\s",replacement = "/")) %>% 
+  separate(sample_id,sep = "/",into = c("line1","line2","line3"),remove = F) %>%
+  separate(sample_id,sep = "/",into = c("line1","line2","line3"),remove = F) %>% 
+  ##### Erroneous data correcting ######
+  mutate(sample_id=case_match(sample_id,
+                              "A31O"~"A310",
+                              .default = sample_id)) %>% 
+  filter(!duplicated(sample_id)) %>% 
+  filter(!is.na(sample_id)) %>% 
+  pivot_longer(cols = c(line1,line2,line3),names_to = "dup",values_to = "animal_id") %>% 
+  filter(!is.na(animal_id)) %>% 
+  group_by(sample_id) %>% 
+   mutate(
+    individual_id = paste0("I_", first(animal_id)),
+    lines_per_individual=n()
+  ) %>%
+  ungroup() %>% 
+  select(-dup,-x1) %>% 
+  mutate(iPSC=grepl(genetic_material,pattern="iPSC")) %>% 
+  separate(genetic_material,sep = "/",into = c("cell_type","type1","type2","type3","type4")) %>% 
+  mutate(cell_type=case_when(cell_type=="C"~"Fibro",
+                             cell_type=="PBMC"~"PBMc",
+                             cell_type=="BLOOD"~"PBMc",
+                             cell_type=="PMBc isolation"~"PBMc",
+                             cell_type=="?"~"unclear",
+                             cell_type=="-"~"unclear",
+                             is.na(cell_type)~"Primary",
+                             T~"Primary")) %>% 
+  mutate(status=cell_type!="Primary") %>% 
+  mutate(scientific_name=str_replace(scientific_name,pattern = "\\?",replacement = ""),
+         scientific_name=str_to_sentence(scientific_name)) %>% 
+  distinct()
+```
+
+
+```{r}
+### correct names
+species_names_fish<-subset(species_names,group=="Fish") %>% 
+  mutate(scientific_name_sample=str_to_sentence(scientific_name_sample))
+
+species_names_fish<-species_names_fish[match(fish_list_clean$scientific_name[
+  which(fish_list_clean$scientific_name%in%species_names_fish$scientific_name_sample)],
+  species_names_fish$scientific_name_sample,
+  incomparables = F),]
+
+fish_list_clean$scientific_name[which(
+  fish_list_clean$scientific_name%in%species_names_fish$scientific_name_sample)
+  ]<-species_names_fish$correct_name
+
+fish_list_clean<-fish_list_clean %>% 
+  separate(scientific_name,into=c("n1","n2","subspecies"),remove = F,convert = T) %>% 
+  mutate(n1=stringr::str_to_title(n1),
+         n2=tolower(n2)) %>% 
+  unite(c(n1,n2),col = "species",sep=" ")
+
+saveRDS(fish_list_clean,paste0(path,"/output/Sample_List_fish_clean.rds"))
+write_excel_csv(fish_list_clean,paste0(path,"/output/Sample_List_fish_clean.csv"))
+
+```
+
+
+## Combine sample tables
+
+```{r}
+combined_sample<-bind_rows(tetra_list_clean,mammals_list_clean) %>% 
+  bind_rows(fish_list_clean) %>% 
+  select(-c(cell_barcode)) %>% 
+  mutate(species_short=paste(str_to_title(substr(str_split(string = species,
+                                                           pattern = " ",
+                                                           simplify=T)[,1],1,3)),
+                             str_to_title(substr(str_split(string = species,
+                                                           pattern = " ",
+                                                           simplify=T)[,2],1,3)),sep="_")) %>% 
+  group_by(species_short) %>% 
+  mutate(sample_id=paste(sep="_",species_short,row_number())) %>% 
+  ungroup() %>% 
+  mutate(link=txt_paste(x14,x15,data,na.rm = T)) %>% 
+  select(-c(x14,x15,data)) %>% 
+  mutate(animal_id=str_remove(animal_id,pattern="\\?"),
+         dna=if_any(.cols=starts_with("type"),~grepl("DNA",.)),
+         karyo=if_any(.cols=starts_with("type"),~grepl("K",.)),
+         rna=if_any(.cols=starts_with("type"),~grepl("RNA",.)),
+         iPSC2=if_any(.cols=starts_with("type"),~grepl("iPSC",.)),
+         seq=if_any(.cols=starts_with("type"),~grepl("SEQ",.))) %>% 
+  mutate(iPSC=if_else(iPSC==iPSC2,iPSC,T)) %>% 
+  select(-c(iPSC2,type1,type2,type3,type4))
+  
+ 
+
+```
+
+
+
+## Add info from the working sheet
+```{r}
+work_table<-read_sheet("https://docs.google.com/spreadsheets/d/1SRid9RGRfcCpGAWsAXG8h0wE-7p1fhOtwvkMJgR1s8w/edit?usp=sharing",sheet = "Samples from A274",skip = 1,col_types = "ccccccccccccccccc") %>% 
+  select(-c(3,13,16,17))
+
+work_table<-work_table %>% 
+  clean_names() %>% 
+  filter(!if_all(everything(), is.na)) %>% 
+  mutate(animal_species=if_else(animal_species%in%c("second_round","second round"),
+                                NA_character_,
+                                animal_species)) %>% 
+  filter(date!="DATE") %>% 
+  fill(c(samples,date,animal_species,coming_from,species_360_local_id),.direction = "down") %>% 
+  distinct() %>% 
+  mutate(coming_from_clean = case_when(
+    # Acuario Gijon variations
+    coming_from %in% c("Acuario de Gijon", "Acuario Gijon") ~ "Aquarium de Gijon",
+
+    # Acuario Zaragoza
+    coming_from == "Acuario de Zaragoza" ~ "Aquarium de Zaragoza",
+
+    # BCN Zoo variations
+    coming_from %in% c("BCN zoo", "BCN Zoo", "BCN ZOO", "BCN ZOO (frozen)", 
+                       "BCN ZOO, Zoo Barcelona", "zoo Barcelona", 
+                       "Zoo barcelona", "Zoo Barcelona", "Zoo de Barcelona","Potamochoerus porcus") ~ "Zoo Barcelona",
+
+    # Bioparc Valencia variations
+    coming_from %in% c("Bioparc", "BioParc", "Bioparc Valencia", 
+                       "Bioparco de Valencia", "Bioparco valencia", 
+                       "Bioparco Valencia") ~ "Zoo Bioparc Valencia",
+
+    # Oceanografic Valencia
+    coming_from %in% c("Oceanografic Valencia", "Oceanografico") ~ "Aquarium Oceanografic Valencia",
+
+    # Rio Safari Elche variations
+    coming_from %in% c("Rio safari Elche", "Rio Safari Elche", 
+                       "RIO SAFARI ELCHE", "Zoo safari Elche", 
+                       "Zoo Safari Elche","Elche","Elche Safari") ~ "Zoo Rio Safari Elche",
+
+    # Salvi variations
+    coming_from %in% c("Salvi", "Salvis") ~ "Salvi",
+
+    # Sendaviva variations
+    coming_from %in% c("Sendavia", "Sendaviva") ~ "Zoo Sendaviva Navarra",
+
+    # Torre Ferrusa variations
+    coming_from %in% c("Torre Ferrusa (UAB)", "Torrefarrussa", "Torreferrusa") ~ "Zoo Centro de Fauna de Torreferrussa",
+
+    # Zoo Madrid variations
+    coming_from %in% c("Zoo de madrid", "Zoo de Madrid", "ZOO de Madrid", 
+                       "zoo madrid", "Zoo madrid", "Zoo Madrid", 
+                       "ZOO Madrid", "ZOO MADRID","Madrid Zoo") ~ "Zoo Madrid",
+
+    # Zoo Jerez variations
+    coming_from %in% c("Zoo Botánico Jerez", "Zoo Jerez", 
+                       "Zoologico Jerez de la Frontera","Jerez") ~ "Zoo Jerez",
+    
+    # Copenhagen zoo
+    coming_from %in% c("Copenaghen Zoo","Copenhaguen ZOO") ~ "Zoo Copenhagen",
+    
+    # Prague zoo
+    coming_from %in% c("Praga Zoo") ~ "Zoo Prague",
+    
+    # "Marcelle Naturaleza"
+    coming_from %in% c("Marcelle Naturaleza") ~ "Zoo Marcelle Natureza",
+    
+    # "Tarragona/CBP"
+    
+    coming_from %in% c("CBP","Tarragona","Tarragona/CBP")~ "Tarragona/CBP",
+    
+    # "Aquarium de Madrid"
+    coming_from =="Aquarium Madrid"~"Aquarium de Madrid",
+    
+    # "MondoMar"
+    coming_from =="MondoMar"~"Zoo Mundomar Benidorm",
+    
+    # "Aquarium San Sebastian"
+    coming_from =="Aquarium San Sebastian"~"Aquarium de San Sebastian",
+    
+    # parque de la naturaleza cabarceno
+    
+    coming_from =="Parque de la Naturaleza Caberceno"~"Zoo Parque de la Naturaleza Cabarceno",
+    
+    # MCNB
+    
+    coming_from =="MCNB"~"Museu de Ciencies Naturlas Barcelona",
+    
+    
+    # Exact matches stay as is
+    TRUE ~ coming_from
+  ))
+
+```
+
+
+```{r}
+
+work_table_filt<-work_table %>% 
+  select("samples","date","animal_species","coming_from_clean","species_360_local_id") %>% 
+  distinct() 
+
+work_table_filt<-work_table_filt %>% 
+  group_by(samples) %>% 
+  mutate(n_samples=n()) %>% 
+  group_by(samples,n_samples) %>%
+  summarise(date = paste(unique(date), collapse = ", "),
+            animal_species =paste(unique(animal_species), collapse = ", "),
+            species_360_local_id =paste(unique(species_360_local_id), collapse = ", "),
+            coming_from_clean =paste(unique(coming_from_clean), collapse = ", "),
+            .groups = "drop") %>% 
+  ungroup() %>% 
+  rename(animal_id=samples)
+
+sort(unique(work_table_filt$coming_from_clean))
+```
+
+```{r}
+
+combined_sample<-full_join(combined_sample,work_table_filt) %>% 
+  filter(!is.na(species)) %>% 
+  mutate(superclass=case_when(superclass=="Amphibian"~"Amphibia",
+                              superclass=="Reptiles"~"Reptil",
+                              superclass=="Amphibian"~"Amphibia",
+                              superclass=="Amphibian"~"Amphibia",
+                              T~superclass
+                              ))
+
+
+saveRDS(combined_sample,
+       paste0(path,"/output/Sample_List_all_species_clean.rds"))
+
+write_excel_csv(combined_sample,
+                paste0(path,"/output/Sample_List_all_species_clean.csv"))
+```
+
+## summarize on the species level
+
+```{r}
+summary_species<-combined_sample %>% 
+  group_by(species,scientific_name,subspecies) %>% 
+  summarize(individuals_cl=length(unique(individual_id)),
+         cell_lines=sum(status),
+         fibro=sum(cell_type=="Fibro"),
+         pbmc=sum(cell_type=="PBMc"),
+         ipsc=sum(iPSC),
+         family=paste(unique(family), collapse = ", ")) %>% 
+  ungroup()
+
+```
+
+
+
+# Compare sample list and species list info
+
+Entries only found in species table: `r setdiff(List_of_species_new_zoo$species,summary_species$species)`
+
+Entries only found in sample table:`r setdiff(summary_species$species,List_of_species_new_zoo$species)`
+
+
+```{r}
+List_of_species_new_zoo %>% 
+  select(species,individuals,tissue_of_origin,sex,cell_line,i_psc) %>% 
+  inner_join(summary_species) %>% 
+  ggplot()+
+  ggpointdensity::geom_pointdensity(aes(individuals,individuals_cl),position = position_jitter())+
+  geom_abline(slope = 1,intercept = 0)+
+  scale_x_continuous(breaks = 1:20)+
+  scale_y_continuous(breaks = 1:20)+
+  labs(x="number of individuals in species table",y="number of individuals in sample table")
+
+sum<-List_of_species %>% 
+  select(species,individuals,tissue_of_origin,sex,cell_line,i_psc) %>% 
+  inner_join(summary_species) %>% 
+  mutate(comp=case_when(individuals==individuals_cl~"same",
+                        individuals>individuals_cl~"more in species list",
+                        individuals<individuals_cl~"more in sample list"
+                        ))
+
+table(sum$comp)
+
+```
+
+
+
+
+### Add additional Info to Species Table:
+
+information about the initial sample selection for the illumina cryozoo project
+This file was gernerated
+
+```{r}
+
+selected_species <- read_sheet("https://docs.google.com/spreadsheets/d/1k-0sFR4AuaA0hAM2qeUZ8IMvLx96vY2JIQbwrNQtLj0/edit?usp=drive_link") %>%
+  select(silencer, illumina, species, taxon_id) %>% 
+  mutate(taxon_id=as.character(taxon_id))
+
+```
+
+
+```{r}
+
+Species_list_complete <- List_of_species_new_zoo %>% 
+  
+  ## Add info from cell line table
+  left_join(
+    select(summary_species, c(species, scientific_name, individuals_cl,
+                              cell_lines, fibro, pbmc, ipsc, subspecies)),
+    by = c("species", "scientific_name", "subspecies")
+  ) %>%
+  
+  ## Replace NA in numeric cell line columns
+  mutate(
+    across(c(fibro, cell_lines, pbmc, ipsc), ~ if_else(is.na(.x), 0, .x))
+  ) %>%
+  
+  filter(!is.na(superclass)) %>%
+  
+  ## Factors
+  mutate(
+    cell_line = factor(cell_line,
+                       levels = c("No cell line", "Fibro/PBMc", "PBMc", "Fibro")),
+    superclass = factor(superclass,
+                        levels = rev(c("Mammalia", "Birds", "Reptil",
+                                       "Amphibia", "Fish")))
+  ) %>%
+
+  ## Fibro logic
+  mutate(
+    fibro_l = grepl("Fibro", cell_line),
+    fibro_l = if_else(!fibro_l & fibro > 0, TRUE, fibro_l),
+    fibro   = if_else(fibro_l & fibro < 1, 1, fibro)
+  ) %>%
+
+  ## Species counts per order
+  group_by(order) %>%
+  mutate(nspecies = n()) %>%
+  ungroup() %>%
+
+  arrange(superclass, nspecies) %>%
+
+  ## Category
+  mutate(
+    cat = case_when(
+      genome & !fibro_l ~ "Genome",
+      !genome & !fibro_l ~ "Neither",
+      !genome & fibro_l ~ "Fibro",
+      genome & fibro_l ~ "Both"
+    ),
+    cat = factor(cat, levels = c("Neither", "Fibro", "Genome", "Both")),
+    cat_num = as.numeric(cat) / 4
+  ) %>%
+
+  ## Genome assembly and match factors
+  mutate(
+    assembly_level = assembly_level %>%
+      fct_na_value_to_level("No Genome") %>%
+      factor(levels = rev(c("Complete Genome", "Chromosome",
+                            "Scaffold", "Contig", "No Genome"))),
+    genome_match = factor(genome_match,
+                          levels = rev(c("species", "genus",
+                                         "family", "none")))
+  ) %>%
+
+  left_join(selected_species) %>%
+
+  ## Project logic
+  mutate(
+    illumina = replace_na(illumina, FALSE),
+    silencer = replace_na(silencer, FALSE),
+    tetrapod = !illumina & superclass != "Fish",
+    selected = illumina | silencer | tetrapod,
+    project = case_when(
+      silencer ~ "silencer",
+      illumina ~ "illumina",
+      tetrapod ~ "tetrapod",
+      TRUE ~ "no_project"
+    )
+  ) 
+
+
+saveRDS(Species_list_complete,paste0(path,"/output/Species_List_with_genome_and_cl_info.rds"))
+```
+
+
+```{r}
+
+species_cols<-c("scientific_name","species","iucn_category","individuals","taxon_id","genus","family","order","class","superclass","TOGA_species","refseq","ensembl","genome_match","ref_genome","divergence_mya_adj","contig_n50","scaffold_n50","assembly_level","TOGA_ref","toga_assembly_name_ref","genome_size","gene_count","fibro_l","cat","illumina","silencer","tetrapod","selected","project","i_psc","cell_line")
+
+sample_cols<-cols <- c(
+  "animal_id","scientific_name", "species", "subspecies", "common_name",
+  "family", "zims_species360", "origin", "sex", "cell_type", "karyotype",
+  "sample_id", "wgs", "rna_seq", "iucn", "superclass", "individual_id",
+  "lines_per_individual", "iPSC", "status", "cnag_id", "species_short",
+  "link", "dna", "karyo", "rna", "seq", "n_samples", "date",
+  "animal_species", "species_360_local_id", "coming_from_clean"
+)
+
+
+```
+
+
+This google sheet "https://docs.google.com/spreadsheets/d/1csFMpLFtTr1_-hF1Nncduzjl9uIjKHRh0w7kntRZM2A/edit?usp=drive_link" is linked to sequencing tables etc and has to be updated here:
+
+```{r}
+Species_list_complete %>% 
+  select(all_of(species_cols)) %>% 
+
+write_sheet( ss = "https://docs.google.com/spreadsheets/d/1csFMpLFtTr1_-hF1Nncduzjl9uIjKHRh0w7kntRZM2A/edit?usp=drive_link",
+            sheet = "species")
+```
+
+
+```{r}
+
+combined_sample %>% 
+  select(all_of(sample_cols)) %>% 
+  write_sheet( ss = "https://docs.google.com/spreadsheets/d/1csFMpLFtTr1_-hF1Nncduzjl9uIjKHRh0w7kntRZM2A/edit?usp=drive_link", 
+            sheet = "all_samples")
+
+```
+
+
+
+The final tables are:
+```{r}
+
+df_path<-data.frame(Table=c("Species Table",
+"Species Table + Genome Info","Species Table + Genome + Cell lines","Sample Table Mammals","Sample Table other", "Sample Table Fish","Sample Table All"),
+Path=c("/output/Species_List.rds","/output/Species_List_with_genome_info.rds","/output/Species_List_with_genome_and_cl_info.rds","/output/Sample_List_Mammal_clean.rds",
+ "/output/Sample_List_Tetrapod_clean.rds","/output/Sample_List_fish_clean.rds", "/output/Sample_List_all_species_clean.rds"))
+
+knitr::kable(df_path)
+
+```
+
+
+
