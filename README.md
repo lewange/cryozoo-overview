@@ -27,6 +27,20 @@ steps.
 - `docs/` — rendered workflowr site (published via GitHub Pages)
 - `archive/` — older exploratory scripts and outputs, not part of the active pipeline
 
+## Simple phylogenetic trees
+
+`analysis/plot_trees_simple.Rmd` builds one circular tree per taxonomic
+group (Open Tree of Life topology, IUCN status ring), but the plots are only
+written to file and not printed inline, so the knitted notebook page itself
+shows no trees. View the current output directly:
+
+- [Mammalia](output/figures/trees/tree_nolabels_Mammalia.png)
+- [Aves](output/figures/trees/tree_nolabels_Aves.png)
+- [Reptilia](output/figures/trees/tree_nolabels_Reptilia.png)
+- [Amphibia](output/figures/trees/tree_nolabels_Amphibia.png)
+- [Fish](output/figures/trees/tree_nolabels_Fish.png)
+- [IUCN status legend](output/figures/trees/legend.png)
+
 ## Building the site
 
 To rebuild after editing an analysis file:
