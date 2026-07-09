@@ -33,6 +33,10 @@ order:
 9. [Bird Tree](plot_Tree_birds.html) — phylogenetic tree of CryoZoo bird
    species.
 
+A lighter-weight alternative to steps 8–9 is also available:
+[Simple Phylogenetic Trees](plot_trees_simple.html) — circular trees per
+taxonomic group built from the Open Tree of Life, with an IUCN status ring.
+
 See [analysis/README.md](https://github.com/lewange/cryozoo-overview/blob/master/analysis/README.md)
 for the full pipeline description, including inputs, outputs, and package
 dependencies for each step.
