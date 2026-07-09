@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>N2/-80 stocks Cryozoo</title>
+
+<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Cryozoo_project</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/lewange/cryozoo-overview">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">N2/-80 stocks Cryozoo</h1>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2026-07-09
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>1.Species_selection/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.2). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20221125code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20221125)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20221125code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20221125)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlewangecryozoooverviewtreebc97d32a4b3835a26ceb5de289174aaa4ec57b5etargetblankbc97d32a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/lewange/cryozoo-overview/tree/bc97d32a4b3835a26ceb5de289174aaa4ec57b5e" target="_blank">bc97d32</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomlewangecryozoooverviewtreebc97d32a4b3835a26ceb5de289174aaa4ec57b5etargetblankbc97d32a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/lewange/cryozoo-overview/tree/bc97d32a4b3835a26ceb5de289174aaa4ec57b5e" target="_blank">bc97d32</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    .RData
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    Cryozoo_clean.gsheet
+    Ignored:    Sample_selection_ongoing.gsheet
+    Ignored:    all_species_selection.gsheet
+    Ignored:    analysis/Update_Sample_table.nb.html
+    Ignored:    analysis/goat_cache/
+    Ignored:    analysis/update_Cell_culture.nb.html
+    Ignored:    analysis/update_Cryostock.nb.html
+    Ignored:    analysis/update_Extractions.nb.html
+    Ignored:    analysis/update_Sequencing.nb.html
+    Ignored:    selected_species_assays_Fixed_LK.gsheet
+
+Untracked files:
+    Untracked:  .Rprofile
+    Untracked:  .gitattributes
+    Untracked:  Cryozoo_project.Rproj
+    Untracked:  README.md
+    Untracked:  _workflowr.yml
+    Untracked:  analysis/Clean_CryoZoo_Lists.Rmd
+    Untracked:  analysis/README.md
+    Untracked:  analysis/archive/
+    Untracked:  analysis/plot_trees_simple.R
+    Untracked:  archive/
+    Untracked:  code/
+    Untracked:  data/
+    Untracked:  output/
+    Untracked:  selected_species.csv
+    Untracked:  selected_species_short.csv
+    Untracked:  selection_best_genomes.csv
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/update_Cryostock.Rmd</code>) and
+HTML (<code>docs/update_Cryostock.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lewange/cryozoo-overview/blob/bc97d32a4b3835a26ceb5de289174aaa4ec57b5e/analysis/update_Cryostock.Rmd" target="_blank">bc97d32</a>
+</td>
+<td>
+Luca Wange
+</td>
+<td>
+2026-07-09
+</td>
+<td>
+Publish analysis
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lewange/cryozoo-overview/blob/717f83ec644af8f3a771f74e1523665a29a9d4e0/analysis/update_Cryostock.Rmd" target="_blank">717f83e</a>
+</td>
+<td>
+Luca Wange
+</td>
+<td>
+2026-07-09
+</td>
+<td>
+Host with GitHub.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lewange/cryozoo-overview/blob/a22d48b5054fc43b98dd4832328d44c5539966a8/analysis/update_Cryostock.Rmd" target="_blank">a22d48b</a>
+</td>
+<td>
+Luca Wange
+</td>
+<td>
+2026-06-12
+</td>
+<td>
+Overhaul analysis scripts and add simple tree plotting script
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<p>Get information on availability of cryotubes from the google
+sheet</p>
+<pre class="r"><code>library(googlesheets4)
+library(tidyverse)</code></pre>
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.2.1     ✔ readr     2.2.0
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+✔ purrr     1.2.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre class="r"><code>read_gsheet_allsheets &lt;- function(filename, skip=0, tibble = FALSE) {
+  # I prefer straight data.frames
+  # but if you like tidyverse tibbles (the default with read_excel)
+  # then just pass tibble = TRUE
+  sheets &lt;- googlesheets4::sheet_names(filename)[-skip]
+  x &lt;- lapply(sheets, function(X) googlesheets4::read_sheet(filename, sheet = X))
+  if(!tibble) x &lt;- lapply(x, as.data.frame)
+  names(x) &lt;- make.names(sheets)
+  x
+}
+
+path&lt;-here::here()</code></pre>
+<pre class="r"><code>Nitrogen_and_80 &lt;- read_gsheet_allsheets(&quot;https://docs.google.com/spreadsheets/d/1KXqtgJlJDcty5FJcYSzXUOvUDLCKLq7S76pwVlMa_-Y/edit?usp=sharing&quot;,
+                                         skip = c(1))</code></pre>
+<pre><code>! Using an auto-discovered, cached token.</code></pre>
+<pre><code>  To suppress this message, modify your code or options to clearly consent to
+  the use of a cached token.</code></pre>
+<pre><code>  See gargle&#39;s &quot;Non-interactive auth&quot; vignette for more details:</code></pre>
+<pre><code>  &lt;https://gargle.r-lib.org/articles/non-interactive-auth.html&gt;</code></pre>
+<pre><code>ℹ The googlesheets4 package is using a cached token for
+  &#39;lucasesteban.wange@upf.edu&#39;.</code></pre>
+<pre><code>✔ Reading from &quot;Nitrogen and -80-Current&quot;.</code></pre>
+<pre><code>✔ Range &#39;&#39;Cell Lines Bellaterra II N2&#39;&#39;.</code></pre>
+<pre><code>New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;RED BOX 3 N2 to go&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;BOX1_N2_Bellaterra_RACK1&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;RED BOX 1 N2 to go&#39;&#39;.
+✖ Request 1 failed [429: RESOURCE_EXHAUSTED].
+ℹ Will retry in 2.7s.
+⠙ Retry happens in 2s
+⠹ Retry happens in 1s
+✖ Request 2 failed [429: RESOURCE_EXHAUSTED].
+⠹ Retry happens in 1s
+ℹ Will retry in 7.2s.
+⠹ Retry happens in 1s
+⠹ Retry happens in 0s
+⠙ Retry happens in 6s
+⠹ Retry happens in 3s
+✖ Request 3 failed [429: RESOURCE_EXHAUSTED].
+⠹ Retry happens in 3s
+ℹ Will retry in 22.1s.
+⠹ Retry happens in 3s
+⠹ Retry happens in 0s
+⠙ Retry happens in 23s
+⠹ Retry happens in 20s
+⠸ Retry happens in 17s
+⠼ Retry happens in 14s
+⠴ Retry happens in 11s
+⠦ Retry happens in 9s
+⠧ Retry happens in 6s
+⠇ Retry happens in 3s
+✔ Request 4 successful!
+⠇ Retry happens in 3s
+⠇ Retry happens in 0s
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;RED BOX 2 N2 to go&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;BELLATERA BIOPSIAS N2&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Biopsias caja RED 1 N2&#39;&#39;.
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Biopsis caja RED 4 N2&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Biopsias caja RED 3 -80&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Biopsis caja BLANCA -80&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Biopsis caja RED 2 -80 &#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;BIOP6&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;BIOP 7-80&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;BIOP 8-80&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;BIOP 9 EMBL TANK&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;BIOP 10-80&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;BIOP 11 -80&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Biop 12 -80&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Biop 13 EMBL TANK&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Biop 14 EMBL TANK&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Biop 15 EMBL TANK&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Biop 16 position 2 rack EMBL&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Biop 17 EMBL TANK RACK 7&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Biop 18 EMBL TANK RACK 7&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Biop 19 -80&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Fibro BOX 18 EMBL TANK&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Fibro BOX 19 EMBL tank&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Fibro BOX 20 EMBL TANK&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Fibro BOX 21 EMBL TANK&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Fibro BOX 22 - 80ºC&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Samples ERGA_-80&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;BOX1_N2_RACK?_IPSCs&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;BOX2_N2_RACK?_IPSCs&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;BOX3_N2_RACK?_IPSCs&#39;&#39;.
+New names:
+✖ Request 1 failed [429: RESOURCE_EXHAUSTED, per user quota].
+ℹ Will retry in 61.4s.
+⠙ Retry happens in 1m
+⠹ Retry happens in 1m
+⠸ Retry happens in 1m
+⠼ Retry happens in 1m
+⠴ Retry happens in 1m
+⠦ Retry happens in 1m
+⠧ Retry happens in 49s
+⠇ Retry happens in 46s
+⠏ Retry happens in 43s
+⠋ Retry happens in 40s
+⠙ Retry happens in 37s
+⠹ Retry happens in 34s
+⠸ Retry happens in 31s
+⠼ Retry happens in 28s
+⠴ Retry happens in 25s
+⠦ Retry happens in 22s
+⠧ Retry happens in 19s
+⠇ Retry happens in 16s
+⠏ Retry happens in 13s
+⠋ Retry happens in 10s
+⠙ Retry happens in 7s
+⠹ Retry happens in 4s
+⠸ Retry happens in 1s
+✔ Request 2 successful!
+⠸ Retry happens in 1s
+⠸ Retry happens in 0s
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;&quot;provisional&quot;BOX3_N2_RACKEMBL_IPSCs&#39;&#39;.
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;&quot;provisional&quot;BOX4_N2_RACKEMBL_IPSCs&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;BOX1_N2_RACK2&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;BOX2_N2_RACK2&#39;&#39;.
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;BOX3_N2_RACK2&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;BOX4_N2_RACK2&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Box5_Fibro BOX 16_N2_RACK2&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;BOX6_N2_RACK2&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Fibro BOX 15 N2&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;BOX8_N2_RACK2&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;BOX9_N2_RACK2&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;BOX10_N2_RACK2&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Fibro BOX 17 N2&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;BOX12_N2_RACK2&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;BOX13_N2-RACK2&#39;&#39;.
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Fibro BOX 14 N2&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;caixa PELLETS -80&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;caixa PELLETS 2 -80 (actualitzar)&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;caixa PELLETS 3 -80&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Revive&amp;Restore iPSCs PELLETS&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Revive&amp;Restore fibro PELLETS&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;ATAC PELLETS 1 &#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;ATAC PELLETS 2&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;ATAC PELLETS 3&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;ATAC PELLETS 4&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;RNA PELLETS 1&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Box mixed&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;DNA extracted -80 caja blanca 1 &#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;DNA extracted -80 caja blanca 2&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;DNA extracted -80 caja blanca 3&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;DNA extracted -80 4&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;DNA extracted -80 5&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;DNA extracted -80 6&#39;&#39;.
+New names:
+✖ Request 1 failed [429: RESOURCE_EXHAUSTED, per user quota].
+ℹ Will retry in 61.5s.
+⠙ Retry happens in 1m
+⠹ Retry happens in 1m
+⠸ Retry happens in 1m
+⠼ Retry happens in 1m
+⠴ Retry happens in 1m
+⠦ Retry happens in 1m
+⠧ Retry happens in 50s
+⠇ Retry happens in 47s
+⠏ Retry happens in 44s
+⠋ Retry happens in 41s
+⠙ Retry happens in 38s
+⠹ Retry happens in 35s
+⠸ Retry happens in 32s
+⠼ Retry happens in 29s
+⠴ Retry happens in 26s
+⠦ Retry happens in 23s
+⠧ Retry happens in 20s
+⠇ Retry happens in 17s
+⠏ Retry happens in 14s
+⠋ Retry happens in 11s
+⠙ Retry happens in 8s
+⠹ Retry happens in 5s
+⠸ Retry happens in 2s
+✔ Request 2 successful!
+⠸ Retry happens in 2s
+⠸ Retry happens in 0s
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;RNA extracted -80 caja Amarilla&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;RNA extracted box 2&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;RNA extracted box 3&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;RNA extracted box 4&#39;&#39;.
+New names:
+✔ Reading from &quot;Nitrogen and -80-Current&quot;.
+✔ Range &#39;&#39;Template&#39;&#39;.
+New names:
+• `` -&gt; `...1`
+• `` -&gt; `...12`</code></pre>
+<pre class="r"><code>Nitrogen_and_80&lt;-Nitrogen_and_80[-which(names(Nitrogen_and_80)==&quot;Template&quot;)]</code></pre>
+<pre class="r"><code>box_names &lt;- names(Nitrogen_and_80)
+
+infer_box_type &lt;- function(x) {
+  case_when(
+    
+    # Pellets boxes
+    str_detect(x, regex(&quot;PELLETS&quot;, ignore_case = TRUE)) ~ &quot;pellets&quot;,
+    
+    # IPSC
+    str_detect(x, regex(&quot;IPSC&quot;, ignore_case = TRUE)) ~ &quot;ipsc&quot;,
+    
+    # Biopsy boxes (many variants)
+    str_detect(x, regex(&quot;BIOP|Biops?i&quot;, ignore_case = TRUE)) ~ &quot;biopsy&quot;,
+    
+    # Extracted DNA or RNA
+    str_detect(x, regex(&quot;DNA\\.extracted|RNA\\.extracted&quot;, ignore_case = TRUE)) ~ &quot;extracts&quot;,
+    
+    # ERGA
+    str_detect(x, regex(&quot;ERGA&quot;, ignore_case = TRUE)) ~ &quot;ERGA&quot;,
+    
+    # Fibroblast boxes
+    str_detect(x, regex(&quot;^Fibro|Fibro\\.BOX&quot;, ignore_case = TRUE)) ~ &quot;fibroblast&quot;,
+    
+    # Backup boxes:  
+    # any N2 boxes that are not biopsies/fibro/etc.
+    str_detect(x, regex(&quot;Bellaterra|to.go&quot;, ignore_case = TRUE)) ~ &quot;backup&quot;,
+    
+    # Everything else
+    TRUE ~ &quot;other&quot;
+  )
+}
+
+fibro_bio &lt;- data.frame(
+  box = box_names,
+  box_type = infer_box_type(box_names),
+  storage = if_else(str_detect(box_names,regex(&quot;80&quot;,ignore_case=TRUE)),&quot;-80ºC&quot;,
+                    if_else(str_detect(box_names,regex(&quot;N2|TANK&quot;,ignore_case=TRUE)),&quot;liquid-nitrogen&quot;,&quot;-80ºC&quot;)),
+  stringsAsFactors = FALSE)</code></pre>
+<pre class="r"><code>ggplot(fibro_bio)+
+  geom_bar(aes(box_type,fill=box_type))+
+  facet_grid(~storage,scales=&quot;free&quot;)</code></pre>
+<p><img src="figure/update_Cryostock.Rmd/unnamed-chunk-4-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<div id="make-long-table" class="section level2">
+<h2>make long table</h2>
+<pre class="r"><code>rm(cryo_long)</code></pre>
+<pre><code>Warning in rm(cryo_long): object &#39;cryo_long&#39; not found</code></pre>
+<pre class="r"><code>for (i in names(Nitrogen_and_80)[which(!(fibro_bio$box_type %in% c(&quot;extracts&quot;,&quot;pellets&quot;)))]){
+  print(i)
+    colnames(Nitrogen_and_80[[i]])[1]&lt;-&quot;row&quot;
+    if (!exists(&quot;cryo_long&quot;)){
+    cryo_long&lt;-Nitrogen_and_80[[i]] %&gt;%
+      filter(!is.na(row)) %&gt;%
+      mutate(across(everything(),as.character))%&gt;% 
+      pivot_longer(cols = 2:ncol(.),names_to = &quot;column&quot;,values_to = &quot;cryotube&quot;) %&gt;% 
+      mutate(box=i) %&gt;% 
+      select(&quot;row&quot;,&quot;column&quot;,&quot;cryotube&quot;,&quot;box&quot;)
+    } else {
+    cryo_long&lt;-bind_rows(cryo_long,
+                Nitrogen_and_80[[i]] %&gt;%
+      filter(!is.na(row)) %&gt;% 
+      mutate(across(everything(),as.character)) %&gt;% 
+      pivot_longer(cols = 2:ncol(.),names_to = &quot;column&quot;,values_to = &quot;cryotube&quot;) %&gt;% 
+      mutate(box=i)
+      ) %&gt;% 
+      select(&quot;row&quot;,&quot;column&quot;,&quot;cryotube&quot;,&quot;box&quot;)
+    }
+}</code></pre>
+<pre><code>[1] &quot;Cell.Lines.Bellaterra.II.N2&quot;
+[1] &quot;RED.BOX.3.N2.to.go&quot;
+[1] &quot;BOX1_N2_Bellaterra_RACK1&quot;
+[1] &quot;RED.BOX.1.N2.to.go&quot;
+[1] &quot;RED.BOX.2.N2.to.go&quot;
+[1] &quot;BELLATERA.BIOPSIAS.N2&quot;
+[1] &quot;Biopsias.caja.RED.1.N2&quot;
+[1] &quot;Biopsis.caja.RED.4.N2&quot;
+[1] &quot;Biopsias.caja.RED.3..80&quot;
+[1] &quot;Biopsis.caja.BLANCA..80&quot;
+[1] &quot;Biopsis.caja.RED.2..80.&quot;
+[1] &quot;BIOP6&quot;
+[1] &quot;BIOP.7.80&quot;
+[1] &quot;BIOP.8.80&quot;
+[1] &quot;BIOP.9.EMBL.TANK&quot;
+[1] &quot;BIOP.10.80&quot;
+[1] &quot;BIOP.11..80&quot;
+[1] &quot;Biop.12..80&quot;
+[1] &quot;Biop.13.EMBL.TANK&quot;
+[1] &quot;Biop.14.EMBL.TANK&quot;
+[1] &quot;Biop.15.EMBL.TANK&quot;
+[1] &quot;Biop.16.position.2.rack.EMBL&quot;
+[1] &quot;Biop.17.EMBL.TANK.RACK.7&quot;
+[1] &quot;Biop.18.EMBL.TANK.RACK.7&quot;
+[1] &quot;Biop.19..80&quot;
+[1] &quot;Fibro.BOX.18.EMBL.TANK&quot;
+[1] &quot;Fibro.BOX.19.EMBL.tank&quot;
+[1] &quot;Fibro.BOX.20.EMBL.TANK&quot;
+[1] &quot;Fibro.BOX.21..EMBL.TANK&quot;
+[1] &quot;Fibro.BOX.22...80ºC&quot;
+[1] &quot;Samples.ERGA_.80&quot;
+[1] &quot;BOX1_N2_RACK._IPSCs&quot;
+[1] &quot;BOX2_N2_RACK._IPSCs&quot;
+[1] &quot;BOX3_N2_RACK._IPSCs&quot;
+[1] &quot;X.provisional.BOX3_N2_RACKEMBL_IPSCs&quot;
+[1] &quot;X.provisional.BOX4_N2_RACKEMBL_IPSCs&quot;
+[1] &quot;BOX1_N2_RACK2&quot;
+[1] &quot;BOX2_N2_RACK2&quot;
+[1] &quot;BOX3_N2_RACK2&quot;
+[1] &quot;BOX4_N2_RACK2&quot;
+[1] &quot;Box5_Fibro.BOX.16_N2_RACK2&quot;
+[1] &quot;BOX6_N2_RACK2&quot;
+[1] &quot;Fibro.BOX.15.N2&quot;
+[1] &quot;BOX8_N2_RACK2&quot;
+[1] &quot;BOX9_N2_RACK2&quot;
+[1] &quot;BOX10_N2_RACK2&quot;
+[1] &quot;Fibro.BOX.17.N2&quot;
+[1] &quot;BOX12_N2_RACK2&quot;
+[1] &quot;BOX13_N2.RACK2&quot;
+[1] &quot;Fibro.BOX.14.N2&quot;
+[1] &quot;Box.mixed&quot;</code></pre>
+<pre class="r"><code>head(cryo_long)</code></pre>
+<pre><code># A tibble: 6 × 4
+  row   column   cryotube box                        
+  &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;                      
+1 ROW 1 COLUMN 1 A21 P2   Cell.Lines.Bellaterra.II.N2
+2 ROW 1 COLUMN 2 A21 P2   Cell.Lines.Bellaterra.II.N2
+3 ROW 1 COLUMN 3 A21 P3   Cell.Lines.Bellaterra.II.N2
+4 ROW 1 COLUMN 4 A50 P3   Cell.Lines.Bellaterra.II.N2
+5 ROW 1 COLUMN 5 A50 P3   Cell.Lines.Bellaterra.II.N2
+6 ROW 1 COLUMN 6 A50 P3   Cell.Lines.Bellaterra.II.N2</code></pre>
+<pre class="r"><code>cryo_full&lt;-cryo_long %&gt;% 
+  ungroup() %&gt;% 
+  filter(!(cryotube==&quot;NULL&quot;)) %&gt;% 
+  mutate(column=as.numeric(str_extract(column,&quot;\\d+&quot;))) %&gt;% 
+  mutate(row=as.numeric(str_extract(row,&quot;\\d+&quot;))) %&gt;% 
+  mutate(type=if_else(str_detect(box,&quot;N2&quot;),&quot;N2&quot;,&quot;-80&quot;)) %&gt;% 
+  mutate(animal_id = str_to_upper(str_extract(cryotube, &quot;[Aa]\\d+&quot;))) %&gt;% 
+  mutate(passage=str_extract(cryotube,pattern = &quot;[Pp]\\d+&quot;)) %&gt;%
+  left_join(fibro_bio) %&gt;% 
+  mutate(type2=case_when(str_detect(box,&quot;(?i)iPSC&quot;)~&quot;iPSC&quot;,
+                        str_detect(box,&quot;Fib&quot;)~&quot;Fibroblast&quot;,
+                        str_detect(box,&quot;(?i)Bio&quot;)~&quot;Biopsy&quot;,
+                        .default =&quot;other&quot;)) %&gt;% 
+  mutate(type2=case_when(type2==&quot;other&quot;&amp; str_detect(cryotube,&quot;(?i)Bio&quot;)~&quot;Biopsy&quot;,
+                         type2==&quot;other&quot;&amp; str_detect(cryotube,&quot;(?i)pbmc&quot;)~&quot;PBMC&quot;,
+                         type2==&quot;other&quot;&amp; str_detect(cryotube,&quot;(?i)pmbc&quot;)~&quot;PBMC&quot;,
+                         type2==&quot;other&quot;&amp; str_detect(cryotube,&quot;(?i)ipsc&quot;)~&quot;iPSC&quot;,
+                         type2==&quot;other&quot;&amp; str_detect(cryotube,&quot;(?i)fibro&quot;)~&quot;Fibroblast&quot;,
+                         T~type2)) %&gt;% 
+  filter(!is.na(animal_id)) %&gt;% 
+  mutate(type2=if_else(type2==&quot;other&quot;&amp; !is.na(passage),&quot;Fibroblast&quot;,type2)) %&gt;% 
+  mutate(info=str_remove(cryotube,pattern=animal_id)) %&gt;% 
+  mutate(passage=if_else(is.na(passage),&quot;-1&quot;,passage)) %&gt;% 
+  mutate(info =case_when(
+    passage==&quot;NA&quot; ~ info,
+    TRUE ~ str_remove(info, passage)))%&gt;% 
+  mutate(passage=if_else(passage==&quot;-1&quot;,NA_character_,passage)) %&gt;%
+  mutate(passage=as.numeric(str_remove(passage,pattern = &quot;[Pp]&quot;)))%&gt;% 
+  mutate(passage=if_else(is.na(passage)&amp; type2 %in% c(&quot;Biopsy&quot;,&quot;other&quot;),-1, passage)) %&gt;% 
+  mutate(passage=if_else(is.na(passage)&amp; type2==&quot;PBMC&quot;,0, passage)) %&gt;% 
+  mutate(passage=if_else(is.na(passage)&amp; type2==&quot;Fibroblast&quot;,0, passage)) %&gt;% 
+  filter(!is.na(cryotube)) %&gt;% 
+  filter(cryotube!=&quot;NULL&quot;)</code></pre>
+<pre><code>Joining with `by = join_by(box)`</code></pre>
+<pre class="r"><code>table(cryo_full$box,cryo_full$type2)</code></pre>
+<pre><code>                                      
+                                       Biopsy Fibroblast iPSC other PBMC
+  BELLATERA.BIOPSIAS.N2                    75          0    0     0    0
+  BIOP.10.80                               85          0    0     0    0
+  BIOP.11..80                              99          0    0     0    0
+  Biop.12..80                              75          0    0     0    0
+  Biop.13.EMBL.TANK                        79          0    0     0    0
+  Biop.14.EMBL.TANK                        80          0    0     0    0
+  Biop.15.EMBL.TANK                        78          0    0     0    0
+  Biop.16.position.2.rack.EMBL            100          0    0     0    0
+  Biop.17.EMBL.TANK.RACK.7                 81          0    0     0    0
+  Biop.18.EMBL.TANK.RACK.7                 81          0    0     0    0
+  Biop.19..80                              55          0    0     0    0
+  BIOP.7.80                                95          0    0     0    0
+  BIOP.8.80                                89          0    0     0    0
+  BIOP.9.EMBL.TANK                         97          0    0     0    0
+  BIOP6                                    94          0    0     0    0
+  Biopsias.caja.RED.1.N2                   87          0    0     0    0
+  Biopsias.caja.RED.3..80                  86          0    0     0    0
+  Biopsis.caja.BLANCA..80                  91          0    0     0    0
+  Biopsis.caja.RED.2..80.                  89          0    0     0    0
+  Biopsis.caja.RED.4.N2                    94          0    0     0    0
+  BOX1_N2_Bellaterra_RACK1                  0         64    0     0    0
+  BOX1_N2_RACK._IPSCs                       0          0   30     0    0
+  BOX1_N2_RACK2                            28         40    0    11    9
+  BOX10_N2_RACK2                           28         56    0     8    0
+  BOX12_N2_RACK2                            0         82    0     0    0
+  BOX13_N2.RACK2                            0         83    0     2    0
+  BOX2_N2_RACK._IPSCs                       0          0   33     0    0
+  BOX2_N2_RACK2                            23         34    0    15    2
+  BOX3_N2_RACK._IPSCs                       0          0   50     0    0
+  BOX3_N2_RACK2                             0         78    0     2    0
+  BOX4_N2_RACK2                            24         39    0    10   10
+  Box5_Fibro.BOX.16_N2_RACK2                0         78    0     0    0
+  BOX6_N2_RACK2                             0         90    0     0    0
+  BOX8_N2_RACK2                            28         29    0    12    9
+  BOX9_N2_RACK2                             7         27    0     7    6
+  Cell.Lines.Bellaterra.II.N2               0         70    0     0    0
+  Fibro.BOX.14.N2                           0         74    0     0    0
+  Fibro.BOX.15.N2                           0         91    0     0    0
+  Fibro.BOX.17.N2                           0         86    0     0    0
+  Fibro.BOX.18.EMBL.TANK                    0         94    0     0    0
+  Fibro.BOX.19.EMBL.tank                    0         76    0     0    0
+  Fibro.BOX.20.EMBL.TANK                    0         79    0     0    0
+  Fibro.BOX.21..EMBL.TANK                   0         79    0     0    0
+  Fibro.BOX.22...80ºC                       0         68    0     0    0
+  RED.BOX.1.N2.to.go                        4          6    0    76    0
+  RED.BOX.2.N2.to.go                        0         81    0     0    0
+  RED.BOX.3.N2.to.go                        0         61    0     3    0
+  Samples.ERGA_.80                          3          0    0    15    0
+  X.provisional.BOX3_N2_RACKEMBL_IPSCs      0          0   81     0    0
+  X.provisional.BOX4_N2_RACKEMBL_IPSCs      0          0   20     0    0</code></pre>
+<pre class="r"><code>cryo_full %&gt;% 
+  ggplot()+
+  geom_bar(aes(box,fill=type2))+
+  facet_grid(~paste0(box_type,&quot;\n(&quot;,storage,&quot;)&quot;),scales=&quot;free&quot;,space=&quot;free&quot;)+
+  theme(axis.text.x = element_text(angle=90,vjust=0.5),
+        legend.position = &quot;top&quot;)+
+  ggsci::scale_fill_bmj()</code></pre>
+<p><img src="figure/update_Cryostock.Rmd/unnamed-chunk-7-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>cryo_summary&lt;-cryo_full %&gt;% 
+  filter(!is.na(animal_id)) %&gt;% 
+  group_by(animal_id,type2) %&gt;% 
+  summarize(n_passages=length(unique(passage)),max_passage=max(passage)) </code></pre>
+<pre><code>`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by animal_id and type2.
+ℹ Output is grouped by animal_id.
+ℹ Use `summarise(.groups = &quot;drop_last&quot;)` to silence this message.
+ℹ Use `summarise(.by = c(animal_id, type2))` for per-operation grouping
+  (`?dplyr::dplyr_by`) instead.</code></pre>
+<pre class="r"><code>cryo_summary&lt;-cryo_full %&gt;% 
+  filter(!is.na(animal_id)) %&gt;% 
+  filter(!is.na(passage)) %&gt;% 
+  group_by(animal_id,type2,passage) %&gt;% 
+  summarize(CT_per_passage=n()) %&gt;% 
+  pivot_wider(id_cols = c(animal_id,type2),names_from = passage,values_from = CT_per_passage,values_fill = 0) %&gt;% 
+  ungroup() %&gt;% 
+  mutate(CT_total=rowSums(across(3:11))) %&gt;% 
+  left_join(cryo_summary)</code></pre>
+<pre><code>`summarise()` has regrouped the output.
+Joining with `by = join_by(animal_id, type2)`
+ℹ Summaries were computed grouped by animal_id, type2, and passage.
+ℹ Output is grouped by animal_id and type2.
+ℹ Use `summarise(.groups = &quot;drop_last&quot;)` to silence this message.
+ℹ Use `summarise(.by = c(animal_id, type2, passage))` for per-operation
+  grouping (`?dplyr::dplyr_by`) instead.</code></pre>
+<pre class="r"><code>ggplot(cryo_summary) +
+  geom_histogram(aes(max_passage,fill=type2))</code></pre>
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value `binwidth`.</code></pre>
+<pre><code>Warning: Removed 5 rows containing non-finite outside the scale range
+(`stat_bin()`).</code></pre>
+<p><img src="figure/update_Cryostock.Rmd/unnamed-chunk-8-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(cryo_summary)+
+  geom_vline(xintercept = c(2,5,10),col=&quot;grey&quot;,lty=&quot;dashed&quot;) +
+  geom_histogram(aes(CT_total,fill=type2),binwidth = 1)</code></pre>
+<p><img src="figure/update_Cryostock.Rmd/unnamed-chunk-9-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>saveRDS(cryo_full,paste0(path,&quot;/data/Cryo_stocks_long.rds&quot;))
+saveRDS(cryo_summary,paste0(path,&quot;/data/Cryo_stocks_summary.rds&quot;))
+
+write_sheet(cryo_full,&quot;https://docs.google.com/spreadsheets/d/1Vmbhsa0_075VgdC3F2f-5lZdB_RSTkgse3xdM-XbSGE/edit?usp=sharing&quot;,&quot;Cryo_stocks_long&quot;)</code></pre>
+<pre><code>✔ Writing to &quot;Sample locations&quot;.</code></pre>
+<pre><code>✔ Writing to sheet &#39;Cryo_stocks_long&#39;.</code></pre>
+<pre class="r"><code>write_sheet(cryo_summary,&quot;https://docs.google.com/spreadsheets/d/1Vmbhsa0_075VgdC3F2f-5lZdB_RSTkgse3xdM-XbSGE/edit?usp=sharing&quot;,&quot;Cryo_stocks_summary&quot;)</code></pre>
+<pre><code>✔ Writing to &quot;Sample locations&quot;.</code></pre>
+<pre><code>✔ Writing to sheet &#39;Cryo_stocks_summary&#39;.</code></pre>
+<pre class="r"><code>ggplot(cryo_full)+
+  geom_bar(aes(box,fill=type2))+
+  facet_grid(type~.,scales = &quot;free&quot;,space = &quot;free&quot;)+
+  coord_flip()</code></pre>
+<p><img src="figure/update_Cryostock.Rmd/unnamed-chunk-11-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(cryo_full)+
+  geom_bar(aes(type,fill=type2))+
+  coord_flip()</code></pre>
+<p><img src="figure/update_Cryostock.Rmd/unnamed-chunk-11-2.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>cryo_full %&gt;% 
+  filter(box==&quot;Fibro.BOX.14.N2&quot;) %&gt;% 
+
+ggplot()+
+  geom_raster(aes(column,row,fill=type2))+
+  geom_hline(yintercept = 0.5:10.5)+
+  geom_vline(xintercept = 0.5:10.5)+
+  scale_y_reverse(breaks=1:10)+
+  scale_x_continuous(breaks=1:12,position = &quot;top&quot;)+
+  geom_text(aes(column,row,label=animal_id))</code></pre>
+<p><img src="figure/update_Cryostock.Rmd/unnamed-chunk-11-3.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(cryo_full)+
+  geom_bar(aes(passage,fill=type2))+
+  xlim(NA,10)</code></pre>
+<pre><code>Warning: Removed 72 rows containing non-finite outside the scale range
+(`stat_count()`).</code></pre>
+<pre><code>Warning: Removed 1 row containing missing values or values outside the scale range
+(`geom_bar()`).</code></pre>
+<p><img src="figure/update_Cryostock.Rmd/unnamed-chunk-12-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>cryo_full %&gt;% 
+  filter(type2!=&quot;Biopsy&quot;) %&gt;% 
+ggplot()+
+  geom_bar(aes(animal_id,fill=factor(passage)))+
+  ylim(NA,20)+
+  theme(axis.text.x = element_text(angle=90,vjust=0.2))+
+  theme(legend.position = &quot;bottom&quot;)+
+  facet_grid(~type2,scales=&quot;free&quot;,space=&quot;free&quot;)</code></pre>
+<pre><code>Warning: Removed 14 rows containing missing values or values outside the scale range
+(`geom_bar()`).</code></pre>
+<p><img src="figure/update_Cryostock.Rmd/unnamed-chunk-13-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>if(exists(&quot;extr_long&quot;)) {rm(extr_long)}
+
+for (i in names(Nitrogen_and_80)[which(fibro_bio$box_type==&quot;extracts&quot;)]){
+  print(i)
+    colnames(Nitrogen_and_80[[i]])[1]&lt;-&quot;row&quot;
+    if (!exists(&quot;extr_long&quot;)){
+    extr_long&lt;-Nitrogen_and_80[[i]] %&gt;%
+      filter(!is.na(row)) %&gt;%
+      mutate(across(everything(),as.character))%&gt;% 
+      pivot_longer(cols = 2:ncol(.),names_to = &quot;column&quot;,values_to = &quot;cryotube&quot;) %&gt;% 
+      mutate(box=i) 
+    } else {
+    extr_long&lt;-bind_rows(extr_long,
+                Nitrogen_and_80[[i]] %&gt;%
+      filter(!is.na(row)) %&gt;% 
+      mutate(across(everything(),as.character)) %&gt;% 
+      pivot_longer(cols = 2:ncol(.),names_to = &quot;column&quot;,values_to = &quot;cryotube&quot;) %&gt;% 
+      mutate(box=i)
+      )
+    }
+}</code></pre>
+<pre><code>[1] &quot;DNA.extracted..80.caja.blanca.1.&quot;
+[1] &quot;DNA.extracted..80.caja.blanca.2&quot;
+[1] &quot;DNA.extracted..80.caja.blanca.3&quot;
+[1] &quot;DNA.extracted..80.4&quot;
+[1] &quot;DNA.extracted..80.5&quot;
+[1] &quot;DNA.extracted..80.6&quot;
+[1] &quot;RNA.extracted..80.caja.Amarilla&quot;
+[1] &quot;RNA.extracted.box.2&quot;
+[1] &quot;RNA.extracted.box.3&quot;
+[1] &quot;RNA.extracted.box.4&quot;</code></pre>
+<pre class="r"><code>extr_long&lt;-extr_long %&gt;% 
+  mutate(type=str_extract(box,pattern=&quot;^[^.]*&quot;)) %&gt;% 
+  filter(!is.na(cryotube))
+
+saveRDS(extr_long,paste0(path,&quot;/data/Extractions_long.rds&quot;))
+
+
+write_sheet(extr_long,&quot;https://docs.google.com/spreadsheets/d/1Vmbhsa0_075VgdC3F2f-5lZdB_RSTkgse3xdM-XbSGE/edit?usp=sharing&quot;,&quot;Extractions_long&quot;)</code></pre>
+<pre><code>✔ Writing to &quot;Sample locations&quot;.</code></pre>
+<pre><code>✔ Writing to sheet &#39;Extractions_long&#39;.</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.6.0 (2026-04-24)
+Platform: aarch64-apple-darwin23
+Running under: macOS Tahoe 26.5.1
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: Europe/Madrid
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] lubridate_1.9.5     forcats_1.0.1       stringr_1.6.0      
+ [4] dplyr_1.2.1         purrr_1.2.2         readr_2.2.0        
+ [7] tidyr_1.3.2         tibble_3.3.1        ggplot2_4.0.3      
+[10] tidyverse_2.0.0     googlesheets4_1.1.2 workflowr_1.7.2    
+
+loaded via a namespace (and not attached):
+ [1] utf8_1.2.6         rappdirs_0.3.4     sass_0.4.10        generics_0.1.4    
+ [5] stringi_1.8.7      hms_1.1.4          digest_0.6.39      magrittr_2.0.5    
+ [9] timechange_0.4.0   evaluate_1.0.5     grid_4.6.0         RColorBrewer_1.1-3
+[13] fastmap_1.2.0      cellranger_1.1.0   rprojroot_2.1.1    jsonlite_2.0.0    
+[17] processx_3.9.0     whisker_0.4.1      googledrive_2.1.2  promises_1.5.0    
+[21] httr_1.4.8         scales_1.4.0       jquerylib_0.1.4    cli_3.6.6         
+[25] rlang_1.3.0        withr_3.0.3        cachem_1.1.0       yaml_2.3.12       
+[29] otel_0.2.0         tools_4.6.0        tzdb_0.5.0         gargle_1.6.1      
+[33] httpuv_1.6.17      here_1.0.2         curl_7.1.0         vctrs_0.7.3       
+[37] R6_2.6.1           lifecycle_1.0.5    git2r_0.36.2       fs_2.1.0          
+[41] pkgconfig_2.0.3    callr_3.8.0        pillar_1.11.1      bslib_0.11.0      
+[45] later_1.4.8        gtable_0.3.6       glue_1.8.1         Rcpp_1.1.2        
+[49] xfun_0.59          tidyselect_1.2.1   rstudioapi_0.19.0  knitr_1.51        
+[53] farver_2.1.2       htmltools_0.5.9    ggsci_5.1.0        labeling_0.4.3    
+[57] rmarkdown_2.31     compiler_4.6.0     getPass_0.2-4      S7_0.2.2          
+[61] askpass_1.2.1      openssl_2.4.2     </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

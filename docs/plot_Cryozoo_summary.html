@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>2. Plotting the Cryozoo</title>
+
+<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Cryozoo_project</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/lewange/cryozoo-overview">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">2. Plotting the Cryozoo</h1>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2026-07-09
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>1.Species_selection/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.2). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20221125code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20221125)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20221125code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20221125)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlewangecryozoooverviewtreebc97d32a4b3835a26ceb5de289174aaa4ec57b5etargetblankbc97d32a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/lewange/cryozoo-overview/tree/bc97d32a4b3835a26ceb5de289174aaa4ec57b5e" target="_blank">bc97d32</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomlewangecryozoooverviewtreebc97d32a4b3835a26ceb5de289174aaa4ec57b5etargetblankbc97d32a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/lewange/cryozoo-overview/tree/bc97d32a4b3835a26ceb5de289174aaa4ec57b5e" target="_blank">bc97d32</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    .RData
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    Cryozoo_clean.gsheet
+    Ignored:    Sample_selection_ongoing.gsheet
+    Ignored:    all_species_selection.gsheet
+    Ignored:    analysis/Update_Sample_table.nb.html
+    Ignored:    analysis/goat_cache/
+    Ignored:    analysis/update_Cell_culture.nb.html
+    Ignored:    analysis/update_Cryostock.nb.html
+    Ignored:    analysis/update_Extractions.nb.html
+    Ignored:    analysis/update_Sequencing.nb.html
+    Ignored:    selected_species_assays_Fixed_LK.gsheet
+
+Untracked files:
+    Untracked:  .Rprofile
+    Untracked:  .gitattributes
+    Untracked:  Cryozoo_project.Rproj
+    Untracked:  README.md
+    Untracked:  _workflowr.yml
+    Untracked:  analysis/Clean_CryoZoo_Lists.Rmd
+    Untracked:  analysis/README.md
+    Untracked:  analysis/archive/
+    Untracked:  analysis/plot_trees_simple.R
+    Untracked:  archive/
+    Untracked:  code/
+    Untracked:  data/
+    Untracked:  output/
+    Untracked:  selected_species.csv
+    Untracked:  selected_species_short.csv
+    Untracked:  selection_best_genomes.csv
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/plot_Cryozoo_summary.Rmd</code>)
+and HTML (<code>docs/plot_Cryozoo_summary.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lewange/cryozoo-overview/blob/bc97d32a4b3835a26ceb5de289174aaa4ec57b5e/analysis/plot_Cryozoo_summary.Rmd" target="_blank">bc97d32</a>
+</td>
+<td>
+Luca Wange
+</td>
+<td>
+2026-07-09
+</td>
+<td>
+Publish analysis
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lewange/cryozoo-overview/blob/717f83ec644af8f3a771f74e1523665a29a9d4e0/analysis/plot_Cryozoo_summary.Rmd" target="_blank">717f83e</a>
+</td>
+<td>
+Luca Wange
+</td>
+<td>
+2026-07-09
+</td>
+<td>
+Host with GitHub.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lewange/cryozoo-overview/blob/a22d48b5054fc43b98dd4832328d44c5539966a8/analysis/plot_Cryozoo_summary.Rmd" target="_blank">a22d48b</a>
+</td>
+<td>
+Luca Wange
+</td>
+<td>
+2026-06-12
+</td>
+<td>
+Overhaul analysis scripts and add simple tree plotting script
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<pre class="r"><code>library(tidyverse)
+library(cowplot)
+library(readxl)
+
+theme_set(theme_classic())
+
+here::here()</code></pre>
+<pre><code>[1] &quot;/Users/lucas/Library/CloudStorage/GoogleDrive-lucasesteban.wange@upf.edu/My Drive/Projects/Cryozoo/1.Species_selection&quot;</code></pre>
+<pre class="r"><code>path&lt;-here::here()
+
+# load colour palettes
+
+source(&quot;https://raw.githubusercontent.com/mammalian-iPSCs/colour-palettes/main/palettes.R&quot;)</code></pre>
+<p>This script aims to summarize and plot the species present in the
+cryozoo. It is based on lists from the “Clean_CryoZoo_Lists.Rmd” script
+so make sure to run this before.</p>
+<pre class="r"><code>List_of_species&lt;-readRDS(paste0(path,&quot;/output/Species_List_with_genome_and_cl_info.rds&quot;))
+
+
+table(List_of_species$fibro_l)</code></pre>
+<pre><code>
+FALSE  TRUE 
+  117   212 </code></pre>
+<pre class="r"><code>sum_list&lt;-List_of_species %&gt;% 
+  group_by(superclass) %&gt;% 
+  summarize(nspecies=n())
+
+sum(sum_list$nspecies)</code></pre>
+<pre><code>[1] 329</code></pre>
+<pre class="r"><code>table(List_of_species$superclass)</code></pre>
+<pre><code>
+    Fish Amphibia   Reptil    Birds Mammalia 
+      16       26       58      108      121 </code></pre>
+<div id="general-species-level-summary" class="section level2">
+<h2>General Species level summary</h2>
+<pre class="r"><code>bar.all_spec&lt;-ggplot(data=List_of_species)+
+  geom_bar(aes(x=&quot;All\n Samples&quot;,fill=superclass))+
+  geom_text(data=sum_list,aes(label=nspecies),x=&quot;All\n Samples&quot;,y=c(320,300,255,175,60),color=&quot;white&quot;)+
+  labs(x=&quot;&quot;,y=&quot;Number of species&quot;,fill=&quot;&quot;)+
+  coord_flip()+
+  theme_minimal()+
+  theme(legend.position = &quot;top&quot;,
+        axis.ticks.y=element_blank(),
+        axis.line.y = element_blank())+
+  scale_fill_manual(values=class_col,limits=force)
+
+
+
+bar.fibro&lt;-ggplot(data=List_of_species)+
+  geom_bar(aes(x=superclass,fill=superclass,alpha=fibro_l))+
+  labs(x=&quot;&quot;,y=&quot;Number of species&quot;,fill=&quot;&quot;,alpha=&quot;Fibroblasts established&quot;)+
+  coord_flip()+
+  ggsci::scale_fill_aaas()+
+  theme_minimal()+
+  theme(legend.position = c(0.8,0.4),
+        axis.ticks.y=element_blank(),
+        axis.line.y = element_blank())+
+  guides(fill=&quot;none&quot;)+
+  scale_fill_manual(values=class_col,limits=force)</code></pre>
+<pre><code>Scale for fill is already present.
+Adding another scale for fill, which will replace the existing scale.</code></pre>
+<pre class="r"><code>plot_grid(bar.all_spec,bar.fibro,nrow = 2,rel_heights = c(0.3,0.7),align = &quot;v&quot;,axis=&quot;tblr&quot;)</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-3-1.png" alt="" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>save_plot(plot = plot_grid(bar.all_spec,bar.fibro,nrow = 2,rel_heights = c(0.3,0.7),align = &quot;v&quot;,axis=&quot;tblr&quot;),base_height = 5,base_width = 8,filename = paste0(path,&quot;/output/figures/overview.png&quot;))</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+</div>
+<div id="cell-lines-per-order" class="section level2">
+<h2>Cell lines per order</h2>
+<pre class="r"><code>taxlevel&lt;-List_of_species %&gt;% 
+  group_by(order) %&gt;% 
+  mutate(samples_per_taxlevel=n()) %&gt;% 
+  group_by(class) %&gt;% 
+  mutate(taxlevel=if_else(samples_per_taxlevel&gt;5,&quot;order&quot;,&quot;class&quot;),
+        samples_per_taxlevel=if_else(samples_per_taxlevel&gt;5,samples_per_taxlevel,n()),
+        taxon=if_else(taxlevel==&quot;order&quot;,order,class),
+        taxon=if_else(is.na(taxon),superclass,taxon)) %&gt;% 
+  select(order,class,samples_per_taxlevel,taxlevel,taxon) %&gt;% 
+  distinct()
+  
+  
+
+for (i in unique(taxlevel$taxon)) {
+
+print(i)
+tl&lt;-taxlevel %&gt;% 
+  filter(taxon==i) %&gt;% 
+  select(taxlevel) %&gt;% 
+  distinct() %&gt;% 
+  pull(taxlevel)
+
+filt &lt;- List_of_species %&gt;% 
+  filter(if (tl == &quot;order&quot;) order == i else class == i)
+
+filt %&gt;% 
+ggplot()+
+  geom_bar(aes(x=family,fill=superclass,alpha=fibro_l))+
+  labs(x=&quot;&quot;,y=&quot;Number of species&quot;,fill=&quot;&quot;,alpha=&quot;Fibroblasts?&quot;)+
+  coord_flip()+
+  theme_minimal()+
+  theme(legend.position = &quot;right&quot;,
+        axis.ticks.y=element_blank(),
+        axis.line.y = element_blank())+
+  guides(fill=&quot;none&quot;)+
+  scale_fill_manual(values=class_col,limits=force)+
+  ggtitle(paste(i,&quot;Species with Fibroblast lines&quot;))-&gt;p
+  
+print(p)
+}</code></pre>
+<pre><code>[1] &quot;Actinopteri&quot;</code></pre>
+<pre><code>Adding missing grouping variables: `class`</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-4-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;Chondrichthyes&quot;</code></pre>
+<pre><code>Adding missing grouping variables: `class`</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-4-2.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;Caudata&quot;</code></pre>
+<pre><code>Adding missing grouping variables: `class`</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-4-3.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;Anura&quot;</code></pre>
+<pre><code>Adding missing grouping variables: `class`</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-4-4.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;Reptil&quot;</code></pre>
+<pre><code>Adding missing grouping variables: `class`</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-4-5.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;Testudines&quot;</code></pre>
+<pre><code>Adding missing grouping variables: `class`</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-4-6.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;Squamata&quot;</code></pre>
+<pre><code>Adding missing grouping variables: `class`</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-4-7.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;Aves&quot;</code></pre>
+<pre><code>Adding missing grouping variables: `class`</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-4-8.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;Accipitriformes&quot;</code></pre>
+<pre><code>Adding missing grouping variables: `class`</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-4-9.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;Anseriformes&quot;</code></pre>
+<pre><code>Adding missing grouping variables: `class`</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-4-10.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;Columbiformes&quot;</code></pre>
+<pre><code>Adding missing grouping variables: `class`</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-4-11.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;Pelecaniformes&quot;</code></pre>
+<pre><code>Adding missing grouping variables: `class`</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-4-12.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;Psittaciformes&quot;</code></pre>
+<pre><code>Adding missing grouping variables: `class`</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-4-13.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;Passeriformes&quot;</code></pre>
+<pre><code>Adding missing grouping variables: `class`</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-4-14.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;Mammalia&quot;</code></pre>
+<pre><code>Adding missing grouping variables: `class`</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-4-15.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;Perissodactyla&quot;</code></pre>
+<pre><code>Adding missing grouping variables: `class`</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-4-16.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;Rodentia&quot;</code></pre>
+<pre><code>Adding missing grouping variables: `class`</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-4-17.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;Carnivora&quot;</code></pre>
+<pre><code>Adding missing grouping variables: `class`</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-4-18.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;Primates&quot;</code></pre>
+<pre><code>Adding missing grouping variables: `class`</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-4-19.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;Artiodactyla&quot;</code></pre>
+<pre><code>Adding missing grouping variables: `class`</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-4-20.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="species-by-iucn-status" class="section level2">
+<h2>Species by IUCN status</h2>
+<pre class="r"><code>names(IUCN_COLOURS) &lt;- c(&quot;LEAST CONCERN&quot;, &quot;NEAR THREATENED&quot;, &quot;VULNERABLE&quot;, &quot;ENDANGERED&quot;,
+                          &quot;CRITICALLY ENDANGERED&quot;, &quot;EXTINCT IN THE WILD&quot;, &quot;EXTINCT&quot;,
+                          &quot;DATA DEFICIENT&quot;, &quot;NOT EVALUATED&quot;)
+
+bar.iucn&lt;-List_of_species %&gt;% 
+  filter(!is.na(iucn_category)) %&gt;% 
+  mutate(iucn_category=factor(iucn_category,levels=c(&quot;EXTINCT IN THE WILD&quot;,&quot;CRITICALLY ENDANGERED&quot;,&quot;ENDANGERED&quot;,&quot;VULNERABLE&quot;,&quot;NEAR THREATENED&quot;,&quot;LEAST CONCERN&quot;,&quot;NA&quot;)
+                              )) %&gt;% 
+  ggplot()+
+  geom_bar(aes(x=superclass,fill=iucn_category),position=position_stack())+
+  labs(x=&quot;&quot;,y=&quot;Number of species&quot;,fill=&quot;IUCN status&quot;)+
+  coord_flip()+
+  theme_minimal()+
+  theme(legend.position = c(0.7,0.3),
+        axis.ticks.y=element_blank(),
+        axis.line.y = element_blank())+
+  scale_fill_manual(values=IUCN_COLOURS)
+bar.iucn</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-5-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>save_plot(plot = bar.iucn,base_height = 5,base_width = 5,filename = paste0(path,&quot;/output/figures/bar.iucn.png&quot;))</code></pre>
+</div>
+<div id="iucn-status-all" class="section level2">
+<h2>IUCN status all</h2>
+<pre class="r"><code>List_of_species %&gt;% 
+  filter(!is.na(iucn_category)) %&gt;% 
+  mutate(iucn_category=factor(iucn_category,levels=c(&quot;EXTINCT IN THE WILD&quot;,&quot;CRITICALLY ENDANGERED&quot;,&quot;ENDANGERED&quot;,&quot;VULNERABLE&quot;,&quot;NEAR THREATENED&quot;,&quot;LEAST CONCERN&quot;,&quot;NA&quot;)
+                              )) %&gt;% 
+  ggplot()+
+  geom_bar(aes(x=&quot;all&quot;,fill=iucn_category),position=position_stack())+
+  labs(x=&quot;&quot;,y=&quot;Number of species&quot;,fill=&quot;IUCN status&quot;)+
+  theme_minimal()+
+  scale_fill_manual(values=IUCN_COLOURS)</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-6-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>table(List_of_species$iucn_category)</code></pre>
+<pre><code>
+ CRITICALLY ENDANGERED             ENDANGERED    EXTINCT IN THE WILD 
+                    20                     31                      3 
+         LEAST CONCERN                     NA        NEAR THREATENED 
+                   183                      6                     32 
+            VULNERABLE VULNERABLE, ENDANGERED 
+                    51                      1 </code></pre>
+</div>
+<div id="replicates-per-class" class="section level2">
+<h2>Replicates per Class</h2>
+<pre class="r"><code>p.samples&lt;-ggplot(data=List_of_species)+
+  geom_bar(aes(x=individuals,fill=superclass),position = position_dodge(),show.legend = F)+
+  labs(x=&quot;Number of individuals&quot;,y=&quot;Number of species&quot;,fill=&quot;&quot;)+
+  facet_grid(superclass~.)+
+  scale_fill_manual(values=class_col,limits=force)+
+  scale_x_continuous(breaks=c(1:20))+
+  theme_bw()
+
+p.samples</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-7-1.png" alt="" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>save_plot(plot = p.samples,base_height = 5,base_width = 5,filename = paste0(path,&quot;/output/figures/p.samples.png&quot;))</code></pre>
+</div>
+<div id="replicates-binned" class="section level2">
+<h2>Replicates binned</h2>
+<pre class="r"><code>p.samples2&lt;-List_of_species %&gt;% 
+  mutate(samples_cat=case_when(individuals==1~ &quot;one&quot;,
+                               individuals==2~ &quot;two&quot;,
+                               individuals==3 ~ &quot;three&quot;,
+                               individuals&gt;3 ~ &quot;more than three&quot;)) %&gt;% 
+  mutate(samples_cat=factor(samples_cat,levels=rev(c(&quot;more than three&quot;,&quot;three&quot;,&quot;two&quot;,&quot;one&quot;)))) %&gt;% 
+  mutate(superclass=forcats::fct_rev(superclass)) %&gt;% 
+  
+    ggplot()+
+  geom_bar(aes(superclass,fill=samples_cat),position = position_dodge())+
+  coord_flip()+
+  scale_fill_viridis_d(direction = -1)+
+  labs(y=&quot;number of species&quot;,x=&quot;&quot;,fill=&quot;Replicates per species&quot;)+
+  theme(legend.position = &quot;top&quot;)
+
+p.samples2</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-8-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>save_plot(plot = p.samples2,base_height = 5,base_width = 5,filename = paste0(path,&quot;/output/figures/p.samples2.png&quot;))</code></pre>
+</div>
+<div id="representation-of-cryozoo-species" class="section level1">
+<h1>representation of cryozoo species</h1>
+<pre class="r"><code>all_species_summary&lt;-readRDS(paste0(path,&quot;/data/mammal_data_orders.rds&quot;))</code></pre>
+<pre class="r"><code>ggplot(all_species_summary)+
+  geom_col(aes(y=nspecies,x=group),position = position_dodge())+
+  facet_wrap(~order,scales = &quot;free_x&quot;)+
+  coord_flip()</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-10-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(all_species_summary)+
+  geom_col(aes(y=ngenera,x=group),position = position_dodge())+
+  facet_wrap(~order,scales = &quot;free_x&quot;)+
+  coord_flip()</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-11-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(all_species_summary)+
+  geom_col(aes(y=nfamily,x=group),position = position_dodge())+
+  facet_wrap(~order)+
+  coord_flip()</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-12-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>all_mammals&lt;-all_species_summary %&gt;% 
+  filter(group==&quot;all_mammals&quot;) %&gt;% 
+  ungroup() %&gt;% 
+  select(-c(group)) %&gt;% 
+  rename(total_genera=ngenera,
+         total_species=nspecies,
+         total_families=nfamily)
+  
+ all_species_summary&lt;-all_species_summary %&gt;% 
+   filter(group!=&quot;all_mammals&quot;) %&gt;% 
+   left_join(all_mammals) %&gt;% 
+   mutate(p_species=(nspecies/total_species)*100,
+          p_genera=(ngenera/total_genera)*100,
+          p_families=(nfamily/total_families)*100)</code></pre>
+<pre><code>Joining with `by = join_by(class, phylum, order)`</code></pre>
+<pre class="r"><code>  ggplot()+
+    ggbeeswarm::geom_beeswarm(data=all_species_summary,aes(x=reorder(order,total_species),col=group,y=p_species,size=total_species))+
+    coord_flip()+
+    theme_light()+
+      scale_colour_manual(values=c(&quot;zoonomia&quot;=&quot;#e63946&quot;,&quot;cryozoo&quot;=&quot;#6987b5&quot;))+
+      labs(x=&quot;mammalian orders\n (sorted by number of species)&quot;,y=&quot;percent of all species covered&quot;)</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-13-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>sum_long&lt;-all_species_summary %&gt;% 
+  pivot_longer(cols=c(p_species,p_genera,p_families),names_to = c(&quot;P&quot;,&quot;tax_level&quot;),values_to = &quot;percent&quot;,names_sep = &quot;_&quot;) %&gt;% 
+  select(-P) %&gt;% 
+  mutate(tax_level=factor(tax_level,levels=rev(c(&quot;families&quot;,&quot;genera&quot;,&quot;species&quot;))))
+
+ggplot()+
+    ggbeeswarm::geom_beeswarm(data=sum_long,aes(x=reorder(order,total_species),colour=group,y=percent),position=position_dodge())+
+    coord_flip()+
+    theme_light()+
+      scale_colour_manual(values=c(&quot;zoonomia&quot;=&quot;#e63946&quot;,&quot;cryozoo&quot;=&quot;#6987b5&quot;))+
+      labs(x=&quot;mammalian orders\n (sorted by number of species)&quot;,y=&quot;percent of all taxonomic units covered&quot;) +
+  facet_grid(~tax_level)</code></pre>
+<pre><code>Warning in ggbeeswarm::geom_beeswarm(data = sum_long, aes(x = reorder(order, :
+Ignoring unknown parameters: `position`</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-14-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>taxlevel_colours&lt;- c(
+    &quot;species&quot; = &quot;#2AA37F&quot;,
+    &quot;genera&quot;   = &quot;#E18445&quot;,
+    &quot;families&quot;  = &quot;#9490C3&quot;
+  )
+
+sum_long&lt;-all_species_summary %&gt;% 
+  filter(group==&quot;cryozoo&quot;) %&gt;% 
+  pivot_longer(cols=c(p_species,p_genera,p_families),names_to = c(&quot;P&quot;,&quot;tax_level&quot;),values_to = &quot;percent&quot;,names_sep = &quot;_&quot;) %&gt;% 
+  select(-P) %&gt;% 
+  mutate(tax_level=factor(tax_level,levels=rev(c(&quot;families&quot;,&quot;genera&quot;,&quot;species&quot;))))
+
+ggplot()+
+    ggbeeswarm::geom_beeswarm(data=sum_long,aes(x=reorder(order,total_species),colour=tax_level,y=percent),position=position_dodge())+
+    coord_flip()+
+    theme_light()+
+      scale_colour_manual(values=taxlevel_colours)+
+      labs(x=&quot;mammalian orders\n (sorted by number of species)&quot;,y=&quot;percent of all taxonomic units covered&quot;)</code></pre>
+<pre><code>Warning in ggbeeswarm::geom_beeswarm(data = sum_long, aes(x = reorder(order, :
+Ignoring unknown parameters: `position`</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-15-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="summary-plots-genome" class="section level1">
+<h1>Summary plots genome</h1>
+<div id="refgenome-sequencing" class="section level2">
+<h2>Refgenome sequencing</h2>
+<pre class="r"><code># per superclass
+
+List_of_species%&gt;% 
+  mutate(sequencing_status=factor(sequencing_status,levels=rev(c(&quot;sample_collected&quot;,&quot;sample_acquired&quot;,&quot;in_progress&quot;,&quot;open&quot;,&quot;insdc_open&quot;,&quot;published&quot;)))) %&gt;% 
+  mutate(superclass=factor(superclass,levels=rev(c(&quot;Mammalia&quot;,&quot;Birds&quot;,&quot;Amphibia&quot;,&quot;Reptil&quot;,&quot;Fish&quot;)))) %&gt;% 
+
+ggplot()+
+  geom_bar(aes(fill=sequencing_status,x=superclass))+
+  coord_flip()</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-16-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># per order
+
+List_of_species %&gt;% 
+  mutate(sequencing_status=factor(sequencing_status,levels=rev(c(&quot;sample_collected&quot;,&quot;sample_acquired&quot;,&quot;in_progress&quot;,&quot;open&quot;,&quot;insdc_open&quot;,&quot;published&quot;)))) %&gt;% 
+   mutate(superclass=factor(superclass,levels=rev(c(&quot;Mammalia&quot;,&quot;Birds&quot;,&quot;Amphibia&quot;,&quot;Reptil&quot;,&quot;Fish&quot;)))) %&gt;% 
+ggplot()+
+  geom_bar(aes(fill=sequencing_status,x=order))+
+  coord_flip()+
+  facet_grid(superclass~genome,scales = &quot;free&quot;,space = &quot;free&quot;) </code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-17-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="only-fibroblast-cell-lines" class="section level1">
+<h1>Only Fibroblast cell lines:</h1>
+<div id="based-on-species-table" class="section level3">
+<h3>Based on species table</h3>
+<pre class="r"><code>List_of_cell_lines&lt;-List_of_species %&gt;% 
+  filter(fibro_l) %&gt;% 
+  group_by(order) %&gt;% 
+  mutate(nspecies=n()) %&gt;% 
+  ungroup() %&gt;% 
+  arrange(nspecies)
+
+order_col &lt;- scales::hue_pal()(length(unique(List_of_cell_lines$order)))
+names(order_col)&lt;-unique(List_of_cell_lines$order)
+
+
+p.species_per_order&lt;-ggplot(List_of_cell_lines)+
+  geom_bar(aes(y=reorder(order,nspecies),fill=order),show.legend = F)+
+  labs(y=&quot;&quot;,x=&quot;Number of species&quot;)+
+  scale_x_reverse()+
+  theme(axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(),
+        axis.line.y = element_blank())+
+  scale_fill_manual(values=order_col,limits=force)+
+  facet_grid(superclass~.,scales = &quot;free&quot;,space=&quot;free&quot;)
+
+
+p.sample_per_species&lt;-ggplot(List_of_cell_lines)+
+  stat_summary(fun.data = &quot;mean_se&quot;,aes(x=individuals,y=reorder(order,nspecies),col=order),show.legend = F)+
+  #ggbeeswarm::geom_quasirandom(aes(x=individuals,y=reorder(order,nspecies),colour=order),groupOnX = F,show.legend = F)+
+  labs(y=&quot;&quot;,x=&quot;Number of samples&quot;)+
+  scale_x_continuous(breaks=1:15)+
+  scale_colour_manual(values=order_col,limits=force)+
+  facet_grid(superclass~.,scales = &quot;free&quot;,space=&quot;free&quot;)
+
+
+p.byorder&lt;-plot_grid(p.species_per_order,p.sample_per_species,rel_widths = c(0.45,0.55))</code></pre>
+<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
+(`geom_segment()`).</code></pre>
+<pre><code>Warning: Removed 7 rows containing missing values or values outside the scale range
+(`geom_segment()`).</code></pre>
+<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
+(`geom_segment()`).</code></pre>
+<pre class="r"><code>p.byorder</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-18-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>save_plot(plot = p.byorder,base_height = 8,base_width = 8,filename = paste0(path,&quot;/output/figures/p.byorder.png&quot;))</code></pre>
+<pre class="r"><code>library(colorspace)
+
+
+make_shaded_palette &lt;- function(base_cols, shade_labels, amount = 0.3, name_sep=&quot; &quot;, direction=c(&quot;light_to_dark&quot;, &quot;dark_to_light&quot;)) {
+  direction &lt;- match.arg(direction)
+  n_shades &lt;- length(shade_labels)
+  
+  # spread shade amounts evenly from +amount (lightest) to -amount (darkest)
+  # e.g. n=2 -&gt; c(0.3, -0.3); n=3 -&gt; c(0.3, 0, -0.3); n=5 -&gt; c(0.3, 0.15, 0, -0.15, -0.3)
+  shade_amounts &lt;- seq(amount, -amount, length.out = n_shades)
+  
+  if (direction == &quot;dark_to_light&quot;) {
+    shade_amounts &lt;- rev(shade_amounts)
+  }
+  
+  shaded &lt;- lapply(names(base_cols), function(nm) {
+    sapply(shade_amounts, function(a) {
+      if (a &gt; 0) lighten(base_cols[[nm]], amount = a)
+      else if (a &lt; 0) darken(base_cols[[nm]], amount = abs(a))
+      else base_cols[[nm]]
+    })
+  })
+  
+  
+  
+  shaded_cols &lt;- unlist(shaded)
+  names(shaded_cols) &lt;- as.vector(outer(shade_labels, names(base_cols),
+                                         FUN = function(s, n) paste(n, s, sep = name_sep)))
+  
+  # reorder so it&#39;s grouped by base colour, not by shade
+  shaded_cols &lt;- shaded_cols[order(rep(seq_along(base_cols), each = n_shades))]
+  
+  shaded_cols
+}
+
+class_genome_cols &lt;- make_shaded_palette(class_col, 
+                                         shade_labels = c(&quot;Not Available&quot;,&quot;Available&quot;),
+                                         direction=&quot;light_to_dark&quot;)
+
+List_of_species %&gt;% 
+  mutate(genome_class=if_else(genome,paste(superclass, &quot;Available&quot;),paste(superclass,&quot;Not Available&quot;)),
+         genome_class=factor(genome_class,levels = rev(c(&quot;Mammalia Available&quot;, &quot;Mammalia Not Available&quot;,&quot;Birds Available&quot;,&quot;Birds Not Available&quot;,&quot;Amphibia Available&quot;,&quot;Amphibia Not Available&quot;,&quot;Reptil Available&quot;,&quot;Reptil Not Available&quot;,&quot;Fish Available&quot;,&quot;Fish Not Available&quot;)))) %&gt;% 
+ggplot()+
+  geom_bar(aes(fill=genome_class,x=superclass),position=position_fill())+
+  coord_flip()+
+  labs(y=&quot;percent of species with genome&quot;,x= &quot;&quot;)+
+  scale_fill_manual(values = class_genome_cols)+
+  scale_y_continuous(labels = scales::label_percent())+
+  theme_bw()+
+  guides(fill=&quot;none&quot;)</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-19-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(List_of_species)+
+  geom_bar(aes(fill=superclass,alpha=genome_match,x=superclass),position=position_fill())+
+  coord_flip()+
+  labs(y=&quot;percent of species with genome&quot;,x= &quot;&quot;)+
+  scale_fill_manual(values = class_col)+
+  scale_y_continuous(labels = scales::label_percent())+
+  theme_bw()+
+  guides(fill=&quot;none&quot;)</code></pre>
+<pre><code>Warning: Using alpha for a discrete variable is not advised.</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-20-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>p.genome&lt;-ggplot(List_of_species)+
+  geom_bar(aes(fill=assembly_level,x=superclass))+
+  coord_flip()+
+  labs(y=&quot;Number of Species&quot;,x= &quot;&quot;,
+       title= &quot;Genome availability&quot;,
+       fill= &quot;assembly level&quot;)+
+  scale_fill_manual(values = assembly_levels_cols)+
+  theme_bw()
+
+p.genome</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-21-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>save_plot(plot = p.genome,base_height = 5,base_width = 8,filename = paste0(path,&quot;/output/figures/p.genome.png&quot;))</code></pre>
+<pre class="r"><code>p.genomefibro&lt;-ggplot(List_of_species)+
+  geom_bar(aes(x=superclass,fill=cat,alpha=cat_num))+
+  coord_flip()+
+  labs(y=&quot;Number of Species&quot;,x= &quot;&quot;,
+       fill= &quot;group&quot;)+
+  ggsci::scale_fill_npg()+
+  theme_bw()+
+  guides(alpha=&quot;none&quot;)
+p.genomefibro</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-22-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>save_plot(plot = p.genomefibro,base_height = 5,base_width = 8,filename = paste0(path,&quot;/output/figures/p.genomefibro.png&quot;))
+
+table(List_of_species$cat,List_of_species$superclass,useNA = &quot;always&quot;)</code></pre>
+<pre><code>         
+          Fish Amphibia Reptil Birds Mammalia &lt;NA&gt;
+  Neither    6       10     21     9        0    0
+  Fibro      1        4     18    13        4    0
+  Genome     8        5     11    32       15    0
+  Both       1        7      8    54      102    0
+  &lt;NA&gt;       0        0      0     0        0    0</code></pre>
+</div>
+</div>
+<div id="toga-overlap" class="section level1">
+<h1>TOGA overlap</h1>
+<pre class="r"><code>toga_cols&lt;-c(&quot;toga1/2&quot;=&quot;#8fbd17&quot;,&quot;toga1&quot;=&quot;#005b88&quot;,&quot;toga2&quot;=&quot;#7852a2&quot;,&quot;not_in_toga&quot;=&quot;grey75&quot;)
+
+List_of_species&lt;-List_of_species %&gt;% 
+  mutate(TOGA=factor(TOGA_ref,levels=rev(c(&quot;toga1/2&quot;,&quot;toga1&quot;,&quot;toga2&quot;,&quot;not_in_toga&quot;))))
+
+TOGA_ol&lt;-ggplot(List_of_species)+
+  geom_bar(aes(x=superclass,fill=TOGA))+
+  coord_flip()+
+  labs(y=&quot;Number of Species&quot;,x= &quot;&quot;,
+       fill= &quot;group&quot;)+
+  scale_fill_manual(values = toga_cols)+
+  theme_bw()
+
+TOGA_ol</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-23-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>TOGA_ol_mam&lt;-List_of_species %&gt;% 
+  filter(class== &quot;Mammalia&quot;) %&gt;%
+  group_by(order) %&gt;% 
+  mutate(nspec=n()) %&gt;% 
+ggplot()+
+  geom_bar(aes(x=reorder(order,nspec),fill=TOGA),show.legend = F)+
+  coord_flip()+
+  labs(y=&quot;Number of Species&quot;,x= &quot;&quot;,
+       fill= &quot;group&quot;)+
+  scale_fill_manual(values = toga_cols)+
+  theme_bw()
+
+TOGA_ol_mam</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-24-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>annotation_cols &lt;- c(
+  &quot;TOGA&quot;                  = &quot;#73CAB2&quot;,  # pastel bluish green
+  &quot;refseq&quot;                = &quot;#73B1D5&quot;,  # pastel blue
+  &quot;ensembl&quot;               = &quot;#F1CA73&quot;,  # pastel orange
+  &quot;TOGA/refseq&quot;           = &quot;#A2D6F3&quot;,  # pastel sky blue
+  &quot;TOGA/ensembl&quot;          = &quot;#E8A673&quot;,  # pastel vermillion
+  &quot;refseq/ensembl&quot;        = &quot;#E3B5CF&quot;,  # pastel reddish purple
+  &quot;TOGA/refseq/ensembl&quot;   = &quot;#737373&quot;,  # charcoal (kept darker so it doesn&#39;t wash into &quot;no_annotation&quot;)
+  &quot;no_annotation&quot;         = &quot;grey80&quot;
+)
+
+List_of_species&lt;-List_of_species %&gt;% 
+  mutate(TOGA= TOGA_species%in%c(&quot;toga1/2&quot;,&quot;toga1&quot;,&quot;toga2&quot;)) %&gt;% 
+  mutate(annotation_level = case_when(
+    rowSums(across(c(TOGA, refseq, ensembl))) == 0 ~ &quot;no_annotation&quot;,
+    TRUE ~ pmap_chr(list(TOGA, refseq, ensembl), function(t, r, e) {
+      paste(c(&quot;TOGA&quot;[t], &quot;refseq&quot;[r], &quot;ensembl&quot;[e]), collapse = &quot;/&quot;)
+    })
+  ))
+
+p.annot&lt;-ggplot(List_of_species)+
+  geom_bar(aes(x=superclass,fill=annotation_level))+
+  coord_flip()+
+  labs(y=&quot;Number of Species&quot;,x= &quot;&quot;,
+       fill= &quot;annotation level&quot;,
+       title = &quot;Genome annotation&quot;)+
+  scale_fill_manual(values = annotation_cols)+
+  theme_bw()
+
+p.annot</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-25-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>library(patchwork)</code></pre>
+<pre><code>
+Attaching package: &#39;patchwork&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:cowplot&#39;:
+
+    align_plots</code></pre>
+<pre class="r"><code>p.genome / p.annot</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-25-2.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>save_plot(plot = p.genome / p.annot ,base_height = 5,base_width = 8,filename = paste0(path,&quot;/output/figures/p.genome_assembly_annotation.png&quot;))</code></pre>
+<pre class="r"><code>selection&lt;-List_of_species %&gt;% 
+  filter(cat==&quot;Both&quot;) %&gt;% 
+  #filter(superclass != &quot;Fish&quot;) %&gt;% 
+  mutate(fibro2=if_else(fibro==0,1,as.double(fibro))) %&gt;% 
+  mutate(to_process=if_else(fibro2&gt;1,2,as.double(fibro2))) %&gt;% 
+  group_by(order) %&gt;% 
+  mutate(nspecies=n(),
+         order2=if_else(nspecies&gt;2,order,&quot;Other&quot;)) %&gt;% 
+  group_by(scientific_name) %&gt;% 
+  mutate(assembly_level=factor(assembly_level,levels=c(&quot;Complete Genome&quot;,&quot;Chromosome&quot;,&quot;Scaffold&quot;,&quot;Contig&quot;)))
+
+table(selection$superclass) # species</code></pre>
+<pre><code>
+    Fish Amphibia   Reptil    Birds Mammalia 
+       1        7        8       54      102 </code></pre>
+<pre class="r"><code>table(selection$to_process,selection$superclass)</code></pre>
+<pre><code>   
+    Fish Amphibia Reptil Birds Mammalia
+  1    1        7      8    45       37
+  2    0        0      0     9       65</code></pre>
+<pre class="r"><code>p.genomequality&lt;-selection %&gt;% 
+  pivot_longer(cols=c(scaffold_n50,contig_n50), names_to=&quot;metric&quot;,values_to = &quot;value&quot;) %&gt;% 
+ggplot()+
+  geom_boxplot(aes(x=superclass,y=value,col=assembly_level),outlier.shape = NA)+
+  ggbeeswarm::geom_beeswarm(aes(x=superclass,y=value,group=assembly_level),col=&quot;grey45&quot;,show.legend = T,groupOnX = T,dodge.width = 0.7,alpha=0.5)+
+  facet_wrap(.~metric)+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle=45,hjust=1))+
+  scale_y_log10()+
+  labs(x=&quot;&quot;)+
+  ggsci::scale_color_futurama()</code></pre>
+<pre><code>Warning: The `groupOnX` argument of `position_beeswarm()` is deprecated as of ggbeeswarm
+0.7.1.
+ℹ The axis to group on is now guessed from the data. To override, specify
+  orientation=&quot;x&quot; or &quot;y&quot;.
+This warning is displayed once per session.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+generated.</code></pre>
+<pre class="r"><code>p.genomequality</code></pre>
+<pre><code>Warning: Removed 3 rows containing non-finite outside the scale range
+(`stat_boxplot()`).</code></pre>
+<pre><code>Warning: Removed 3 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-26-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>save_plot(plot = p.genomequality,base_height = 5,base_width = 5,filename = paste0(path,&quot;/output/figures/p.genomequality.png&quot;))</code></pre>
+<pre><code>Warning: Removed 3 rows containing non-finite outside the scale range
+(`stat_boxplot()`).
+Removed 3 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+<pre class="r"><code>p.genome_size&lt;-selection %&gt;% 
+  group_by(superclass) %&gt;% 
+  mutate(med_g_size=median(genome_size)) %&gt;% 
+  ggplot()+
+    geom_boxplot(aes(x=superclass,y=genome_size),col=&quot;grey75&quot;,outlier.shape = NA)+
+    ggbeeswarm::geom_beeswarm(aes(x=superclass,y=genome_size,col=superclass),
+                              show.legend = T,alpha=0.5)+
+    geom_label(aes(x=superclass,y=2*10^9,label=scales::scientific(med_g_size,2),colour=superclass),show.legend = F)+
+    theme_bw()+
+    theme(axis.text.x = element_text(angle=45,hjust=1))+
+    scale_y_log10()+
+    labs(x=&quot;&quot;)+
+    scale_fill_manual(values=class_col,limits=force)+
+    ggsci::scale_color_jama()
+
+p.genome_size</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-27-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>save_plot(plot = p.genome_size,base_height = 5,base_width = 5,filename = paste0(path,&quot;/output/figures/p.genome_size.png&quot;))</code></pre>
+<p>Genome size between Mammals and Birds differs by a factor of ~ 2.3.
+for Chip-seq this might mean we need 2.3 times the number of cells for
+the same amount of chromatin input into the IP.</p>
+<pre class="r"><code>ggplot(selection) +
+  geom_bar(aes(x=order,fill=order),show.legend = F)+
+  facet_grid(superclass~.,scales = &quot;free_y&quot;,space=&quot;free&quot;)+
+  coord_flip()+
+  labs(y=&quot;Number of Species&quot;)+
+  scale_fill_manual(values=order_col)</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-28-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<div
+id="select-species-with-best-genome-and-most-samples-for-method-establishment"
+class="section level3">
+<h3>Select species with best genome and most samples for method
+establishment</h3>
+<pre class="r"><code>best_genome_mammals&lt;-selection %&gt;% 
+  filter(superclass==&quot;Mammalia&quot;) %&gt;% 
+  #group_by(order) %&gt;% 
+  slice_max(scaffold_n50,n=30) %&gt;% 
+  ungroup() %&gt;% 
+  slice_max(fibro&gt;1,n=30) %&gt;% 
+  slice_max(individuals,n=20) %&gt;% 
+  arrange(fibro)
+
+
+best_genome_Birds&lt;-selection %&gt;% 
+  filter(superclass==&quot;Birds&quot;) %&gt;% 
+  #group_by(order) %&gt;% 
+  ungroup() %&gt;% 
+  slice_max(fibro&gt;1,n=10) %&gt;% 
+  slice_max(scaffold_n50,n=10)
+
+best_genome&lt;-bind_rows(best_genome_mammals,best_genome_Birds) %&gt;% 
+  write_excel_csv(file = paste0(path,&quot;/selection_best_genomes.csv&quot;))
+
+selection_final&lt;-selection %&gt;% 
+  filter(superclass!=&quot;Fish&quot;) %&gt;% 
+  filter(!duplicated(scientific_name)) %&gt;% 
+  mutate(selected=if_else(species%in%best_genome$species,T,F))
+
+write_excel_csv(selection_final, file = paste0(path,&quot;/selected_species.csv&quot;))
+
+selection_final%&gt;% 
+  select(scientific_name,iucn_category,superclass,class,genus,individuals,fibro,tissue_of_origin,assembly_level,scaffold_n50,genome_size,genome_match,selected) %&gt;% 
+  write_excel_csv(file = paste0(path,&quot;/selected_species_short.csv&quot;))</code></pre>
+<p>#Replicates</p>
+<pre class="r"><code>List_of_species %&gt;% 
+  mutate(reps=if_else(fibro&gt;2,&quot;3 or more&quot;,as.character(fibro))) %&gt;% 
+  filter(reps!=&quot;0&quot;) %&gt;% 
+ggplot()+
+  geom_bar(aes(x=reps,fill=genome))+
+  ggsci::scale_fill_npg()+
+  facet_wrap(~superclass)</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-30-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="sample-sources" class="section level2">
+<h2>Sample Sources</h2>
+<pre class="r"><code>sample_table&lt;-readRDS(paste0(path,&quot;/output/Sample_List_all_species_clean.rds&quot;)) %&gt;% 
+  mutate(origin=case_when(origin==&quot;U&quot;~&quot;UNKNOWN&quot;,
+                          origin==&quot;UNKOWN&quot;~&quot;UNKNOWN&quot;,
+                          origin==&quot;-&quot;~&quot;UNKNOWN&quot;,
+                          is.na(origin)~&quot;UNKNOWN&quot;,
+                          T~origin))
+
+ggplot(sample_table)+
+  geom_bar(aes(x=superclass,fill=origin))</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-31-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="plot-the-sample-provenance" class="section level1">
+<h1>Plot the sample provenance</h1>
+<div id="make-a-color-scale" class="section level4">
+<h4>make a color scale</h4>
+<p>from Sample table</p>
+<pre class="r"><code>library(scales)</code></pre>
+<pre><code>
+Attaching package: &#39;scales&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:purrr&#39;:
+
+    discard</code></pre>
+<pre><code>The following object is masked from &#39;package:readr&#39;:
+
+    col_factor</code></pre>
+<pre class="r"><code># Assign categories
+df &lt;- tibble(name = sort(unique(sample_table$coming_from_clean))) %&gt;%
+  mutate(category = case_when(
+    grepl(&quot;(?i)aquarium&quot;, name) | grepl(&quot;(?i)Oceanografic&quot;, name) ~ &quot;Aquarium&quot;,
+    grepl(&quot;(?i)zoo&quot;, name) ~ &quot;Zoo&quot;,
+    TRUE ~ &quot;Other&quot;
+  ))
+
+# Generate red-&gt;orange-&gt;yellow palette
+zoo_colors &lt;- colorRampPalette(c(&quot;red&quot;, &quot;orange&quot;, &quot;yellow&quot;))(
+  length(unique(df$name[df$category == &quot;Zoo&quot;]))
+)
+
+
+# Aquarium colors: blues
+aq_colors  &lt;- scales::hue_pal(h = c(200, 260))(
+  length(unique(df$name[df$category == &quot;Aquarium&quot;]))
+)
+
+# Other colors: greys
+oth_colors &lt;- gray.colors(
+  length(unique(df$name[df$category == &quot;Other&quot;])), 
+  start = 0.2, end = 0.7
+)
+
+color_map &lt;- c(
+  setNames(zoo_colors, df$name[df$category == &quot;Zoo&quot;]),
+  setNames(aq_colors,  df$name[df$category == &quot;Aquarium&quot;]),
+  setNames(oth_colors, df$name[df$category == &quot;Other&quot;])
+)</code></pre>
+</div>
+</div>
+<div id="plot-sample-provenance" class="section level1">
+<h1>plot sample provenance</h1>
+<pre class="r"><code>sample_table %&gt;% 
+  mutate(superclass=if_else(is.na(superclass),&quot;Sample_discarded&quot;,superclass),
+         superclass=factor(superclass,levels=rev(c(&quot;Mammalia&quot;,&quot;Birds&quot;,&quot;Reptil&quot;,&quot;Amphibia&quot;,&quot;Fish&quot;,&quot;Sample_discarded&quot;)))) %&gt;% 
+  ggplot()+
+  geom_bar(aes(x=superclass,fill=coming_from_clean))+
+  scale_fill_manual(values= color_map)+
+  coord_flip()+
+  labs(fill=&quot;sample source&quot;,x=&quot;&quot;,y=&quot;number of samples&quot;)</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-33-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="plot-superclass-per-provider" class="section level1">
+<h1>plot superclass per provider</h1>
+<pre class="r"><code>sample_table %&gt;% 
+  mutate(superclass=if_else(is.na(superclass),&quot;Sample_discarded&quot;,superclass),
+         superclass=factor(superclass,levels=rev(c(&quot;Mammalia&quot;,&quot;Birds&quot;,&quot;Reptil&quot;,&quot;Amphibia&quot;,&quot;Fish&quot;,&quot;Sample_discarded&quot;)))) %&gt;% 
+  group_by(coming_from_clean) %&gt;% 
+  filter(!is.na(superclass)) %&gt;% 
+  mutate(samples=n()) %&gt;% 
+  ggplot()+
+  geom_bar(aes(x=reorder(coming_from_clean,samples),fill=superclass))+
+  scale_fill_manual(values = class_col,breaks = names(class_col))+
+  coord_flip()+
+  labs(fill=&quot;class&quot;,x=&quot;&quot;,y=&quot;number of samples&quot;)</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-34-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="plot-fibroblast-generation-per-superclass"
+class="section level1">
+<h1>plot fibroblast generation per superclass</h1>
+<pre class="r"><code>sample_table %&gt;%
+  filter(cell_type!=c(&quot;PBMc&quot;,&quot;unclear&quot;)) %&gt;% 
+  mutate(fibro_l=factor(if_else(cell_type==&quot;Fibro&quot;, &quot;Fibroblast line&quot;, &quot;No fibroblast line&quot;),
+                        levels=c(&quot;No fibroblast line&quot;,&quot;Fibroblast line&quot;)),
+         superclass=factor(superclass,
+                           levels=rev(c(&quot;Mammalia&quot;,&quot;Birds&quot;,&quot;Reptil&quot;,&quot;Amphibia&quot;,&quot;Fish&quot;,&quot;Sample_discarded&quot;))
+                           )) %&gt;%
+  ggplot()+
+  geom_bar(aes(x=superclass,fill=factor(fibro_l)),position=position_fill())+
+  scale_fill_manual(values = c(&quot;grey75&quot;,&quot;#e63946&quot;),labels=c(&quot;No fibroblast line&quot;,&quot;Fibroblast line&quot;))+
+  coord_flip()+
+  labs(fill=&quot;Fibroblast line established?&quot;,x=&quot;&quot;,y=&quot;number of samples&quot;)</code></pre>
+<pre><code>Warning: There was 1 warning in `filter()`.
+ℹ In argument: `cell_type != c(&quot;PBMc&quot;, &quot;unclear&quot;)`.
+Caused by warning in `cell_type != c(&quot;PBMc&quot;, &quot;unclear&quot;)`:
+! longer object length is not a multiple of shorter object length</code></pre>
+<p><img src="figure/plot_Cryozoo_summary.Rmd/unnamed-chunk-35-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<div id="save-data" class="section level2">
+<h2>Save data</h2>
+<pre class="r"><code>saveRDS(List_of_species,paste0(path,&quot;/output/Species_List_with_genome_and_cl_info2.rds&quot;))
+
+# write_excel_csv(filter(List_of_species,superclass==&quot;Birds&quot;) %&gt;% 
+#   ungroup() %&gt;% 
+#   select(scientific_name),paste0(path,&quot;/output/bird_names.csv&quot;))</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.6.0 (2026-04-24)
+Platform: aarch64-apple-darwin23
+Running under: macOS Tahoe 26.5.1
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: Europe/Madrid
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] scales_1.4.0     patchwork_1.3.2  colorspace_2.1-2 readxl_1.5.0    
+ [5] cowplot_1.2.0    lubridate_1.9.5  forcats_1.0.1    stringr_1.6.0   
+ [9] dplyr_1.2.1      purrr_1.2.2      readr_2.2.0      tidyr_1.3.2     
+[13] tibble_3.3.1     ggplot2_4.0.3    tidyverse_2.0.0  workflowr_1.7.2 
+
+loaded via a namespace (and not attached):
+ [1] gtable_0.3.6       beeswarm_0.4.0     xfun_0.59          bslib_0.11.0      
+ [5] processx_3.9.0     callr_3.8.0        tzdb_0.5.0         vctrs_0.7.3       
+ [9] tools_4.6.0        generics_0.1.4     parallel_4.6.0     pkgconfig_2.0.3   
+[13] RColorBrewer_1.1-3 S7_0.2.2           lifecycle_1.0.5    compiler_4.6.0    
+[17] farver_2.1.2       git2r_0.36.2       textshaping_1.0.5  ggsci_5.1.0       
+[21] getPass_0.2-4      vipor_0.4.7        httpuv_1.6.17      htmltools_0.5.9   
+[25] sass_0.4.10        yaml_2.3.12        crayon_1.5.3       later_1.4.8       
+[29] pillar_1.11.1      jquerylib_0.1.4    whisker_0.4.1      cachem_1.1.0      
+[33] tidyselect_1.2.1   digest_0.6.39      stringi_1.8.7      labeling_0.4.3    
+[37] rprojroot_2.1.1    fastmap_1.2.0      grid_4.6.0         here_1.0.2        
+[41] cli_3.6.6          magrittr_2.0.5     withr_3.0.3        promises_1.5.0    
+[45] bit64_4.8.2        ggbeeswarm_0.7.3   timechange_0.4.0   rmarkdown_2.31    
+[49] httr_1.4.8         bit_4.6.0          otel_0.2.0         cellranger_1.1.0  
+[53] ragg_1.5.2         hms_1.1.4          evaluate_1.0.5     knitr_1.51        
+[57] viridisLite_0.4.3  rlang_1.3.0        Rcpp_1.1.2         glue_1.8.1        
+[61] vroom_1.7.1        rstudioapi_0.19.0  jsonlite_2.0.0     R6_2.6.1          
+[65] systemfonts_1.3.2  fs_2.1.0          </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

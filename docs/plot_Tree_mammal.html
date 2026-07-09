@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>5.1 Cryozoo - trees</title>
+
+<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Cryozoo_project</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/lewange/cryozoo-overview">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">5.1 Cryozoo - trees</h1>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2026-07-09
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>1.Species_selection/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.2). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20221125code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20221125)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20221125code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20221125)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlewangecryozoooverviewtreebc97d32a4b3835a26ceb5de289174aaa4ec57b5etargetblankbc97d32a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/lewange/cryozoo-overview/tree/bc97d32a4b3835a26ceb5de289174aaa4ec57b5e" target="_blank">bc97d32</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomlewangecryozoooverviewtreebc97d32a4b3835a26ceb5de289174aaa4ec57b5etargetblankbc97d32a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/lewange/cryozoo-overview/tree/bc97d32a4b3835a26ceb5de289174aaa4ec57b5e" target="_blank">bc97d32</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    .RData
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    Cryozoo_clean.gsheet
+    Ignored:    Sample_selection_ongoing.gsheet
+    Ignored:    all_species_selection.gsheet
+    Ignored:    analysis/Update_Sample_table.nb.html
+    Ignored:    analysis/goat_cache/
+    Ignored:    analysis/update_Cell_culture.nb.html
+    Ignored:    analysis/update_Cryostock.nb.html
+    Ignored:    analysis/update_Extractions.nb.html
+    Ignored:    analysis/update_Sequencing.nb.html
+    Ignored:    selected_species_assays_Fixed_LK.gsheet
+
+Untracked files:
+    Untracked:  .Rprofile
+    Untracked:  .gitattributes
+    Untracked:  Cryozoo_project.Rproj
+    Untracked:  README.md
+    Untracked:  _workflowr.yml
+    Untracked:  analysis/Clean_CryoZoo_Lists.Rmd
+    Untracked:  analysis/README.md
+    Untracked:  analysis/archive/
+    Untracked:  analysis/plot_trees_simple.R
+    Untracked:  archive/
+    Untracked:  code/
+    Untracked:  data/
+    Untracked:  output/
+    Untracked:  selected_species.csv
+    Untracked:  selected_species_short.csv
+    Untracked:  selection_best_genomes.csv
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/plot_Tree_mammal.Rmd</code>) and
+HTML (<code>docs/plot_Tree_mammal.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lewange/cryozoo-overview/blob/bc97d32a4b3835a26ceb5de289174aaa4ec57b5e/analysis/plot_Tree_mammal.Rmd" target="_blank">bc97d32</a>
+</td>
+<td>
+Luca Wange
+</td>
+<td>
+2026-07-09
+</td>
+<td>
+Publish analysis
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lewange/cryozoo-overview/blob/717f83ec644af8f3a771f74e1523665a29a9d4e0/analysis/plot_Tree_mammal.Rmd" target="_blank">717f83e</a>
+</td>
+<td>
+Luca Wange
+</td>
+<td>
+2026-07-09
+</td>
+<td>
+Host with GitHub.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lewange/cryozoo-overview/blob/a22d48b5054fc43b98dd4832328d44c5539966a8/analysis/plot_Tree_mammal.Rmd" target="_blank">a22d48b</a>
+</td>
+<td>
+Luca Wange
+</td>
+<td>
+2026-06-12
+</td>
+<td>
+Overhaul analysis scripts and add simple tree plotting script
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<pre class="r"><code>##
+library(tidyverse)</code></pre>
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.2.1     ✔ readr     2.2.0
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+✔ purrr     1.2.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre class="r"><code>library(cowplot)</code></pre>
+<pre><code>
+Attaching package: &#39;cowplot&#39;
+
+The following object is masked from &#39;package:lubridate&#39;:
+
+    stamp</code></pre>
+<pre class="r"><code>library(treedataverse)</code></pre>
+<pre><code>── Attaching packages ─────────────────────────────────── treedataverse 0.0.1 ──
+✔ ape         5.8.1      ✔ ggtree      4.2.0 
+✔ tidytree    0.4.8      ✔ ggtreeExtra 1.22.1
+✔ treeio      1.36.1     </code></pre>
+<pre><code>Warning: package &#39;tidytree&#39; was built under R version 4.6.1</code></pre>
+<pre><code>── Conflicts ────────────────────────────────────── treedataverse_conflicts() ──
+✖ treeio::drop.tip()   masks tidytree::drop.tip(), ape::drop.tip()
+✖ ggtree::expand()     masks tidyr::expand()
+✖ tidytree::filter()   masks dplyr::filter(), stats::filter()
+✖ tidytree::keep.tip() masks ape::keep.tip()
+✖ dplyr::lag()         masks stats::lag()
+✖ ggtree::rotate()     masks ape::rotate()
+✖ ape::where()         masks dplyr::where()</code></pre>
+<pre class="r"><code>library(magrittr)</code></pre>
+<pre><code>
+Attaching package: &#39;magrittr&#39;
+
+The following object is masked from &#39;package:ggtree&#39;:
+
+    inset
+
+The following object is masked from &#39;package:purrr&#39;:
+
+    set_names
+
+The following object is masked from &#39;package:tidyr&#39;:
+
+    extract</code></pre>
+<pre class="r"><code>library(RColorBrewer)
+library(readxl)
+library(googlesheets4)
+
+## plotting options
+theme_set(theme_bw())
+
+
+here::here()</code></pre>
+<pre><code>[1] &quot;/Users/lucas/Library/CloudStorage/GoogleDrive-lucasesteban.wange@upf.edu/My Drive/Projects/Cryozoo/1.Species_selection&quot;</code></pre>
+<pre class="r"><code>#path&lt;-here::here()
+
+path&lt;-here::here()</code></pre>
+<div id="mamphy-supertree-vertlife" class="section level3">
+<h3>MamPhy supertree (vertlife)</h3>
+<pre class="r"><code>big_tree&lt;-drop.tip(read.nexus(paste0(path,&quot;/data/MamPhy_fullPosterior_BDvr_DNAonly_4098sp_topoFree_NDexp_MCC_v2_target.tre&quot;)),&quot;_Anolis_carolinensis&quot;)
+
+summary_species&lt;-readRDS(paste0(path,&quot;/output/Species_List_with_genome_and_cl_info2.rds&quot;)) %&gt;%
+  filter(class==&quot;Mammalia&quot;) %&gt;% 
+  filter(!duplicated(species)) %&gt;% 
+  mutate(cryo_sample=case_when(cell_line==&quot;Fibro/PBMc&quot;~&quot;Fibroblast and PBMc&quot;,
+                               cell_line==&quot;Fibro&quot;~&quot;Fibroblast&quot;,
+                               cell_line==&quot;PBMc&quot;~&quot;PBMc&quot;,
+                               cell_line==&quot;No cell line&quot;~&quot;Biopsy&quot;)
+)
+
+species_selection&lt;- read_sheet(
+  &quot;https://docs.google.com/spreadsheets/d/1k-0sFR4AuaA0hAM2qeUZ8IMvLx96vY2JIQbwrNQtLj0/edit?usp=drive_link&quot;
+) %&gt;%
+  arrange(-silencer, -illumina, species) %&gt;%
+  select(silencer, illumina, species)</code></pre>
+<pre><code>! Using an auto-discovered, cached token.</code></pre>
+<pre><code>  To suppress this message, modify your code or options to clearly consent to
+  the use of a cached token.</code></pre>
+<pre><code>  See gargle&#39;s &quot;Non-interactive auth&quot; vignette for more details:</code></pre>
+<pre><code>  &lt;https://gargle.r-lib.org/articles/non-interactive-auth.html&gt;</code></pre>
+<pre><code>ℹ The googlesheets4 package is using a cached token for
+  &#39;lucasesteban.wange@upf.edu&#39;.</code></pre>
+<pre><code>Auto-refreshing stale OAuth token.</code></pre>
+<pre><code>✔ Reading from &quot;selected_species_assays_Fixed_LK&quot;.</code></pre>
+<pre><code>✔ Range &#39;selected_species&#39;.</code></pre>
+<pre class="r"><code>summary_species&lt;-summary_species %&gt;% left_join(species_selection) </code></pre>
+<pre><code>Joining with `by = join_by(species, silencer, illumina)`</code></pre>
+<pre class="r"><code>tree_meta &lt;- data.frame(label=big_tree$tip.label) %&gt;%
+  separate(col = label,sep = &quot;_&quot;,into = c(&quot;s1&quot;,&quot;s2&quot;,&quot;family&quot;,&quot;order&quot;),remove = F) %&gt;%
+  unite(c(s1,s2),col = &quot;species_&quot;,sep = &quot;_&quot;) %&gt;%
+  mutate(family=str_to_title(family),
+         order=str_to_title(order))
+
+table(summary_species$species_ %in% tree_meta$species_)</code></pre>
+<pre><code>
+FALSE  TRUE 
+    8   108 </code></pre>
+</div>
+<div id="replace-incorrect-species-names-in-tree"
+class="section level1">
+<h1>replace incorrect species names in tree</h1>
+<pre class="r"><code>summary_species[!(summary_species$species_ %in% tree_meta$species_),]</code></pre>
+<pre><code># A tibble: 8 × 81
+  scientific_name         species subspecies subfamily cites_annex iucn_category
+  &lt;chr&gt;                   &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;        
+1 Notamacropus rufogrise… Notama… &lt;NA&gt;       &lt;NA&gt;      -           LEAST CONCERN
+2 Osphranter rufus        Osphra… &lt;NA&gt;       &lt;NA&gt;      -           LEAST CONCERN
+3 Equus przewalskii       Equus … &lt;NA&gt;       &lt;NA&gt;      I           ENDANGERED   
+4 Otaria byronia          Otaria… &lt;NA&gt;       &lt;NA&gt;      -           LEAST CONCERN
+5 Aonyx cinereus          Aonyx … &lt;NA&gt;       &lt;NA&gt;      I           VULNERABLE   
+6 Hydrictis maculicollis  Hydric… &lt;NA&gt;       &lt;NA&gt;      &lt;NA&gt;        NEAR THREATE…
+7 Cercocebus lunulatus    Cercoc… &lt;NA&gt;       &lt;NA&gt;      II          ENDANGERED   
+8 Hexaprotodon liberiens… Hexapr… &lt;NA&gt;       &lt;NA&gt;      II          ENDANGERED   
+# ℹ 75 more variables: individuals &lt;dbl&gt;, sex &lt;chr&gt;, superclass &lt;fct&gt;,
+#   cell_line &lt;fct&gt;, karyotype &lt;chr&gt;, dna &lt;chr&gt;, rna &lt;chr&gt;,
+#   wgs_sequencing &lt;chr&gt;, rna_seq &lt;chr&gt;, i_psc &lt;chr&gt;, tissue_of_origin &lt;chr&gt;,
+#   alternative_name &lt;chr&gt;, species_ &lt;chr&gt;, taxon_id &lt;chr&gt;, synonym &lt;chr&gt;,
+#   tolid_prefix &lt;chr&gt;, assembly_id &lt;chr&gt;, assembly_name &lt;chr&gt;,
+#   genbank_accession &lt;chr&gt;, refseq_accession &lt;chr&gt;, genus &lt;chr&gt;, family &lt;chr&gt;,
+#   order &lt;chr&gt;, class &lt;chr&gt;, phylum &lt;chr&gt;, kingdom &lt;chr&gt;, …</code></pre>
+<pre class="r"><code>summary_species$tree_MD&lt;-summary_species$species_%in%tree_meta$species_
+
+table(summary_species$tree_MD)</code></pre>
+<pre><code>
+FALSE  TRUE 
+    8   108 </code></pre>
+<pre class="r"><code># replace incorrect species names in tree
+Wrong_Species_names2 &lt;- read_excel(paste0(path,&quot;/data/Wrong_Species_names2.xlsx&quot;))%&gt;% 
+  filter(superclass==&quot;Mammals&quot;)
+
+tree_meta[tree_meta$species_ %in% Wrong_Species_names2$mammal_tree_name, ]$species_ &lt;-
+  Wrong_Species_names2$species_name_
+
+summary_species$tree_MD&lt;-summary_species$species_%in%tree_meta$species_
+
+table(summary_species$tree_MD)</code></pre>
+<pre><code>
+FALSE  TRUE 
+    2   114 </code></pre>
+<pre class="r"><code>#replace incorect species names in species list
+summary_species %&lt;&gt;%
+  mutate(species=if_else(tree_MD,species,alternative_name),
+         species_=gsub(species,pattern = &quot; &quot;,replacement = &quot;_&quot;))
+
+summary_species$tree_MD&lt;-summary_species$species_%in%tree_meta$species_
+
+table(summary_species$tree_MD)</code></pre>
+<pre><code>
+FALSE  TRUE 
+    2   114 </code></pre>
+<pre class="r"><code>summary_species[!(summary_species$species_%in%tree_meta$species_),]</code></pre>
+<pre><code># A tibble: 2 × 82
+  scientific_name        species  subspecies subfamily cites_annex iucn_category
+  &lt;chr&gt;                  &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;        
+1 Equus przewalskii      Equus c… &lt;NA&gt;       &lt;NA&gt;      I           ENDANGERED   
+2 Hydrictis maculicollis &lt;NA&gt;     &lt;NA&gt;       &lt;NA&gt;      &lt;NA&gt;        NEAR THREATE…
+# ℹ 76 more variables: individuals &lt;dbl&gt;, sex &lt;chr&gt;, superclass &lt;fct&gt;,
+#   cell_line &lt;fct&gt;, karyotype &lt;chr&gt;, dna &lt;chr&gt;, rna &lt;chr&gt;,
+#   wgs_sequencing &lt;chr&gt;, rna_seq &lt;chr&gt;, i_psc &lt;chr&gt;, tissue_of_origin &lt;chr&gt;,
+#   alternative_name &lt;chr&gt;, species_ &lt;chr&gt;, taxon_id &lt;chr&gt;, synonym &lt;chr&gt;,
+#   tolid_prefix &lt;chr&gt;, assembly_id &lt;chr&gt;, assembly_name &lt;chr&gt;,
+#   genbank_accession &lt;chr&gt;, refseq_accession &lt;chr&gt;, genus &lt;chr&gt;, family &lt;chr&gt;,
+#   order &lt;chr&gt;, class &lt;chr&gt;, phylum &lt;chr&gt;, kingdom &lt;chr&gt;, …</code></pre>
+<div id="plot-the-full-tree" class="section level2">
+<h2>plot the full tree</h2>
+<pre class="r"><code>big_tree$tip.label&lt;-tree_meta$species_
+
+summary_species2&lt;-summary_species %&gt;% 
+  select(-c(family,order)) %&gt;% 
+  inner_join(tree_meta,by=&quot;species_&quot;) %&gt;% 
+  select(-label)
+
+
+
+pos&lt;-which(colnames(summary_species2)==&quot;species_&quot;)
+summary_species2&lt;-summary_species2[,c(pos,1:(pos-1),(pos+1):ncol(summary_species2))]
+
+table(duplicated(summary_species2$species_))</code></pre>
+<pre><code>
+FALSE 
+  114 </code></pre>
+<pre class="r"><code>p.tree&lt;-ggtree(big_tree,color=&quot;grey60&quot;,lwd=0.5,layout=&quot;circular&quot;)
+
+cols&lt;-colorRampPalette(ggsci::pal_futurama()(12))(length(unique(summary_species2$order)))
+names(cols)&lt;-unique(summary_species2$order)
+
+#cols[!(names(cols)%in%summary_species$order)]&lt;-&quot;grey75&quot;
+                    
+
+p.tree2&lt;-p.tree %&lt;+% summary_species2+
+  geom_tippoint(aes(color=order, shape=cat))+
+  scale_colour_manual(values=cols,na.value=NA)
+p.tree2</code></pre>
+<pre><code>Warning: Removed 3985 rows containing missing values or values outside the scale range
+(`geom_interactive_point_g_gtree()`).</code></pre>
+<p><img src="figure/plot_Tree_mammal.Rmd/unnamed-chunk-4-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div
+id="group-otus-to-annotate-which-edges-belong-ot-one-oder-family-etc."
+class="section level1">
+<h1>group OTUs to annotate which edges belong ot one oder, family
+etc.</h1>
+<pre class="r"><code>#the groups must be supplied as a list of the tip labels
+
+groupInfo&lt;-tree_meta %&gt;% 
+  select(order,species_) %&gt;%
+  pivot_wider(names_from = &quot;order&quot;,values_from = &quot;species_&quot;) %&gt;% 
+  as.list() %&gt;% 
+  list_flatten()</code></pre>
+<pre><code>Warning: Values from `species_` are not uniquely identified; output will contain
+list-cols.
+• Use `values_fn = list` to suppress this warning.
+• Use `values_fn = {summary_fun}` to summarise duplicates.
+• Use the following dplyr code to identify duplicates.
+  {data} |&gt;
+  dplyr::summarise(n = dplyr::n(), .by = c(order)) |&gt;
+  dplyr::filter(n &gt; 1L)</code></pre>
+<pre class="r"><code>tree &lt;-groupOTU(big_tree,groupInfo)
+
+#as.tibble(tree) %&gt;% view
+
+cols&lt;-c(&quot;grey75&quot;,colorRampPalette(ggsci::pal_futurama()(12))(length(names(groupInfo))+1))
+
+names(cols)&lt;-c(&quot;0&quot;,names(groupInfo))
+
+# library(scales)
+# 
+# show_col(cols)
+
+p.tree&lt;-ggtree(tree,aes(color=group),lwd=0.5,layout = &quot;circular&quot;)+
+  scale_color_manual(values=cols,na.value = NA)
+
+p.tree %&lt;+% summary_species2+
+  geom_tippoint(aes(shape=cat),color=&quot;grey25&quot;)</code></pre>
+<pre><code>Warning: Removed 3985 rows containing missing values or values outside the scale range
+(`geom_interactive_point_g_gtree()`).</code></pre>
+<p><img src="figure/plot_Tree_mammal.Rmd/unnamed-chunk-5-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># p.tree %&lt;+% summary_species2
+# 
+# dat&lt;-select(column_to_rownames(summary_species2,var=&quot;species_&quot;),cat)
+# 
+# gheatmap(p.tree,data = dat)</code></pre>
+<div id="subset-for-1-species-per-family" class="section level2">
+<h2>subset for 1 species per family</h2>
+<pre class="r"><code>tree_meta2&lt;-tree_meta %&gt;% 
+  group_by(family) %&gt;% 
+  slice_head(n=1) %&gt;% 
+  ungroup() %&gt;% 
+  filter(!(family%in%summary_species$family))
+
+tree_meta_fam&lt;-bind_rows(tree_meta2,subset(tree_meta,species_ %in% summary_species$species_))
+
+summary_species2&lt;-summary_species %&gt;% 
+  full_join(tree_meta_fam) %&gt;% 
+  mutate(order=if_else(order==&quot;Cetartiodactyla&quot;,&quot;Artiodactyla&quot;,order)) %&gt;% 
+  select(-label)</code></pre>
+<pre><code>Joining with `by = join_by(species_, family, order)`</code></pre>
+<pre class="r"><code>## remove other species
+remove &lt;-
+  !(tree_meta$species_ %in% summary_species2$species_)
+
+table(remove)</code></pre>
+<pre><code>remove
+FALSE  TRUE 
+  231  3868 </code></pre>
+<pre class="r"><code>sub_tree2 &lt;- drop.tip(big_tree, tree_meta$species_[remove])
+
+groupInfo&lt;-summary_species2 %&gt;% 
+  select(order,species_) %&gt;%
+  pivot_wider(names_from = &quot;order&quot;,values_from = &quot;species_&quot;) %&gt;% 
+  as.list() %&gt;% 
+  list_flatten()</code></pre>
+<pre><code>Warning: Values from `species_` are not uniquely identified; output will contain
+list-cols.
+• Use `values_fn = list` to suppress this warning.
+• Use `values_fn = {summary_fun}` to summarise duplicates.
+• Use the following dplyr code to identify duplicates.
+  {data} |&gt;
+  dplyr::summarise(n = dplyr::n(), .by = c(order)) |&gt;
+  dplyr::filter(n &gt; 1L)</code></pre>
+<pre class="r"><code>sub_tree2 &lt;-groupOTU(sub_tree2,groupInfo)
+
+
+cols&lt;-c(&quot;grey75&quot;,colorRampPalette(ggsci::pal_futurama()(12))(length(names(groupInfo))+1))
+
+names(cols)&lt;-c(&quot;0&quot;,names(groupInfo))
+
+
+keep &lt;-
+  (tree_meta$species_ %in% summary_species2$species_)
+
+tree_meta3 &lt;- tree_meta[keep, ]</code></pre>
+</div>
+<div id="plot-the-tree" class="section level2">
+<h2>Plot the tree</h2>
+<pre class="r"><code>table(sub_tree2$tip.label == tree_meta3$species_)</code></pre>
+<pre><code>
+TRUE 
+ 231 </code></pre>
+<pre class="r"><code>sub_tree2$tip.label[!(sub_tree2$tip.label %in% summary_species2$species_)]</code></pre>
+<pre><code>character(0)</code></pre>
+<pre class="r"><code>summary_species2 &lt;-summary_species2[na.omit(match(sub_tree2$tip.label, summary_species2$species_)), ]
+
+pos &lt;- which(colnames(summary_species2) == &quot;species_&quot;)
+
+summary_species2 &lt;-
+  summary_species2[, c(pos, 1:(pos - 1), (pos + 1):ncol(summary_species2))]
+
+saveRDS(sub_tree2,paste0(path,&quot;/data/mamaltree_object_allfamilies.Rds&quot;))
+saveRDS(summary_species2,paste0(path,&quot;/data/mamaltree_object_allfamilies_metadata.Rds&quot;))
+saveRDS(cols,paste0(path,&quot;/data/mamaltree_object_allfamilies_cols.Rds&quot;))</code></pre>
+<pre class="r"><code>p.tree3 &lt;- ggtree(sub_tree2, aes(color = group), lwd = 0.5,mrsd = &quot;01/08/2023&quot;,layout = &quot;circular&quot;)
+
+
+p.tree4 &lt;- p.tree3 %&lt;+% summary_species2 +
+  geom_tippoint(aes(shape=cryo_sample), size = 3,color=&quot;grey55&quot;) +
+  scale_color_manual(values=cols,na.value = NA)
+p.tree4</code></pre>
+<pre><code>Warning: Removed 117 rows containing missing values or values outside the scale range
+(`geom_interactive_point_g_gtree()`).</code></pre>
+<p><img src="figure/plot_Tree_mammal.Rmd/unnamed-chunk-8-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<div id="plot-rectangular-and-add-matrix" class="section level3">
+<h3>Plot rectangular and add matrix</h3>
+<pre class="r"><code>p.tree5 &lt;- ggtree(sub_tree2, aes(color = group), lwd = 0.5,mrsd = &quot;01/08/2023&quot;,layout = &quot;rectangular&quot;)
+
+mat_sel2&lt;-summary_species2 %&gt;% 
+   ungroup() %&gt;% 
+   filter(!(duplicated(species_))) %&gt;% 
+   mutate(fibroblasts=fibro_l,
+          replicates=individuals&gt;1) %&gt;% 
+   dplyr::select(species_,fibroblasts,genome,replicates,annotation,cryo_sample) %&gt;%
+   column_to_rownames(&quot;species_&quot;) %&gt;% 
+   as.matrix
+ 
+
+heatmap.colours &lt;- c(&quot;darkblue&quot;,&quot;grey75&quot;,&quot;red&quot;,&quot;purple&quot;,&quot;darkgreen&quot;,&quot;orange&quot;)
+
+names(heatmap.colours) &lt;- c(&quot;TRUE&quot;,&quot;FALSE&quot;,&quot;Fibroblast&quot;,&quot;Fibroblast and PBMc&quot;,&quot;PBMc&quot;,&quot;Biopsy&quot;)
+
+
+ tree_map2&lt;-gheatmap(p.tree5,mat_sel2, width=.05, colnames=T,legend_title = &quot;&quot;,
+          colnames_position = &quot;top&quot;,font.size = 3,colnames_angle =90,colnames_offset_y = 10,offset = 2)   +
+   scale_fill_manual(values=heatmap.colours,
+                     #breaks=c(&quot;Chromosome&quot;,&quot;Contig&quot;,&quot;Scaffold&quot;,2,4,6,8,10),
+                     na.value = &quot;grey75&quot;,limits=force)+
+   scale_color_manual(values=cols)+
+   ylim(NA,260)+
+   labs(colour=&quot;&quot;,fill=&quot;&quot;,shape=&quot;&quot;)+
+   theme(legend.direction = &quot;horizontal&quot;)+
+   #guides(fill=&quot;none&quot;)+
+   theme_tree2()+
+   theme(legend.position = c(0.3,0.7))</code></pre>
+<pre><code>Scale for fill is already present.
+Adding another scale for fill, which will replace the existing scale.
+Scale for y is already present.
+Adding another scale for y, which will replace the existing scale.</code></pre>
+<pre class="r"><code>tree_map2</code></pre>
+<pre><code>Ignoring unknown labels:
+• shape : &quot;&quot;</code></pre>
+<p><img src="figure/plot_Tree_mammal.Rmd/unnamed-chunk-9-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>gc()</code></pre>
+<pre><code>          used  (Mb) gc trigger  (Mb) limit (Mb) max used  (Mb)
+Ncells 2265796 121.1    4313511 230.4         NA  4313511 230.4
+Vcells 4933196  37.7   12256304  93.6      36864 12243414  93.5</code></pre>
+</div>
+</div>
+<div id="only-cryozoo-species" class="section level2">
+<h2>only cryozoo species</h2>
+<pre class="r"><code>## remove other species
+remove &lt;-
+  !(tree_meta$species_ %in% summary_species$species_)
+
+table(remove)</code></pre>
+<pre><code>remove
+FALSE  TRUE 
+  114  3985 </code></pre>
+<pre class="r"><code>sub_tree3 &lt;- drop.tip(big_tree, tree_meta$species_[remove])
+
+groupInfo&lt;-summary_species %&gt;% 
+  select(order,species_) %&gt;%
+  pivot_wider(names_from = &quot;order&quot;,values_from = &quot;species_&quot;) %&gt;% 
+  as.list() %&gt;% 
+  list_flatten()</code></pre>
+<pre><code>Warning: Values from `species_` are not uniquely identified; output will contain
+list-cols.
+• Use `values_fn = list` to suppress this warning.
+• Use `values_fn = {summary_fun}` to summarise duplicates.
+• Use the following dplyr code to identify duplicates.
+  {data} |&gt;
+  dplyr::summarise(n = dplyr::n(), .by = c(order)) |&gt;
+  dplyr::filter(n &gt; 1L)</code></pre>
+<pre class="r"><code>sub_tree3 &lt;-groupOTU(sub_tree3,groupInfo)
+
+
+cols&lt;-c(&quot;grey75&quot;,colorRampPalette(ggsci::pal_futurama()(12))(length(names(groupInfo))+1))
+
+names(cols)&lt;-c(&quot;0&quot;,names(groupInfo))
+
+
+keep &lt;-
+  (tree_meta$species_ %in% summary_species$species_)
+
+tree_meta3 &lt;- tree_meta[keep, ]</code></pre>
+<div id="plot-subtree-for-cryozoo-species" class="section level3">
+<h3>plot subtree for cryozoo species</h3>
+<pre class="r"><code>table(sub_tree3$tip.label == tree_meta3$species_)</code></pre>
+<pre><code>
+TRUE 
+ 114 </code></pre>
+<pre class="r"><code>sub_tree3$tip.label[!(sub_tree3$tip.label %in% summary_species$species_)]</code></pre>
+<pre><code>character(0)</code></pre>
+<pre class="r"><code>summary_species2 &lt;-summary_species[na.omit(match(sub_tree2$tip.label, summary_species$species_)), ]
+
+pos &lt;- which(colnames(summary_species2) == &quot;species_&quot;)
+
+summary_species2 &lt;-
+  summary_species2[, c(pos, 1:(pos - 1), (pos + 1):ncol(summary_species2))]
+
+p.tree3 &lt;- ggtree(sub_tree3, aes(color = group), lwd = 0.5,mrsd = &quot;01/08/2023&quot;,layout = &quot;circular&quot;)
+
+
+
+p.tree4 &lt;- p.tree3 %&lt;+% summary_species2 +
+  geom_tippoint(aes(shape=cat), size = 2,color=&quot;grey55&quot;) +
+  scale_color_manual(values=cols,na.value = NA)
+p.tree4</code></pre>
+<p><img src="figure/plot_Tree_mammal.Rmd/unnamed-chunk-11-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<div id="rectangular-layout-and-annotation" class="section level4">
+<h4>rectangular layout and annotation</h4>
+<pre class="r"><code>p.tree5 &lt;- ggtree(sub_tree3, aes(color = group), lwd = 0.5,mrsd = &quot;01/08/2023&quot;,layout = &quot;rectangular&quot;)
+
+mat_sel2&lt;-summary_species2 %&gt;% 
+   ungroup() %&gt;% 
+   filter(!(duplicated(species_))) %&gt;% 
+   mutate(fibroblasts=fibro_l,
+          replicates=individuals&gt;1,
+          illumina=if_else(illumina,&quot;illumina&quot;,&quot;FALSE&quot;),
+          silencer=if_else(silencer,&quot;silencer&quot;,&quot;FALSE&quot;)) %&gt;% 
+   dplyr::select(species_,fibroblasts,genome,replicates,illumina,silencer) %&gt;%
+   column_to_rownames(&quot;species_&quot;) %&gt;% 
+   as.matrix
+ 
+
+heatmap.colours &lt;- c(&quot;purple&quot;,&quot;darkblue&quot;,&quot;grey75&quot;,&quot;red&quot;)
+
+names(heatmap.colours) &lt;- c(&quot;illumina&quot;,&quot;TRUE&quot;,&quot;FALSE&quot;,&quot;silencer&quot;)
+
+
+ tree_map2&lt;-gheatmap(p.tree5,mat_sel2, width=.1, colnames=T,legend_title = &quot;&quot;,
+          colnames_position = &quot;top&quot;,font.size = 3,colnames_angle =90,colnames_offset_y = 8,offset = 2)   +
+   scale_fill_manual(values=heatmap.colours,
+                     #breaks=c(&quot;Chromosome&quot;,&quot;Contig&quot;,&quot;Scaffold&quot;,2,4,6,8,10),
+                     na.value = &quot;grey75&quot;,limits=force)+
+   scale_color_manual(values=cols)+
+   ylim(NA,120)+
+   labs(colour=&quot;&quot;,fill=&quot;&quot;,shape=&quot;&quot;)+
+   theme(legend.direction = &quot;horizontal&quot;)+
+   guides(fill=&quot;none&quot;)+
+   theme_tree2()+
+   theme(legend.position = c(0.3,0.7))</code></pre>
+<pre><code>Scale for fill is already present.
+Adding another scale for fill, which will replace the existing scale.
+Scale for y is already present.
+Adding another scale for y, which will replace the existing scale.</code></pre>
+<pre class="r"><code>tree_map2</code></pre>
+<pre><code>Ignoring unknown labels:
+• shape : &quot;&quot;</code></pre>
+<pre><code>Warning: Removed 5 rows containing missing values or values outside the scale range
+(`geom_text()`).</code></pre>
+<p><img src="figure/plot_Tree_mammal.Rmd/unnamed-chunk-12-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>save_plot(plot = tree_map2,base_height =6,base_width = 10,filename = paste0(path,&quot;/output/selection_tree_all.png&quot;))</code></pre>
+<pre><code>Ignoring unknown labels:
+• shape : &quot;&quot;</code></pre>
+<pre><code>Warning: Removed 5 rows containing missing values or values outside the scale range
+(`geom_text()`).</code></pre>
+<pre class="r"><code>gc()</code></pre>
+<pre><code>          used  (Mb) gc trigger  (Mb) limit (Mb) max used  (Mb)
+Ncells 2255054 120.5    4313511 230.4         NA  4313511 230.4
+Vcells 4855276  37.1   12256304  93.6      36864 12243414  93.5</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.6.0 (2026-04-24)
+Platform: aarch64-apple-darwin23
+Running under: macOS Tahoe 26.5.1
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: Europe/Madrid
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] googlesheets4_1.1.2 readxl_1.5.0        RColorBrewer_1.1-3 
+ [4] magrittr_2.0.5      ggtreeExtra_1.22.1  ggtree_4.2.0       
+ [7] treeio_1.36.1       tidytree_0.4.8      ape_5.8-1          
+[10] treedataverse_0.0.1 cowplot_1.2.0       lubridate_1.9.5    
+[13] forcats_1.0.1       stringr_1.6.0       dplyr_1.2.1        
+[16] purrr_1.2.2         readr_2.2.0         tidyr_1.3.2        
+[19] tibble_3.3.1        ggplot2_4.0.3       tidyverse_2.0.0    
+[22] workflowr_1.7.2    
+
+loaded via a namespace (and not attached):
+ [1] ggiraph_0.9.6           tidyselect_1.2.1        farver_2.1.2           
+ [4] S7_0.2.2                fastmap_1.2.0           lazyeval_0.2.3         
+ [7] fontquiver_0.2.1        promises_1.5.0          digest_0.6.39          
+[10] timechange_0.4.0        lifecycle_1.0.5         processx_3.9.0         
+[13] compiler_4.6.0          rlang_1.3.0             sass_0.4.10            
+[16] tools_4.6.0             utf8_1.2.6              yaml_2.3.12            
+[19] knitr_1.51              labeling_0.4.3          askpass_1.2.1          
+[22] htmlwidgets_1.6.4       curl_7.1.0              here_1.0.2             
+[25] aplot_0.3.1             withr_3.0.3             grid_4.6.0             
+[28] googledrive_2.1.2       git2r_0.36.2            gdtools_0.5.1          
+[31] scales_1.4.0            MASS_7.3-65             cli_3.6.6              
+[34] rmarkdown_2.31          crayon_1.5.3            ragg_1.5.2             
+[37] generics_0.1.4          otel_0.2.0              rstudioapi_0.19.0      
+[40] httr_1.4.8              tzdb_0.5.0              cachem_1.1.0           
+[43] parallel_4.6.0          ggplotify_0.1.3         cellranger_1.1.0       
+[46] yulab.utils_0.2.4       vctrs_0.7.3             jsonlite_2.0.0         
+[49] fontBitstreamVera_0.1.1 callr_3.8.0             gridGraphics_0.5-1     
+[52] hms_1.1.4               patchwork_1.3.2         systemfonts_1.3.2      
+[55] ggnewscale_0.5.2        jquerylib_0.1.4         glue_1.8.1             
+[58] stringi_1.8.7           gtable_0.3.6            later_1.4.8            
+[61] pillar_1.11.1           rappdirs_0.3.4          htmltools_0.5.9        
+[64] openssl_2.4.2           R6_2.6.1                textshaping_1.0.5      
+[67] rprojroot_2.1.1         evaluate_1.0.5          lattice_0.22-9         
+[70] ggsci_5.1.0             gargle_1.6.1            httpuv_1.6.17          
+[73] ggfun_0.2.1             fontLiberation_0.1.0    bslib_0.11.0           
+[76] Rcpp_1.1.2              nlme_3.1-169            whisker_0.4.1          
+[79] xfun_0.59               fs_2.1.0                getPass_0.2-4          
+[82] pkgconfig_2.0.3        </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
