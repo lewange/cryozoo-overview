@@ -357,15 +357,15 @@ results.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlewangecryozoooverviewtreebc97d32a4b3835a26ceb5de289174aaa4ec57b5etargetblankbc97d32a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomlewangecryozoooverviewtreee6959356748b23dd0cc3570c5d4043dbe7d5e29btargetblanke695935a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/lewange/cryozoo-overview/tree/bc97d32a4b3835a26ceb5de289174aaa4ec57b5e" target="_blank">bc97d32</a>
+<a href="https://github.com/lewange/cryozoo-overview/tree/e6959356748b23dd0cc3570c5d4043dbe7d5e29b" target="_blank">e695935</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomlewangecryozoooverviewtreebc97d32a4b3835a26ceb5de289174aaa4ec57b5etargetblankbc97d32a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomlewangecryozoooverviewtreee6959356748b23dd0cc3570c5d4043dbe7d5e29btargetblanke695935a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -375,7 +375,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/lewange/cryozoo-overview/tree/bc97d32a4b3835a26ceb5de289174aaa4ec57b5e" target="_blank">bc97d32</a>.
+<a href="https://github.com/lewange/cryozoo-overview/tree/e6959356748b23dd0cc3570c5d4043dbe7d5e29b" target="_blank">e695935</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -411,7 +411,6 @@ Untracked files:
     Untracked:  Cryozoo_project.Rproj
     Untracked:  README.md
     Untracked:  _workflowr.yml
-    Untracked:  analysis/Clean_CryoZoo_Lists.Rmd
     Untracked:  analysis/README.md
     Untracked:  analysis/archive/
     Untracked:  analysis/plot_trees_simple.R
@@ -465,6 +464,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/lewange/cryozoo-overview/blob/e6959356748b23dd0cc3570c5d4043dbe7d5e29b/analysis/index.Rmd" target="_blank">e695935</a>
+</td>
+<td>
+Luca Wange
+</td>
+<td>
+2026-07-09
+</td>
+<td>
+update index
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/lewange/cryozoo-overview/e6251283d254ac4e9d3810b3e8b3dfd9e849305c/docs/index.html" target="_blank">e625128</a>
+</td>
+<td>
+Luca Wange
+</td>
+<td>
+2026-07-09
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -642,12 +675,35 @@ Start workflowr project.
 </div>
 </div>
 </div>
-<p>Welcome to my workflowR documentation of the CryoZoo project to
-profile Tetrapod cell lines using a diverse set of genomics methods.</p>
-<p>Click on this <a href="Generate_Lists.html">link</a> to see how I
-selected the species from the cryozoo inventory.</p>
-<p>Click on this <a href="Cryo_zoo_summary.html">link</a> to see this
-information plotted.</p>
+<p>Welcome to my workflowR documentation of the CryoZoo project, a
+biobank of live Tetrapod cell lines profiled with a diverse set of
+genomics methods.</p>
+<p>This site walks through the species-selection and inventory pipeline,
+in order:</p>
+<ol style="list-style-type: decimal">
+<li><a href="Clean_CryoZoo_Lists.html">Clean CryoZoo Lists</a> — ingest
+and clean the master species and sample lists.</li>
+<li><a href="update_Cryostock.html">Update Cryostock</a> — update the
+cryotube storage inventory.</li>
+<li><a href="update_Cell_culture.html">Update Cell Culture</a> —
+summarise cell culture and thawing outcomes.</li>
+<li><a href="update_Extractions.html">Update Extractions</a> — summarise
+nucleic-acid extraction records.</li>
+<li><a href="update_Sequencing.html">Update Sequencing</a> — aggregate
+sequencing status across library types.</li>
+<li><a href="Update_Sample_table.html">Update Sample Table</a> — join
+everything into a master sample table.</li>
+<li><a href="plot_Cryozoo_summary.html">CryoZoo Summary Plots</a> —
+summary figures for the collection.</li>
+<li><a href="plot_Tree_mammal.html">Mammal Tree</a> — phylogenetic tree
+of CryoZoo mammal species.</li>
+<li><a href="plot_Tree_birds.html">Bird Tree</a> — phylogenetic tree of
+CryoZoo bird species.</li>
+</ol>
+<p>See <a
+href="https://github.com/lewange/cryozoo-overview/blob/master/analysis/README.md">analysis/README.md</a>
+for the full pipeline description, including inputs, outputs, and
+package dependencies for each step.</p>
 </div>
 </div>
 </div>
