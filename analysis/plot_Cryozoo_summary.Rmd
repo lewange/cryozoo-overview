@@ -94,6 +94,8 @@ plot_grid(bar.all_spec,bar.fibro,nrow = 2,rel_heights = c(0.3,0.7),align = "v",a
 
 save_plot(plot = plot_grid(bar.all_spec,bar.fibro,nrow = 2,rel_heights = c(0.3,0.7),align = "v",axis="tblr"),base_height = 5,base_width = 8,filename = paste0(path,"/output/figures/overview.png"))
 
+
+
 ```
 
 ### Cell lines per taxonomic order
@@ -116,7 +118,7 @@ taxlevel<-List_of_species %>%
   select(order,class,samples_per_taxlevel,taxlevel,taxon) %>%
   distinct()
 
-
+table(List_of_species$fibro_l,List_of_species$superclass)
 
 for (i in unique(taxlevel$taxon)) {
 

@@ -1,0 +1,209 @@
+﻿cell_line_ID,date,animal_species,coming_from,species_360_local_id,body_part,process,medium,person,fibros,vials_n2,pellet,micoplasma_test,DNA,comment
+A386,8/23/2022,Spheniscus humboldti,Zoo Barcelona,MIG12-28033500/BARCELONA / 5029,Traquea,"in culture, 4CT",alphamem complete,sira,si,2P12P0,NA,Negative,NA,NA
+A276,2/25/2022,Macropus rufogriseus,BCN zoo,QGH12-00003/11425,skin,"In culture, 1CT",alphamem complete,Silvia,CONTAMINADO,NA,NA,NA,NA,contaminado
+A285,3/16/2022,Triton,Zoo Barcelona,---,Tail,in culture,alphamem complete + 1:1000 fungizona + 1:100 ITS 28C,Sira and silvia,CONTAMINADO,Contaminado placa a 28C,NA,NA,NA,contaminado
+A293,3/31/2022,Alcaudon (pàjaro)/Lanius senator,Zoo Jerez,CRAS 28/22,traquea,"in culture, 1CT",FBM : alphamem complete,silvia,CONTAMINADO,NA,NA,NA,NA,contaminado
+A299,4/14/2022,Penguino,Zoo Barcelona,19146851/ BARCELONA / 4274,skin,"in culture,",FBM,silvia,CONTAMINADO,NA,NA,NA,NA,contaminado
+A333,6/3/2022,Gambian giant pouched rat,Bioparco valencia,TLJ15-00688/: BIOPARCVA / V15082,skin,in culture,alphamem complete,silvia,CONTAMINADO,NA,NA,negative,NA,contaminado
+A336,6/8/2022,Elefante,NA,NA,"Placenta , cordon","in culture,2CT",alphamem complete,silvia Sira,CONTAMINADO,NA,NA,NA,NA,contaminado
+A341,6/14/2022,Reno,Zoo Madrid,NA,Placenta,NA,alphamem complete,Sira,CONTAMINADO,NA,NA,NA,NA,contaminado
+A349,6/22/2022,Salmo salar,Aquarium San Sebastian,NA,Aleta,"in culture,0CT",DMEMF12+10%FBS +glut + NEAA +AA +PS (28grados),silvia,CONTAMINADO,NA,NA,NA,NA,NA
+A352,6/28/2022,Ambystoma mexicanum,Zoo Barcelona,NA,skin,"in culture,1CT","L15, AMEM, DMEMF12 (37C, 28C and RT)",silvia,CONTAMINADO,NA,NA,NA,NA,NA
+A356,7/5/2022,Macrochelys temminckii,Zoo Barcelona,QGH12-00305/BARCELONA/11715,traquea,"in culture,3CT",DMEMF12+10%FBS +glut + NEAA +AA +PS (37grados),Silvia,CONTAMINADO,NA,NA,NA,NA,NA
+A358,7/8/2022,Phoenicopterus ruber,Zoo Barcelona,ap22-00215,traquea,"in culture,2CT",FBM : alphamem complete,silvia,CONTAMINADO,NA,NA,NA,NA,NA
+A380,8/12/2022,Amazona liliciana,Zoo Barcelona,MIG12-28921127/Barcelona12368,Traquea,in culture 3CT,alphamem complete,silvia,CONTAMINADO,NA,NA,NA,NA,NA
+A388,9/5/2022,Agapornis nigrigenis,Zoo Barcelona,DKL-17-04749Barcelona/13256,Traquea,"In culture, 3CT",alphamem complete,silvia,CONTAMINADO,NA,NA,NA,NA,NA
+A408,10/5/2022,Triton Oriental,Torrefarrussa,--,Larva,in culture,Medium A and medium D 18 and 28C,Silvia,CONTAMINADO,NA,NA,NA,NA,NA
+A409,10/5/2022,Triton Occidental,Torrefarrussa,--,Larva,in culture,Medium A and medium D 18 and 28C,Silvia,CONTAMINADO,NA,NA,NA,NA,NA
+A442,2/7/2023,E. encrasicolus,Aquarium San Sebastian,NA,Cuerpo entero,"In culture, liberase and explant, 4CT",L15+20% FBS 28grados,silvia,CONTAMINADO,NA,NA,NA,NA,NA
+A443,2/7/2023,Sargocentron diadema,Aquarium San Sebastian,NA,sticks,"In culture, liberase and explant, 2CT",L15+20% FBS 28grados,silvia,CONTAMINADO,NA,NA,NA,NA,NA
+A444,2/7/2023,H. abdominalis,Aquarium San Sebastian,NA,cuerpo entero,"In culture, liberase and explant, 2CT",L15+20% FBS 28grados,silvia,CONTAMINADO,NA,NA,NA,NA,NA
+A445,2/7/2023,H. reidi,Aquarium San Sebastian,NA,cuerpo entero,"In culture, liberase and explant, 4CT",L15+20% FBS 28grados,silvia,CONTAMINADO,NA,NA,NA,NA,NA
+A320,5/17/2022,Azor,Zoo Botánico Jerez,CRAS83/22,Traquea/SKin,"in culture,2CT",FBM : alphamem complete,Silvia,CONTAMINADO HONGOS!!!!!,NA,NA,NA,NA,Ha llegado en un medio amarillo!
+A454,4/13/2023,Pleurodeles newt,Zoo Barcelona,QGH23-06328-IA,Traquea,in culture,"Medio A (Amniomax II 5% FBS 1% Pen-Strep-Glut), B (L15: FGM (1:1) 5% FBS 1% Pen-Strep-Glut) and C (40% DMEM GlutaMax 10% FBS 50%Water, 1% Pen-Strep-Glut, 10mM Hepes+ 0,1ng/ml FGF2+EGF) + FBM on gel 28.5C 
+
+
+",silvia,Medio A B and C contaminados  SI FBM w/o coating,contaminado Hongos,NA,NA,NA,NA
+A309,5/10/2022,Hippocampus abdominalis,Aquarium San Sebastian,NA,whole specimen,in culture,L15 + 15% FBS +AA +PS and DMEMF12+20%FBS +AA +PS,Sira,No vials N2,NA,NA,NA,NA,NA
+A311,5/10/2022,Engraulis encrasicolus,Aquarium San Sebastian,NA,skin,in culture,L15 + 15% FBS +AA +PS and DMEMF12+20%FBS +AA +PS,Sira,NO success,NO success,NA,NA,NA,no fibros
+A313,5/10/2022,Aurelia Aurita,Aquarium San Sebastian,NA,whole,1 CT,--,Silvia,No vials N2,NA,NA,NA,NA,NA
+A314,5/11/2022,Panther chameleon,Bioparc Valencia,TLJ22-01287/ BIOPARCVA / C10,skin,in culture,alphamem complete,Silvia,No vials N2,NA,NA,NA,NA,NA
+A315,5/11/2022,Elefante,Zoo Barcelona,23537250/BARCELONA/10511,Bocal,in culture,alphamem complete; BEGM medium,sira/silvia,No vials N2,NA,NA,NA,NA,NA
+A324,5/20/2022,Ateles hybridus,Zoo Barcelona,QGH22-06076-IA,Placenta/Umbilical Cordon,"in culture,3CT",alphamem complete,Silvia,No vials N2,NA,NA,NA,NA,NA
+A328,5/31/2022,Python regius,Zoo Barcelona,17963991 BARCELONA/5619,Traquea,in culture,DMEMF12+10%FBS +glut + NEAA +AA +PS,Silvia,no fibros,NA,NA,NA,NA,no fibros
+A334,6/3/2022,Nanger dama,Zoo Barcelona,QGH22-06087,ear,2CT claen,NA,silvia,No vials N2,NA,NA,NA,NA,NA
+A335,6/3/2022,Nanger dama,Zoo Barcelona,QGH22-06088,ear,2CT clean,NA,silvia,No vials N2,NA,NA,NA,NA,NA
+A337,6/8/2022,Anodorrhynchus hyacinthinus,Zoo Barcelona,QGH22-06100-IA,Traquea,"in culture,1CT",FBM : alphamem complete,silvia,no fibros,NA,NA,NA,NA,no fibros
+A338,6/8/2022,Caloeanus nicobarica,Zoo Barcelona,QGH15-02298 /12449,Traquea,"in culture,2CT",FBM : alphamem complete,silvia,no fibros,NA,NA,NA,NA,no fibros
+A343,6/15/2022,Delfus comun,Oceanografic Valencia,NA,skin,"in culture,0CT",DMEMF12 + 20%FBS + P/S + Lglu + S.Piruv. + NEAA + fgf2 20 ng/ml,Silvia,no fibros,NA,NA,NA,NA,no fibros
+A366,7/25/2022,Cabra rasquera,Zoo Barcelona,QGH12-00146,skin,4CT,NA,NA,No vials N2,NA,NA,NA,NA,NA
+A367,7/28/2022,Amazona aestiva,Zoo madrid,"AE-29 ""blu""","skin , traquea",3CT skin 3CT traquea,NA,NA,No vials N2,NA,NA,NA,NA,NA
+A371,7/29/2022,Tauraco erythroliphus,Zoo Barcelona,TRC15-00347,traquea,3CT,NA,NA,No vials N2,NA,NA,NA,NA,NA
+A372,8/3/2022,Turaco leucoti,Zoo Madrid,NA,"traquea , skin",1CT skin 2CT traquea,NA,NA,No vials N2,NA,NA,NA,NA,NA
+A376,8/11/2022,Salmon salar,Acuario Gijon,NA,Skin and Aletas,2CT skin 0CT Aletas,28C and 37C FBM on matrigel and w/o matrigel,Sira,No vials N2,NA,NA,NA,NA,NA
+A377,8/11/2022,Hippocampus abdominalis,Acuario Gijon,NA,Fins,revisar -80 ·CT  2CT skin 2CT Aletas,28C high glucose on matrigel and w/o matrigel,Sira,No vials N2,NA,NA,NA,NA,NA
+A378,8/11/2022,Agalychnis callidryas,Acuario Gijon,NA,skin and riñon,2CT skin 2CT riñon,NA,NA,No vials N2,NA,NA,NA,NA,NA
+A393,9/14/2022,Nanger Dama,Zoo Madrid,MIG12-29854099/MADRID Z / GAD26,skin and ovario,4CT skin and 2 CT ovario,NA,silvia,No vials N2,NA,NA,NA,NA,NA
+A395,9/16/2022,Calotriton arnoldi,Zoo Barcelona,QGH22-06198-IA,Larva,in culture,28C alphamem complete + 100x ITS +0.1% Normocin,Sira,No vials N2,NA,NA,NA,NA,NA
+A183,9/23/2022,Cercocebus torquatus,Zoo Barcelona,QGH14-02193/12333,piel,1 CT,NA,silvia,No vials N2,NA,NA,NA,NA,NA
+A397,9/23/2022,Nanger Dama mhorr,Zoo Barcelona,QGH16-04153/barcelona/12778,skin,1 CT,NA,silvia,No vials N2,NA,NA,NA,NA,NA
+A398,9/23/2022,Nanger Dama mhorr,Zoo Barcelona,QGH17-04511/barcelona/12963,skin,1 CT,NA,silvia,No vials N2,NA,NA,NA,NA,NA
+A405 (A156),10/3/2022,Nanger dama mhoor,Zoo Barcelona,MIG12-29591142,Skin,2CT,NA,Sílvia,No vials N2,NA,NA,NA,NA,NA
+A410,10/7/2022,Loris Arcoiris,Zoo Madrid,NA,"piel , traquea",in culture (2CT),FBM / on Matrigel 19/10/22,Sira,NO SUCCESS,NA,NA,Negative,NA,NA
+A412,10/11/2022,Ateles Hybridus,Zoo Barcelona,QGH22-06222/Barcelona14222,placenta,1CT,--,Silvia,No vials N2,NA,NA,NA,NA,NA
+A415,10/19/2022,Agapronis Nigeriensis,Zoo Barcelona,QGH22-06225-IA,Traquea,in culture,FBM on mg,Sira,No vials N2,NA,NA,NA,NA,NA
+A420,11/3/2022,Gacella dorcas,Zoo Barcelona,QGH22-06235-IA,ear,2CT,NA,NA,No vials N2,NA,NA,NA,NA,NA
+A426,11/30/2022,Ateles hybrydus,Zoo Barcelona,NA,ear,2 CT,NA,NA,No vials N2,NA,NA,NA,NA,NA
+A429,12/12/2022,Lama guanicoe,Zoo Barcelona,18263842/barcelona/9576,ear,3 CT,NA,silvia,No vials N2,NA,NA,NA,NA,NA
+A432,12/20/2022,Hylobates lar,Zoo de Madrid,25620264/MADRID Z / GMB2,skin,"in culture, 1 CT",alphamem,silvia,No vials N2,NA,NA,NA,NA,NA
+A433,12/21/2022,Butorides striata,Zoo Barcelona,QGH12-00159/Barcelona/11588,traquea,2CT,NA,silvia,No vials N2,NA,NA,NA,NA,NA
+A438,1/23/2023,Enducimus ruber,Zoo Barcelona,MIG12-28706348,traquea,2CT,NA,silvia,No vials N2,NA,NA,NA,NA,NA
+A447,2/24/2023,Nanger dama mhorr,Zoo Barcelona,MIG12-29320182,ear,2 CT,NA,silvia,No vials N2,NA,NA,NA,NA,NA
+A451,3/23/2023,Valencia hispanica,ERGA,-,fin,"in culture, 4 CT",A: L15 +20%FBS +P/S  and DMEM high glucose +2%CS + P/S (explant and liberase 0.125 mg/ml) + on gelatin and FBM 28.5C,silvia,No vials N2,NA,NA,NA,NA,NA
+A456,4/21/2023,Gazella dorcas,Zoo Barcelona,QGH2306333-IA,ear,2CT,NA,silvia,No vials N2,NA,NA,NA,NA,NA
+A457,4/25/2023,Panda rojo,Zoo Barcelona,QGH13-01156,ear,2CT,NA,silvia,No vials N2,NA,NA,NA,NA,NA
+A465,6/19/2023,Gazela dorcas,Zoo Barcelona,QGH23-06339,ear,2 CT,NA,Silvia,No vials N2,NA,NA,NA,NA,NA
+A476,NA,NA,NA,NA,NA,NA,NA,NA,No vials N2,NA,NA,NA,NA,NA
+A275,2/21/2022,Elephant,BCN zoo,NA,durezas pie,"in culture, 4CT",alphamem complete +20 ng/ml FGF2,Silvia,No SUCCESS,NA,NA,NA,NA,NA
+A277,3/2/2022,Lophocebus aterrimus,RIO SAFARI ELCHE,MIG12-28090305/ELCHE SAF / 1337,skin,"In culture, 0 CT",alphamem complete +20 ng/ml FGF2,silvia,No SUCCESS,NA,NA,NA,NA,NA
+A351,6/28/2022,Ambystoma mexicanum,Aquarium San Sebastian,NA,"Body, higado, aletas","in culture,3CT",AMEM (MEM + 10%FBS +P/S + Lglut  + ITS),silvia,No SUCCESS,He tirado la placa porque no crecia nada ni a room temperature,NA,NA,NA,NA
+A363,7/18/2022,Lampropelis triangulum sinaloae,Zoo Barcelona,1.80E+07,Traquea,"in culture,2CT",DMEMF12+10%FBS +glut + NEAA +AA +PS (37grados),silvia,No SUCCESS,NA,NA,NA,NA,NA
+A364,7/18/2022,Calotriton arnoldi,Zoo Barcelona,QGH21-05744,Traquea,"in culture,1CT",DMEMF12+10%FBS +glut + NEAA +AA +PS (37grados),silvia,No SUCCESS,NA,NA,NA,NA,NA
+A383,8/19/2022,Amazona brasiliensis,Zoo Barcelona,MIG12-21379186/BARCELONA / 10462,Traquea/Lungs,"in culture, 4CT",alphamem complete 12/09 on matrigel,sira,No SUCCESS,NA,NA,NA,NA,NA
+A387,8/31/2022,Falco naumanni,Zoo Madrid,WKP22-01969/MADRID Z / CEP38,Traquea/skin,"in culture, 3CT",FBM:alphamem 12/09 on matrigel,Sira,No SUCCESS,NA,NA,NA,NA,NA
+A389,9/5/2022,Plegadis falcinellus,Zoo Barcelona,MIG12-28824985,Traquea,"in culture, 2CT",FBM:alphamem,silvia,No SUCCESS,NA,NA,NA,NA,NA
+A430,12/14/2022,"Penguino ""brookling""",Zoo de madrid,WKP13-00159/MADRID Z / PJ61,skin,in culture 3 CT,high glucose,silvia,No SUCCESS,NA,NA,NA,NA,NA
+A436,1/10/2023,Myrmecophaga tridactyla,Zoo de Madrid,26855739/MADRID Z / OH4,placenta,"in culture, 3CT",alphamem,silvia,No SUCCESS,NA,NA,NA,NA,NA
+A449,3/13/2023,Otus scops scops,Zoo Barcelona,MIG12-28179174,Traquea,"in culture, 1 CT",FBM on Mg,silvia,No SUCCESS,NA,NA,NA,NA,NA
+A455,4/18/2023,Falco naumanni,Zoo Madrid,WKP22-01966/MADRID Z / CEP35,Piel,"in culture, ·CT",Alphamem : FMB on well with gelatin and on other with matrigel / 4 wells w/o coating),silvia,No SUCCESS,NA,pellet para DNA,NA,NA,NA
+A458,4/25/2023,Ara ararauna,Zoo Madrid,WKP15-00490/MADRID Z / GAZ55,"piel , Traquea","in culture, 1 CT traquea 3CT piel",FMB on Mg and on Gel,silvia,No SUCCESS,NA,PELLET PARA DNA,NA,NA,NA
+A373,8/5/2022,Aonyx cinereus ( Nutria asiatica),MondoMar,MIG12-29553818,testiculos,"in culture, 2CT",alphamem complete,Silvia,No SUCCESS,NA,NA,negative,NA,NA
+A473,7/24/2023,Malpolon Monspessulanus,ERGA,Salvi,"traquea , skin , riñon","in culture, 4 CT (2traquea +2skin)",FBM on gelatin 28.5C,silvia,probably fibros from traquea,NA,NA,NA,NA,NA
+A318,5/17/2022,Pongo pugmaeus pygmaeus (orangu),Zoo Barcelona,MIG12-30088890/5671,Placenta,"in culture,1CT",alphamem complete,Silvia,Re- try samples (SILVIA),3P0 4P1 3P2,si,Negative,NA,NA
+A347,6/21/2022,sanguinus oedipus,Zoo Barcelona,QGH22-06117-IA,ear,"in culture,0CT",alphamem complete,silvia,Re- try samples (SILVIA),NA,si,NA,NA,NA
+A361,7/13/2022,Crocodrylus rombifer,Zoo Barcelona,AP22-222/5277,traquea,"in culture,3CT",DMEMF12+10%FBS +glut + NEAA +AA +PS on gelatin  (37grados),silvia,Re- try samples (SILVIA),3P0 4 P1,si,NA,NA,NA
+A274,2/21/2022,Papion,ZOO de Madrid,NA,skin,"in culture, 2CT",alphamem complete,Sira/Silvia,si,"1 P0, 1 P1 and 2 P2",si,NA,si,NA
+A279,3/5/2022,Pteropus lylei (Zorro Volador),Zoo Barcelona,MIG12-29239579,Ear,"in culture, 1 CT",DMEMF12 + 20% FBS,silvia,si,1 P0 2P1 2P2,NA,NA,NA,NA
+A280,3/5/2022,Aepyceros melapus petersi (Impala),Zoo Barcelona,QGH20-05395,skin,"in culture, 2 CT",alphamem complete,silvia,si,1 P0 2 P1 2P2,NA,NA,NA,NA
+A282,3/8/2022,Mono araña,Zoo barcelona,MIG12-29017598/BARCELONA / 11694,Placenta,"in culture, 1CT",alphamem complete on Gelatin 0.1%,silvia,si,2 P0 2 P1 1P2 2P3 1P4,si,Negative,NA,NA
+A283,3/11/2022,Gazella dorcas,Zoo Barcelona,QGH16-04140,Ear,"in culture, 1CT",alphamem complete,silvia,si,2 P0 2P1 2P2,NA,NA,NA,NA
+A284,3/15/2022,Dama dama,Zoo Madrid,MIG12-29480644/MADRID Z / GAM53,Skin and ovario,"in culture, 1CT",alphamem complete,silvia,si,"2 P0,P1 and P2 from ovario, 2P0, 2P1 and 2P2 from skin",NA,NA,NA,NA
+A286,3/16/2022,Conejo,Zoo Madrid,---,skin,"in culture, 1CT",alphamem complete,silvia,si,2 P0 2 P1 2 P2,si,NA,NA,NA
+A287,3/23/2022,Mangabey ( Cercocebus torquatus),Zoo Barcelona,5724123 Barcelona/9381,skin,"in culture, 1CT",on gelatin FBM,silvia,si,2P4,NA,negative,NA,NA
+A288,3/23/2022,Phacochoerus africanus,Zoo Barcelona,MIG12-29239592,skin,"in culture, 1CT",alphamem complete,silvia,si,2 P0 1 P1,si,NA,NA,NA
+A289,3/23/2022,Phacochoerus africanus,Zoo Barcelona,2.62E+07,skin,"in culture, 1CT",alphamem complete,silvia,si,2 P0 1 P1,si,NA,NA,NA
+A291,3/31/2022,Canguro de Bennet Macropus rufogriseus,Zoo Jerez,FRW15-00528/JEREZCA56,skin,"in culture, 1CT",alphamem complete,silvia,si,2 P0 2P1,NA,NA,NA,NA
+A292,3/31/2022,Canguro (cria),Zoo Jerez,FRW22-01290/ JEREZCA71,skin,"in culture, 1CT",alphamem complete,silvia,si,2 P0 2 P1 2P2,NA,NA,NA,NA
+A294,4/6/2022,Clamidosaurus kingii,Zoo Barcelona,QGH16-04206,skin,"in culture, 0CT",alphamem complete ( change medium every one day),silvia,si,NA,NA,NA,NA,a hacer el split no se han enganchado
+A295 (=A2),4/7/2022,Canis lupus,Zoo Barcelona,MIG12-29349207/13451,skin,"in culture, 5CT",FBM : alphamem complete,silvia,si,3 P0 2P1 2P2 2P3,si,NA,NA,NA
+A296,4/9/2022,Leon,Bioparc Valencia,NA,skin,"in culture, 1CT",FBM : alphamem complete,silvia,si,2 P0 2P1,si,NA,NA,NA
+A297,4/12/2022,Gallus gallus domestic,Zoo de Madrid,WKP15-00483/MADRID Z / GALL1,skin,"in culture, 1CT",alphamem complete,silvia,si,2P0 2P1 3P2,si,NA,NA,NA
+A298,4/12/2022,Hylobates muelleri,Zoo de Madrid,27920039/MADRID Z / GM2,skin,"in culture, 1CT",alphamem complete on gelatin,silvia,si,2P0 2P1 2P2,NA,NA,NA,NA
+A301,4/21/2022,Hystrix,Zoo Barcelona,MIG12-29239594/: BARCELONA / 6799,skin,"in culture, 1CT",alphamem complete,silvia,si,2P0 2P1 2P2,si,NA,NA,NA
+A302,4/26/2022,Chauna Torquata,Zoo Barcelona,MIG12-28179183,Traquea,"in culture, 1CT",FBM,silvia,si,2P0 3P1 3P2,si,NA,NA,NA
+A303,4/26/2022,Scissirostrum dubium,Zoo Barcelona,-,enbryo's wings,"in culture, 1CT",FBM,silvia,si,3 P0 3P1 4P2,NA,NA,NA,NA
+A304,4/28/2022,Belluga,Oceanografico,RNV18-00506/OCEAN VAL / Kairo,skin,"in culture, 10CT y 2 falcon",DMEMF12 + P/S+ Sodium Piruvate + NEAA + AA + 15%FBS + l-Glut,Sira/Silvia,si,"2P0 2P1 whole w/o coating 1P0 deep w/o coating , 1P0 mid on colag, 1P0 deep on colag, 2P0 2P1 2P2 on gelatin Mid, 2P2 Whole",si,NA,NA,"Whole sin coating SI fibros, On gelatin solo la parte MID con fibros, On colagen MID and DEEP con fibros"
+A305,5/2/2022,Cynomys ludovicianus,Zoo Barcelona,SQK18-04210/BARCELONA13749,skin,"in culture, 1CT",alphamem complete,silvia,si,3 P0 2P1 2P2,si,NA,NA,NA
+A306,5/6/2022,Cercocebus lunulatus (=A206),Zoo Barcelona,QGH16-04193/ BARCELONA / 12808,skin,in culture,alphamem complete,silvia,si,1 P0 2P1,si,NA,NA,NA
+A307,5/6/2022,Bison Bonasus,Zoo Barcelona,26854224/: BARCELONA / 2123,ear,"in culture, 2CT",alphamem complete,Sira,si,2P0 4P1 3P2,si,NA,NA,NA
+A308,5/6/2022,Equus caballus przewalskii,Zoo Botánico Jerez,MQH17-01033/JEREZ / CP13,placenta/umbilical cordon,"in culture, 8CT",alphamem complete,Sira,si,2P1 2P2 1P3,si,negative,NA,NA
+A310,5/10/2022,Diplodus vulgaris,Aquarium San Sebastian,NA,aleta caudal,in culture,L15 + 15% FBS +AA +PS and DMEMF12+20%FBS +AA +PS,Sira,si,CONTAMINADO,NA,NA,NA,First fibros 7 days DMEM/F12)
+A312,5/10/2022,Scissirostrum dubium,Zoo Barcelona,QGH20-05382/BARCELONA/13680,Traquea,"in culture, 1 CT",FBM : alphamem complete,Sira,si,2P0 2P1 3P2,si,NA,NA,NA
+A316,5/12/2022,Platelea ajaja,Zoo Barcelona,MIG12-29661875/BARCELONA/10746,Traquea,"in culture, 2CT",FBM : alphamem complete,Silvia,si,CONTAMINADO,NA,NA,NA,contaminado
+A317,5/13/2022,Cygnus atratus,Zoo de Madrid,27919208/27919208,Traquea/SKin,"in culture, 5CT (2 Traquea/1 Skin)",FBM : alphamem complete,Sira,si,2 P0 2P1 traquea,si,NA,NA,NA
+A319,5/17/2022,Otus scops scops,Zoo Barcelona,25996946/BARCELONA10374,Traquea,in culture,FBM : alphamem complete,Silvia,si,no seccess,NA,NA,NA,no han crecido despues del pase 0
+A321,5/17/2022,Panthera onca,Zoo Barcelona,Panthera onca (same A109),Skin,in culture,BEGM medium for nasal  on gelatin and matri and alphamem for skin,sira/silvia,si,2P1 skin,si,NA,NA,same specimen A217/A109
+A322,5/17/2022,Chimpanzee,Zoo Barcelona,MIG12-30088895/4367,"Skin , nasal",in culture,BEGM medium for nasal  On gel and matri and alphamem for skin,Silvia,si,1P0 0P2 from skin,si,Negative,NA,NA
+A323,5/20/2022,Colius striatus,Zoo Barcelona,QGH14-02099/BARCELONA / 12241,Traquea,"in culture,1CT",FBM : alphamem complete,Sira,si,2P0 1P1,SI,NA,NA,NA
+A325,5/23/2022,Lophura edwardsi,Zoo Barcelona,QGH22-06078-IA,Traquea,"in culture,1CT",FBM : alphamem complete,Silvia,si,1P0 2P1,si,NA,NA,NA
+A326,5/23/2022,Nycticorax Nycticorax,Zoo Barcelona,QGH22-06035/BARCELONA/14079,Traquea,"in culture,1CT",FBM : alphamem complete,Silvia,si,2P0,si,NA,NA,NA
+A327,5/23/2022,Ateles hybridus,Zoo Barcelona,QGH22-06077,skin,"in culture,1CT",alphamem complete,Silvia,si,3P0,si,NA,NA,NA
+A329,5/31/2022,Anodorrhynchus hyacinthinus,Zoo Barcelona,QGH2206092IA,Traquea,in culture,FBM : alphamem complete,Silvia,si,2P0 2P1 2P2,si,NA,NA,NA
+A330,5/31/2022,Polyplectron napoleonis,Zoo Barcelona,QGH1604017,Traquea,"in culture,2CT",FBM : alphamem complete,Silvia,si,2P0 2P1 2P2,si,NA,NA,NA
+A331,NA,Megaptera novaeangliae (Whale ),Oceanografic Valencia,NA,skin,"in culture, 6CT",DMEM high glucose + 20%FBS + P/S + Lglu + S.Piruv. + NEAA,Silvia,si,5P0 4P1,si,NA,NA,NA
+A332,6/3/2022,Ailurus fulgens fulgens,Zoo Madrid,TMJ12-00038/MADRID Z / PR97,"skin , ovario","In culture, 2CTskin 2CTovario",alphamem complete,silvia,si,2P0 2P1 from skin,si,NA,NA,NA
+A339,6/9/2022,Mandrillus sphinx,Zoo Madrid,8425827/MADRID Z / MN17,skin,"in culture,1CT",alphamem complete,silvia,si,4P0 3P1,si,NA,NA,NA
+A340,6/9/2022,Paloma,Zoo Madrid,NA,"Traquea , skin","in culture,2CT",FBM : alphamem complete,silvia,si,4P0 from traqua,si,NA,NA,NA
+A342,6/14/2022,Oso hormiguero,Zoo Madrid,NO ZIMS,Fetus,"in culture,2CT",alphamem complete,Silvia,si,3P0 1P1,si,NA,NA,NA
+A344,6/17/2022,Bucorvus leadbeateri,Zoo Barcelona,QGH22-06111,Traquea,"in culture,2CT",FBM : alphamem complete,silvia,si,2P0 2P1,si,NA,NA,NA
+A345,6/21/2022,Zalophus californianos,Zoo Barcelona,QGH12-00115,placenta,"in culture,3CT",DMEM high glucose + 20%FBS + P/S + Lglu + S.Piruv. + NEAA,Silvia,si,4P0 2P1,si,NA,NA,NA
+A346,6/21/2022,jacana jacana,Zoo Barcelona,QGH13-00872,Traquea,"in culture,2CT",FBM : alphamem complete,Silvia,si,4P0 2P1,si,NA,NA,NA
+A348,6/21/2022,Potamochoerus porcus,Zoo Madrid,MIG12-28806139/ MADRID Z / POT7,ear,"in culture,3CT",alphamem complete,silvia,si,2P0,si,NA,NA,NA
+A350,6/27/2022,sanguinus oedipus,Zoo Barcelona,QGH22-06121,ear,"in culture,2CT",alphamem complete,silvia,si,2P0 2P1,si,NA,NA,NA
+A353,6/28/2022,Rock hyrax,BioParc,CGK10-00254/BIOPARCVA / V11164,skin,"in culture,1CT",alphamem complete,silvia,si,2P0 2P1,NA,NA,NA,NA
+A354,6/29/2022,Eos reticulata,Zoo Barcelona,27181800/barcelona/10564,traquea,"in culture,2CT",FBM : alphamem complete,Silvia,si,2P0 2P1,NA,NA,NA,NA
+A355,7/5/2022,Macropus rufus,Zoo Barcelona,23771982/BARCELONA/10129,ear,"in culture,2CT",alphamem complete,Silvia,si,2P0 2P1,NA,NA,NA,NA
+A357,7/6/2022,Loxodonta africana,Bioparco de Valencia,Kibo,skin,"in culture,6CT",alphamem complete on gelatin 0.1%,silvia,si,3P0 6P1 8P2 3P3,si,Negative,NA,NA
+A359,7/11/2022,Mandrillus leucophaeus,Zoo Barcelona,QGH14-02210,skin,"in culture,3CT",alphamem complete on gelatin,silvia,si,2P0,NA,NA,NA,NA
+A360,7/11/2022,Mandrillus leucophaeus,Zoo Barcelona,QGH13-01342,skin,"in culture,3CT",alphamem complete on gelatin,silvia,si,2P0 2P1,Si,NA,NA,NA
+A362,7/13/2022,Ara chloropterus,Zoo Barcelona,AP22-221/7344,traquea,"in culture,3CT",alphamem complete,silvia,si,4P0 2P1,NA,NA,NA,NA
+A365,7/18/2022,Leopardo,Zoo Madrid,LE-24,skin,"in culture,3CT",alphamem complete,silvia,si,2P0 2P1,si,NA,NA,NA
+A368,7/29/2022,Cercocebus lunulatus,Zoo Barcelona,QGH16-04243,skin,in culture,alphamem complete on gelatin,silvia,si,2P0 2P1,si,NA,NA,NA
+A369,7/29/2022,Cercocebus lunulatus,Zoo Barcelona,QGH16-04293,skin,in culture,alphamem complete on gelatin,Silvia,si,2P0 2P1,si,NA,NA,NA
+A374,8/5/2022,Beatragus hunteri,Bioparco Valencia,NA,skin,"in culture, 2CT",alphamem complete,silvia,si,2P0 2P1,si x DNA and RNA,NA,NA,NA
+A375,8/5/2022,Suricata Suricatta,MondoMar,FMK17-00003,ovarios,in culture 3CT,alphamem complete,silvia,si,2P0 2P1,si x DNA and RNA,negative,NA,NA
+A379,8/12/2022,Hylobates pileatus,Zoo Barcelona,24150276/Barcelona11283,Ear,"in culture,2CT",alphamem complete. On gelatin,silvia,si,2P0 2P1,si,NA,NA,NA
+A381,8/17/2022,Mandrillus leucophaeus,Zoo Barcelona,MIG12-29591019/barcelona/6329,ear,"in culture,3CT",alphamem complete on gelatin 0.1%,silvia,si,2P0 2P1,si,NA,NA,NA
+A382,8/18/2022,Elaphurus davidianus,Zoo Barcelona,MIG12-28066865/barcelona/10882,ear,"in culture, 6CT",alphamem complete,silvia,si,1P0 5P1 1P2,si x DNA and RNA,negative,NA,NA
+A384,8/23/2022,Macropus rufus,Zoo Barcelona,QGH22-06164-IA,ear,"in culture, 3CT",alphamem complete,sira,si,2P0 2P1,si,NA,NA,NA
+A385,8/23/2022,Ixobrychus minutus,Zoo Barcelona,VKM13-00879/BARCELONA / 12860,Traquea,"in culture, 3CT",FBM:alphamem 12/09 on matrigel,sira,si,NA,NA,Micoplasma positivo,NA,NA
+A390,9/9/2022,Lemur catta,Zoo Barcelona,QGH15-02282/Barcelona/12431,skin,"in culture, 1CT",alphamem complete,silvia,si,2P0 2P1,si,Negative,NA,NA
+A391,9/12/2022,Hydrochoerus hydrochaeris (Capybara),Zoo Barcelona,DLK20-06414Barcelona/13876,skin,"in culture, 2CT",alphamem complete,silvia,si,2P0 1P1,si,Negative,NA,NA
+A392,9/14/2022,Cebulla pygmaea (pygmy marmoset),Zoo Barcelona,QGH18-04995Barcelona/13312,skin,in culture,alphamem complete,silvia,si,2P0 2P1 1P3,si,Negative,NA,NA
+A394,9/15/2022,Cebulla pygmaea (pygmy marmoset),Zoo Barcelona,QGH22-06032Barcelona/14077,ear,"in culture, 2CT",alphamem complete on matrigel,silvia,si,2P0 2P1 1P2 1P3,si,Negative,NA,NA
+A287,9/23/2022,Cercocebus torquatus,Zoo Barcelona,5724123/9381,piel,"in culture, 1 CT",alphamem complete  on matrigel,silvia,si,2P0 p1 split on mg ( no veo que crescen mucho),si,Negative,NA,NA
+A400,9/30/2022,Leontopithecus chrysomelas,Zoo Barcelona,MIG12-29918004/Barcelona/10206,ear,"In culture, 4CT",Alphamem complete,Silvia,si,3P0 2P2,si,Negative,si,NA
+A401,9/30/2022,Agapornis nigrigenis,Zoo Barcelona,QGH22-06204-IA/27,traquea,In culture,Alphamem complete,Sira,si,Contaminado,NA,NA,NA,NA
+A402,9/30/2022,Agapornis nigrigenis,Zoo Barcelona,QGH22-06205-IA/28,traquea,In culture,Alphamem complete on matrigel,Sira,si,fibros died,NA,Negative,NA,NA
+A403,9/30/2022,Panthera Onca,Elche,RMC17-00249/ELCHE SAF / 1813,Skin,"In culture, 1 CT",Alphamem complete,Silvia,si,2P0 2P1,si,Negative,si,NA
+A404,10/3/2022,Ailurus fulgens fulgens ( panda rojo),zoo Barcelona,200092917540/BARCELONA / 10009,Skin,"In culture, 2CT",Alphamem complete,Sílvia,si,2P0 2P1,si,Negative,si,NA
+A406,10/5/2022,Gallicolumba luzonica,zoo Barcelona,QGH20-05524/ BARCELONA / 13798,Traquea,in culture,Alphamem complete:FBM,Sira,si,tirado/ contaminacion,NA,NA,NA,NA
+A407,10/5/2022,Dacelo novaeguinaea,Zoo Barcelona,MIG12-28802202/BARCELONA / 12619,Traquea,in culture,Alphamem complete:FBM,Sira,si,Contaminado,si,Negative,NA,NA
+A411,10/7/2022,Gallicolumba luzonica,Zoo Barcelona,VKM12-05794/barcelona14076,traquea,in culture (1CT),FBM:alphamem,Sira,si,1P0 2P1,si,Negative,NA,NA
+A412,10/11/2022,Pteropus lylei,Zoo Barcelona,MIG12-283224384/Barcelona10877,ear,in culture (2CT),FBM:alphamem,Silvia,si,NA,NA,NA,NA,NA
+A414,10/11/2022,Otaria byronia,Oceanografic Valencia,?,skin,in culture (2CT),FBM:alphamem,Silvia,si,2P0 2P1,si,negative,si,NA
+A295 = A2,10/17/2022,Lobo iberico ( Canis lupus ),Zoo Barcelona,MIG12-29349207/13451,skin,in culture,FBM:alphamem,silvia,si,2p0,si,Negative,si,NA
+A416,10/19/2022,Panthera leo,Zoo Barcelona,DKL20-06264/BARCELONA / 13976,Skin,"in culture, 2CT",FBM:alphamem,Sira,si,2P0,si,negative,si,NA
+A417,10/19/2022,Panthera leo,Zoo Barcelona,DKL20-06265/:BARCELONA / 13977,skin,in culture,FBM:alphamem,Sira,si,2P0,si,Negative,NA,NA
+A418,10/19/2022,Elaphurus davidianus,Zoo Madrid,MIG12-29480578/MADRID Z / CP15,skin,in culture  3CT,alphamem,Sira,si,2P0 2P1,si,Negative,si,NA
+A419,10/11/2022,Pteropus lylei,Zoo Barcelona,MIG12-283224384/Barcelona10877,ear,in culture (2CT),FBM:alphamem,Silvia,si,3P0,si,NA,NA,NA
+A421,11/8/2022,Polyplectron Napoleonis,Zoo Barcelona,MIG12-28325583,traqua,"in culture, 2CT",FBM:alphamem,silvia,si,2P0,si,negative,NA,NA
+A422,11/17/2027,European mink,Zoo de madrid,THV16-02170/MADRID Z / V11,ear,"in culture, 2CT",alphamem,silvia,si,1 P0 2P1,si,negative,si,NA
+A423,11/17/2022,Phacochoerus Africanus,Zoo Barcelona,26179436 Barcelona/10958,ear,"in culture, 2CT",alphamem + normocure,silvia,si,2P0,si,negative,NA,NA
+A424,11/23/2022,Bos grunniens,Zoo de madrid,27917608/MADRID Z / Y12,skin,"in culture, 4CT",alphamem,silvia,si,2P0 2P1,si,negative,NA,NA
+A425,11/23/2022,Aepyceros melampus,Zoo Barcelona,QGH22-06136/BARCELONA / 14160,skin,"in culture, 2CT",alphamem,sira,Si,2 P0,NA,negative,NA,NA
+A427,12/7/2026,Eastern bongo,Zoo Barcelona,MIG12-28671173/BARCELONA / 11159,ear,"in culture, 2CT",alphamem,sira,si,2 P0,si,negative,NA,NA
+A428,12/12/2022,Osteolaemus tetraspis,Zoo Barcelona,17965110/barcelona 595,traquea,"in culture, 3CT",FBM on gelatin 28.5 C,silvia,si,3P1,NA,NA,NA,NA
+A431,12/14/2022,"Penguino ""vicky""",Zoo de Madrid,8297685/ MADRID Z / PJ29,"skin , traquea",in culture 2 CT traquea + 2CT skin,high glucose,silvia,si,3P0 skin,si,negative,NA,NA
+A434,1/9/2023,Cebulla pygmaea,Zoo Barcelona,QGH13-00725 Barcelona/11787,ear,"in culture, 2CT",alphamem,silvia,si,2P0 2P1,si,NA,NA,NA
+A435,1/10/2023,Ramphastos toco,Zoo de Madrid,VMT19-40119/MADRID Z / TC7,skin,"in culture, 2CT",alphamem : FBM,silvia,si,4P0 2P1,si,NA,NA,NA
+A437,1/12/2023,Cebulla pygmaea,Zoo Barcelona,QGH18-04995/Barcelona/13312,ear,in culture 1 CT,alphamem,silvia,si,2P0 2P1,si,negative,NA,NA
+A439,1/27/2023,Panthera tigris,Zoo de Madrid,MIG12-29901177/ MADRID Z / TBL8,ovary/skin,"in culture 3 CT skin, 3 CT ovary",alphamem : FBM,sira,si,2P0 2P1 skin,si,negative,NA,NA
+A440,1/27/2023,Pteronura brasiliensis,Zoo de Madrid,JQH12-04082/MADRID Z / NA5,uter/placenta/skin,in culture 3 CT uter,alphamem : FBM,sira,si,3 P0 skin,si,negative,NA,NA
+A441,1/30/2023,Ara Ararauna,Zoo Barcelona,MIG12-28326023,traquea,"in culture, 2 CT",FBM,Silvia,si,2P0 2P1,NA,NA,NA,NA
+A446,2/9/2023,Muntiacus reevesi,Zoo Madrid,WKP13-00240/MADRID Z / MU9,Piel,"in culture, 2 CT",alphamem,silvia,si,2 P0,si,NA,NA,NA
+A448,2/28/2023,Potamoquero,Zoo Madrid,MIG12-28806138/MADRID Z / POT6,piel,"in culture, 2CT",alphamem,silvia,si,3P0,si,negative,NA,NA
+A450 = A287,3/16/2023,Cercocebus torquatus,Zoo Barcelona,574123/barcelona 9381,skin,in culture,alphamem,Silvia,Si,1 P0,NA,negative,NA,NA
+A452,3/24/2023,Dracaeana guianensis,Zoo Barcelona,17968157/Barcelona9399,traquea,"in culture, 2CT",FBM on gelatin and reptile medium on gelatin 28.5 C,Silvia,si,1P0,Si per dna,negative,NA,NA
+A453,3/31/2023,Hystrix,Zoo Barcelona,17968565/barcelona6798,ear,"in culture, 4CT",DMEM,silvia,si,2 P0 2P1,si DNA y RNA,negative,NA,NA
+A459,4/26/2023,Macropus rufogriseus,Sendaviva,CGM20-00275/PARQNATUR / 389,piel,"in culture, 1 CT",DMEM,cira,SI,2 P0,PELLET PARA DNA,NA,NA,NA
+A460,4/26/2023,Mara,Sendaviva,-,piel,in culture,DMEM,cira,si,2P0,PELLET PARA DNA and RNA,NA,NA,NA
+A461,5/23/2023,Pongo pygmaeus pygmaeus,Zoo Barcelona,QGH22-06066,ear,"in culture, 3 CT",DMEM,Silvia,si,2P0 2P1,Pellet para DNA and RNA,NA,NA,NA
+A462,5/1/2023,Tigre Bengala,Zoo Madrid,QRD10-00370/MADRID Z / TBL6,Piel,"In culture, 3CT",DMEM : FBM,Silvia,si,2P0 2P1,Pellet PAra DNA and RNA,NA,NA,NA
+A463,6/8/2023,Canis lupus signatus,Sendaviva,CGM20-00006/PARQNATUR / 121,skin,"in Culture, 2CT",DMEM: FBM,silvia,si,4 P0,Pellet PAra DNA and RNA,NA,NA,NA
+A464,6/9/2023,Canis lupus signatus,Sendaviva,CGM20-00009/PARQNATUR / 124,skin,"in Culture, 2CT",DMEM: FBM,silvia,Si,4 P0,Pellet PAra DNA and RNA,NA,NA,NA
+A466,6/19/2023,Geroticus eremita,Zoo Barcelona,QGH23-06354,traquea,"in Culture, 2CT",FMB on Mg 28.5 C,silvia,si,no success fibros were not growing after P0 split,pellet para DNA,NA,NA,NA
+A467,6/20/2023,Hylobates lar,Elche Safari,HBY14-00185,skin,in culture,DMEM on gel,silvia,Si,2P0,pellet DNA,NA,NA,NA
+A468,6/20/2023,Nanger dama mhorr,Elche Safari,ALM20-00023,skin,in culture,DMEM,silvia,si,2 P0,pellet para DNA AND RNA,NA,NA,NA
+A469,6/27/2023,Procavia Capensis,Bioparc,-,skin,"in culture, 2 CT ( ha llegado en medio amarillo)",DMEM,silvia,si,2P0,pellet DNA,NA,NA,NA
+A470,6/29/2023,Capra pyrenaica hispanica,Zoo Madrid,VCF19-03044/ADRID Z / CAH18,ear,"in Culture, 2CT",DMEM,silvia,si,2 P0 2P1,pellet RNA and DNA,NA,NA,NA
+A471,6/4/2023,Muflon,Zoo Madrid,27917868/ MADRID Z / MUF30,skin,"in Culture, 2CT",DMEM,silvia,si,2 P0 2P1,pellet DNA AND RNA,NA,NA,NA
+A472,7/11/2023,Canis lupus signatus,Sendaviva,CGM20-00008/: PARQNATUR / 123,skin,"in Culture, 2CT",DMEM,silvia,si,3 P0,pellet DNA AND RNA,NA,NA,NA
+A474,7/26/2023,Muflon,Zoo Madrid,27917788/ MADRID Z / MUF45,skin,"in Culture, 2CT",DMEM,silvia,si,NA,NA,NA,NA,NA
+A475,7/26/2023,Reno,Zoo Madrid,MIG12-29480614/: MADRID Z / RE89,skin,"in Culture, 2CT",DMEM,silvia,si,NA,NA,NA,NA,NA
+A396,9/20/2022,Python breitensteini,Zoo Barcelona,15808636/Barcelona/7300,Traquea,"in culture, 1CT",37C alphamem complete + 100x ITS and  amioMax,Silvia,si (37) pasado a 28 grados hongos a 28,No success,NA,NA,NA,NA
+A278,3/3/2022,Gorilla,Zoo barcelona,QGH15-02323,"Skin , nasal , bocal",In culture,alphamem complete on Gelatin 0.1%,SIra,si from skin  and nasal,"2 P0,2P1,2P2, 2P3 from skin, 2P0 from nasal",si,Negative,si,NA
+A300,4/21/2022,Macaca sylvanus,Zoo Barcelona,MIG12-28734788/BARCELONA / 10699,"Skin , nasal , bocal",in culture,BEGM medium for bocal and nasal and alphamem coplete for skin on gelatin coating,silvia,si from skin and nasal,4P0 2P1  2P3 from skin,si,NA,NA,NA
+A281,3/8/2022,Eclectus roratus,zoo madrid,WKP18-01463/ MADRID Z / ECL6,skin and traquea,"in culture, 1CT",FBM : alphamem complete,silvia,si from traquea,2 P0 2 P1,NA,NA,NA,"After P1, fibros grow very slowly"
+A370,7/29/2022,Corucia zebrata,Zoo Barcelona,QGH20-05473,traquea,"in culture, 1CT",28C DMEM/F12 Complets. on matrigel 12/09,sira,si on matrigel and w/o matrigel 28 and 37 grados,no success,NA,Negative,NA,NA
+A290,3/24/2022,Central chimpanzee,Zoo Barcelona,MIG12-30088855,"Skin , nasal , bocal",in culture,alphamem complete,Sira/ Silvia skin,"si, fibros from skin",2P0  2P1 2P2 from skin 4P3,NA,NA,NA,NA

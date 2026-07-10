@@ -1,0 +1,162 @@
+﻿"scientific_name","iucn_category","superclass","class","genus","individuals","fibro","tissue_of_origin","assembly_level","scaffold_n50","genome_size","genome_match","selected"
+"Pleurodeles waltl","NEAR THREATENED","Amphibia","Amphibia","Pleurodeles",2,1,"larvae/Trachea","Chromosome",1360680797,20929200000,"species",FALSE
+"Lissotriton helveticus","LEAST CONCERN","Amphibia","Amphibia","Lissotriton",1,1,"Tail","Chromosome",2132484007,25760520000,"species",FALSE
+"Xenopus laevis","LEAST CONCERN","Amphibia","Amphibia","Xenopus",1,1,"Skin/liver/heart/muscle/eye","Chromosome",155250555,3080700000,"species",FALSE
+"Xenopus tropicalis","LEAST CONCERN","Amphibia","Amphibia","Xenopus",1,1,"Skin/liver/heart/muscle/eye","Chromosome",153961319,1701720000,"species",FALSE
+"Discoglossus pictus","LEAST CONCERN","Amphibia","Amphibia","Discoglossus",1,1,"Fingertips/Tail","Chromosome",453717995,5134500000,"species",FALSE
+"Leptodactylus fallax","CRITICALLY ENDANGERED","Amphibia","Amphibia","Leptodactylus",1,1,"Muscle / skin / heart","Scaffold",4630249,3141825000,"species",FALSE
+"Crocodylus rhombifer","CRITICALLY ENDANGERED","Reptil",NA,"Crocodylus",1,1,"Trachea","Scaffold",478168,2777520000,"species",FALSE
+"Aldabrachelys gigantea","VULNERABLE","Reptil",NA,"Aldabrachelys",2,1,NA,"Chromosome",148569599,2889990000,"species",FALSE
+"Varanus albigularis","LEAST CONCERN","Reptil","Lepidosauria","Varanus",1,1,"Tissue","Scaffold",14924,2009790000,"species",FALSE
+"Caribicus warreni","VULNERABLE","Reptil","Lepidosauria","Caribicus",2,1,"Trachea",NA,NA,1515900000,"none",FALSE
+"Malpolon monspessulanus","LEAST CONCERN","Reptil","Lepidosauria","Malpolon",2,1,NA,"Chromosome",121923953,1476780000,"species",FALSE
+"Hemorrhois hippocrepis","LEAST CONCERN","Reptil","Lepidosauria","Hemorrhois",1,1,NA,"Chromosome",153613759,1691940000,"species",FALSE
+"Ctenosaura bakeri","CRITICALLY ENDANGERED","Reptil","Lepidosauria","Ctenosaura",1,1,"Kidney","Contig",444732,2601480000,"species",FALSE
+"Jacana jacana","LEAST CONCERN","Birds","Aves","Jacana",1,1,"Trachea","Scaffold",126631,1418100000,"species",FALSE
+"Ciconia ciconia","LEAST CONCERN","Birds","Aves","Ciconia",3,1,"Tissue","Scaffold",24544117,1545240000,"species",FALSE
+"Colius striatus","LEAST CONCERN","Birds","Aves","Colius",2,1,"Trachea","Chromosome",89023854,1437660000,"species",FALSE
+"Rhea americana","NEAR THREATENED","Birds","Aves","Rhea",2,2,"Trachea/Skin","Scaffold",3949999,1555020000,"species",FALSE
+"Apus apus","LEAST CONCERN","Birds","Aves","Apus",1,1,NA,"Chromosome",115508478,1251840000,"species",TRUE
+"Bucorvus leadbeateri","VULNERABLE","Birds","Aves","Bucorvus",1,1,"Trachea","Chromosome",40451533,1398540000,"species",FALSE
+"Falco naumanni","LEAST CONCERN","Birds","Aves","Falco",2,1,"Tissue/Trachea","Chromosome",91761059,1403430000,"species",TRUE
+"Ramphastos toco","LEAST CONCERN","Birds","Aves","Ramphastos",1,1,"Tissue","Scaffold",32078995,1760400000,"species",FALSE
+"Spheniscus demersus","ENDANGERED","Birds","Aves","Spheniscus",3,2,"Tissue","Chromosome",88319617,1594140000,"species",FALSE
+"Spheniscus humboldti","VULNERABLE","Birds","Aves","Spheniscus",6,2,"Tissue","Chromosome",89079306,1594140000,"species",FALSE
+"Casuarius casuarius","LEAST CONCERN","Birds","Aves","Casuarius",1,1,"Trachea/Skin","Scaffold",3704890,1555020000,"species",FALSE
+"Phoenicopterus ruber","LEAST CONCERN","Birds","Aves","Phoenicopterus",4,1,"Trachea","Chromosome",85472901,1354530000,"species",FALSE
+"Sarcoramphus papa","LEAST CONCERN","Birds","Aves","Sarcoramphus",1,1,"Skin/traquea","Chromosome",96420541,1476780000,"species",TRUE
+"Psophia crepitans","NEAR THREATENED","Birds","Aves","Psophia",1,1,"Tissue","Scaffold",468890,1405875000,"species",FALSE
+"Haliaeetus leucocephalus","LEAST CONCERN","Birds","Aves","Haliaeetus",1,1,"Tissue","Scaffold",9145499,1398540000,"species",FALSE
+"Otus scops scops","LEAST CONCERN","Birds","Aves","Otus",5,1,"Tissue (skin)","Scaffold",86908813,1369200000,"species",FALSE
+"Tyto alba","LEAST CONCERN","Birds","Aves","Tyto",1,1,"Tissue","Scaffold",36032128,1594140000,"species",FALSE
+"Tauraco erythrolophus","LEAST CONCERN","Birds","Aves","Tauraco",2,1,"Trachea","Scaffold",56334,1391205000,"species",FALSE
+"Gallus gallus domestic","LEAST CONCERN","Birds","Aves","Gallus",1,1,"Tissue","Chromosome",90861225,1237170000,"species",TRUE
+"Pavo cristatus","LEAST CONCERN","Birds","Aves","Pavo",3,3,"Trachea/Skin","Chromosome",94977930,1310520000,"species",TRUE
+"Musophaga violacea","LEAST CONCERN","Birds","Aves","Musophaga",1,1,"Trachea","Scaffold",72826144,1391205000,"family",FALSE
+"Tauraco schalowi","LEAST CONCERN","Birds","Aves","Tauraco",1,1,"Trachea","Scaffold",72826144,1391205000,"genus",FALSE
+"Lophura edwardsi","CRITICALLY ENDANGERED","Birds","Aves","Lophura",1,1,"Trachea","Chromosome",61385513,1237170000,"genus",FALSE
+"Netta peposaca","LEAST CONCERN","Birds","Aves","Netta",1,1,"Tissue (trachea)","Scaffold",75817134,1349640000,"species",FALSE
+"Anas platyrhynchos","LEAST CONCERN","Birds","Aves","Anas",1,1,NA,"Complete Genome",80154792,1418100000,"species",FALSE
+"Netta rufina","LEAST CONCERN","Birds","Aves","Netta",1,1,"Tissue","Chromosome",77261329,1349640000,"species",FALSE
+"Chauna torquata","LEAST CONCERN","Birds","Aves","Chauna",1,1,"Trachea","Scaffold",81945454,1364310000,"species",FALSE
+"Cygnus atratus","LEAST CONCERN","Birds","Aves","Cygnus",1,1,"Trachea/Tissue","Chromosome",84552148,1418100000,"species",FALSE
+"Streptopelia decaocto","LEAST CONCERN","Birds","Aves","Streptopelia",1,1,"Tissue","Chromosome",78754139,1290960000,"species",FALSE
+"Caloenas nicobarica","NEAR THREATENED","Birds","Aves","Caloenas",2,1,"Trachea","Chromosome",79699707,1506120000,"species",FALSE
+"Nycticorax nycticorax","LEAST CONCERN","Birds","Aves","Nycticorax",8,2,"Tissue","Scaffold",3016563,1320300000,"species",FALSE
+"Platalea leucorodia","LEAST CONCERN","Birds","Aves","Platalea",4,1,NA,"Chromosome",94714899,1222500000,"species",TRUE
+"Plegadis falcinellus","LEAST CONCERN","Birds","Aves","Plegadis",4,1,NA,"Scaffold",50846,1222500000,"species",FALSE
+"Eudocimus ruber","LEAST CONCERN","Birds","Aves","Eudocimus",2,2,"Tissue/Trachea","Scaffold",101016769,1222500000,"species",TRUE
+"Threskiornis aethiopicus","LEAST CONCERN","Birds","Aves","Threskiornis",1,1,"Tissue/Trachea","Scaffold",90113662,1222500000,"species",TRUE
+"Pelecanus crispus","NEAR THREATENED","Birds","Aves","Pelecanus",1,1,"Trachea","Chromosome",86807213,1290960000,"species",FALSE
+"Cyanocorax yncas","LEAST CONCERN","Birds","Aves","Cyanocorax",1,1,"Trachea","Contig",13535775,1232280000,"genus",FALSE
+"Copsychus malabaricus","LEAST CONCERN","Birds","Aves","Copsychus",3,1,"Trachea","Scaffold",11085488,1278735000,"genus",FALSE
+"Guaruba guarouba","VULNERABLE","Birds","Aves","Guaruba",1,1,"Trachea","Chromosome",109727540,1339860000,"species",TRUE
+"Trichoglossus moluccanus","LEAST CONCERN","Birds","Aves","Trichoglossus",2,1,"Tissue","Scaffold",72769352,1300740000,"species",FALSE
+"Eclectus roratus","LEAST CONCERN","Birds","Aves","Eclectus",1,1,"Tissue","Scaffold",28643,1555020000,"species",FALSE
+"Anodorhynchus hyacinthinus","VULNERABLE","Birds","Aves","Anodorhynchus",2,1,"Trachea","Scaffold",12605,1320300000,"species",FALSE
+"Amazona autumnalis","CRITICALLY ENDANGERED","Birds","Aves","Amazona",3,1,"Tissue (skin)","Scaffold",17050,1476780000,"species",FALSE
+"Agapornis nigrigenis","VULNERABLE","Birds","Aves","Agapornis",6,2,NA,"Scaffold",81463,1281180000,"species",FALSE
+"Aratinga solstitialis","ENDANGERED","Birds","Aves","Aratinga",1,1,"Tissue/Trachea","Scaffold",16980747,1339860000,"species",FALSE
+"Ara chloropterus","LEAST CONCERN","Birds","Aves","Ara",1,1,"Trachea","Scaffold",19108,1447440000,"species",FALSE
+"Ara ararauna","LEAST CONCERN","Birds","Aves","Ara",2,1,"Trachea","Chromosome",110438430,1418100000,"species",TRUE
+"Ara rubrogenys","CRITICALLY ENDANGERED","Birds","Aves","Ara",1,1,NA,"Scaffold",46382249,1374090000,"species",FALSE
+"Eos reticulata","NEAR THREATENED","Birds","Aves","Eos",1,1,"Trachea","Scaffold",25275,1300740000,"genus",FALSE
+"Procavia capensis","LEAST CONCERN","Mammalia","Mammalia","Procavia",2,2,"Tissue","Scaffold",905827,3970679999,"species",FALSE
+"Oryctolagus cuniculus","ENDANGERED","Mammalia","Mammalia","Oryctolagus",1,1,"Tissue","Chromosome",144279705,3188280000,"species",FALSE
+"Oryctolagus cuniculus ibicea","NA","Mammalia","Mammalia","Oryctolagus",1,1,"Tissue","Chromosome",144279705,3188280000,"species",FALSE
+"Notamacropus rufogriseus","LEAST CONCERN","Mammalia","Mammalia","Notamacropus",9,7,"Tissue","Contig",938,4371659999,"species",TRUE
+"Petrogale xanthopus","NEAR THREATENED","Mammalia","Mammalia","Petrogale",2,2,"Tissue","Contig",1261,3970680000,"species",FALSE
+"Osphranter rufus","LEAST CONCERN","Mammalia","Mammalia","Osphranter",4,4,"Tissue","Contig",1110,3061140000,"species",TRUE
+"Loxodonta africana","ENDANGERED","Mammalia","Mammalia","Loxodonta",2,2,"Tissue","Chromosome",119600562,4342320000,"species",FALSE
+"Elephas maximus sumatranus",NA,"Mammalia","Mammalia","Elephas",1,2,"Tissue (ear)/Umbellical Cordon/Placenta","Chromosome",130469234,3941340000,"species",FALSE
+"Equus quagga chapmani","NEAR THREATENED","Mammalia","Mammalia","Equus",3,3,NA,"Chromosome",122556673,3481680000,"species",TRUE
+"Ceratotherium simum","NEAR THREATENED","Mammalia","Mammalia","Ceratotherium",3,2,"Blood","Chromosome",67555069,3266520000,"species",FALSE
+"Equus caballus przewalskii","ENDANGERED","Mammalia","Mammalia","Equus",1,1,"Placenta/ Umbilical Cordon","Chromosome",99223387,3110040000,"species",FALSE
+"Equus quagga burchelli","NEAR THREATENED","Mammalia","Mammalia","Equus",4,2,"Tissue","Chromosome",122556673,3481680000,"species",TRUE
+"Equus caballus","NA","Mammalia","Mammalia","Equus",1,1,"Tissue (ear)","Chromosome",99223387,3110040000,"species",FALSE
+"Tapirus terrestris","VULNERABLE","Mammalia","Mammalia","Tapirus",2,2,"Tissue (skin)","Scaffold",186384,3696840000,"species",FALSE
+"Hydrochoerus hydrochaeris","LEAST CONCERN","Mammalia","Mammalia","Hydrochoerus",1,1,"Tissue","Scaffold",202224,3663832500,"species",FALSE
+"Dolichotis patagonum","NEAR THREATENED","Mammalia","Mammalia","Dolichotis",3,2,"Tissue","Scaffold",31026,3618600000,"species",FALSE
+"Eliomys quercinus","NEAR THREATENED","Mammalia","Mammalia","Eliomys",1,1,"Tissue","Chromosome",108114398,3882659999,"species",FALSE
+"Hystrix cristata","LEAST CONCERN","Mammalia","Mammalia","Hystrix",1,2,"Tissue","Scaffold",64768,3663832500,"species",FALSE
+"Cynomys ludovicianus","LEAST CONCERN","Mammalia","Mammalia","Cynomys",2,2,"Tissue","Scaffold",1032944,3882659999,"species",FALSE
+"Rattus norvegicus","LEAST CONCERN","Mammalia","Mammalia","Rattus",1,1,"Tissue","Chromosome",137014596,3198060000,"species",FALSE
+"Lutra lutra","NEAR THREATENED","Mammalia","Mammalia","Lutra",2,1,"tissue","Chromosome",149004807,2880210000,"species",FALSE
+"Panthera leo","VULNERABLE","Mammalia","Mammalia","Panthera",9,9,"blood","Chromosome",147402474,2885100000,"species",TRUE
+"Panthera onca","NEAR THREATENED","Mammalia","Mammalia","Panthera",4,6,"Tissue","Chromosome",132627732,2767740000,"species",TRUE
+"Canis lupus signatus","LEAST CONCERN","Mammalia","Mammalia","Canis",4,5,"Tissue/Blood","Chromosome",65778685,2748180000,"species",TRUE
+"Mungos mungo","LEAST CONCERN","Mammalia","Mammalia","Mungos",3,3,"Tissue","Scaffold",236501,2823975000,"species",FALSE
+"Ursus thibetanus","VULNERABLE","Mammalia","Mammalia","Ursus",1,1,"Tissue","Scaffold",26803000,2689500000,"species",FALSE
+"Otaria byronia","LEAST CONCERN","Mammalia","Mammalia","Otaria",5,5,"Tissue","Scaffold",144693000,3080700000,"species",TRUE
+"Ailuropoda melanoleuca","VULNERABLE","Mammalia","Mammalia","Ailuropoda",2,1,"Tissue","Chromosome",129245720,2689500000,"species",FALSE
+"Suricata suricatta","LEAST CONCERN","Mammalia","Mammalia","Suricata",6,7,"Tissue","Chromosome",141453419,2823975000,"species",TRUE
+"Panthera pardus kotiya","VULNERABLE","Mammalia","Mammalia","Panthera",2,2,"Tissue","Scaffold",126810544,2767740000,"species",FALSE
+"Crocuta crocuta","LEAST CONCERN","Mammalia","Mammalia","Crocuta",2,2,"Tissue","Scaffold",7236831,2823975000,"species",FALSE
+"Zalophus californianus","LEAST CONCERN","Mammalia","Mammalia","Zalophus",3,2,"Tissue","Chromosome",147124152,3080700000,"species",FALSE
+"Panthera pardus saxicolor","VULNERABLE","Mammalia","Mammalia","Panthera",1,1,"Tissue","Scaffold",126810544,2767740000,"species",FALSE
+"Mustela lutreola novikovi","CRITICALLY ENDANGERED","Mammalia","Mammalia","Mustela",1,1,"Tissue","Chromosome",154078643,2880210000,"species",FALSE
+"Panthera tigris","ENDANGERED","Mammalia","Mammalia","Panthera",2,2,"Tissue (ovary/skin)","Chromosome",146942463,2650380000,"species",FALSE
+"Pteronura brasiliensis","ENDANGERED","Mammalia","Mammalia","Pteronura",1,1,"Tissue (uter/skin)","Scaffold",119023,2880210000,"species",FALSE
+"Panthera tigris sumatrae","ENDANGERED","Mammalia","Mammalia","Panthera",2,1,"Skin","Chromosome",146942463,2650380000,"species",FALSE
+"Leopardus pardalis","LEAST CONCERN","Mammalia","Mammalia","Leopardus",1,1,NA,"Chromosome",152606360,2909550000,"genus",FALSE
+"Ailurus fulgens","ENDANGERED","Mammalia","Mammalia","Ailurus",7,5,"Tissue","Scaffold",2983736,2833755000,"genus",TRUE
+"Ateles hybridus","CRITICALLY ENDANGERED","Mammalia","Mammalia","Ateles",8,6,"Tissue/placenta","Scaffold",50515269,3166275000,"species",TRUE
+"Lemur catta","ENDANGERED","Mammalia","Mammalia","Lemur",9,6,"Tissue (skin)","Chromosome",102162704,3207840000,"species",TRUE
+"Callithrix geoffroyi","LEAST CONCERN","Mammalia","Mammalia","Callithrix",1,1,"Tissue","Scaffold",13434,3354540000,"species",FALSE
+"Saguinus imperator subgrisescens","LEAST CONCERN","Mammalia","Mammalia","Saguinus",3,4,"Tissue","Scaffold",65636,3378990000,"species",FALSE
+"Saguinus oedipus","CRITICALLY ENDANGERED","Mammalia","Mammalia","Saguinus",3,3,NA,"Chromosome",148490209,3378990000,"species",FALSE
+"Pan troglodytes troglodytes","ENDANGERED","Mammalia","Mammalia","Pan",9,10,"Tissue/Blood","Chromosome",146288486,3613710000,"species",TRUE
+"Cercocebus lunulatus","ENDANGERED","Mammalia","Mammalia","Cercocebus",6,8,NA,"Scaffold",36500,4029360000,"species",TRUE
+"Pongo pygmaeus","CRITICALLY ENDANGERED","Mammalia","Mammalia","Pongo",3,3,"Cell culture / Placenta/ombelical Cordon","Chromosome",143261986,3579480000,"species",FALSE
+"Mandrillus sphinx","VULNERABLE","Mammalia","Mammalia","Mandrillus",2,3,"Tissue","Contig",20999372,3423000000,"species",FALSE
+"Miopithecus ogouensis","NEAR THREATENED","Mammalia","Mammalia","Miopithecus",2,1,"Tissue","Scaffold",39714,3589260000,"species",FALSE
+"Eulemur fulvus","VULNERABLE","Mammalia","Mammalia","Eulemur",2,2,"Tissue","Scaffold",28225,3281190000,"species",FALSE
+"Cercopithecus neglectus","LEAST CONCERN","Mammalia","Mammalia","Cercopithecus",2,2,"Tissue","Scaffold",44019,4762860000,"species",FALSE
+"Cercocebus torquatus","ENDANGERED","Mammalia","Mammalia","Cercocebus",2,2,"Tissue","Scaffold",37166,4792200000,"species",FALSE
+"Gorilla gorilla","CRITICALLY ENDANGERED","Mammalia","Mammalia","Gorilla",4,3,"Blood/Tissue","Contig",42091,3491460000,"species",TRUE
+"Papio cynocephalus","LEAST CONCERN","Mammalia","Mammalia","Papio",3,3,"Tissue","Scaffold",30627,3457230000,"species",FALSE
+"Hylobates muelleri","ENDANGERED","Mammalia","Mammalia","Hylobates",1,1,"Tissue","Scaffold",28009,3246960000,"species",FALSE
+"Mandrillus leucophaeus","VULNERABLE","Mammalia","Mammalia","Mandrillus",3,3,"Tissue","Scaffold",3186748,3423000000,"species",FALSE
+"Hylobates pileatus","ENDANGERED","Mammalia","Mammalia","Hylobates",1,1,"Tissue","Chromosome",131825309,3168720000,"species",FALSE
+"Cebuella pygmaea","VULNERABLE","Mammalia","Mammalia","Cebuella",5,5,"Tissue","Scaffold",35755,3403440000,"species",TRUE
+"Leontopithecus chrysomelas","ENDANGERED","Mammalia","Mammalia","Leontopithecus",1,1,"Tissue","Scaffold",30751,3378990000,"species",FALSE
+"Callimico goeldii","VULNERABLE","Mammalia","Mammalia","Callimico",2,2,"Tissue (ear)","Scaffold",25261,3378990000,"species",FALSE
+"Saguinus midas","LEAST CONCERN","Mammalia","Mammalia","Saguinus",2,2,"Skin","Chromosome",143273090,3378990000,"species",FALSE
+"Varecia variegata","CRITICALLY ENDANGERED","Mammalia","Mammalia","Varecia",2,1,"Skin","Chromosome",128811464,3193170000,"species",FALSE
+"Cercopithecus nictitans martini","ENDANGERED","Mammalia","Mammalia","Cercopithecus",1,1,"skin/ear/traquea","Scaffold",31132,4303200000,"species",FALSE
+"Macaca sylvanus","ENDANGERED","Mammalia","Mammalia","Macaca",2,2,"Tissue","Complete Genome",162126771,3423000000,"genus",FALSE
+"Hylobates lar","ENDANGERED","Mammalia","Mammalia","Hylobates",2,1,"Tissue","Chromosome",131825309,3017130000,"genus",FALSE
+"Nanger dama mhorr","CRITICALLY ENDANGERED","Mammalia","Mammalia","Nanger",20,10,"blood/placenta/ombelical cord","Scaffold",37125998,3403440000,"species",TRUE
+"Aepyceros melampus","LEAST CONCERN","Mammalia","Mammalia","Aepyceros",8,6,"Tissue (ear)","Scaffold",344542,4586820000,"species",TRUE
+"Hexaprotodon liberiensis","ENDANGERED","Mammalia","Mammalia","Hexaprotodon",1,1,"Tissue (skin)","Chromosome",142594368,3041580000,"species",FALSE
+"Ammotragus lervia fassini","VULNERABLE","Mammalia","Mammalia","Ammotragus",7,5,"Tissue","Scaffold",1301762,3195615000,"species",TRUE
+"Oryx gazella","LEAST CONCERN","Mammalia","Mammalia","Oryx",1,1,"Tissue","Scaffold",1579191,3892440000,"species",FALSE
+"Giraffa camelopardalis","VULNERABLE","Mammalia","Mammalia","Giraffa",2,2,NA,"Scaffold",3153258,2709060000,"species",FALSE
+"Lama guanicoe","LEAST CONCERN","Mammalia","Mammalia","Lama",4,3,NA,"Scaffold",14786206,3139380000,"species",TRUE
+"Connochaetes taurinus","LEAST CONCERN","Mammalia","Mammalia","Connochaetes",1,1,NA,"Scaffold",366224,3853320000,"species",FALSE
+"Tragelaphus spekii","LEAST CONCERN","Mammalia","Mammalia","Tragelaphus",2,1,"Tissue (placenta/ombelical cordon)","Scaffold",46427,3853320000,"species",FALSE
+"Bison bonasus","NEAR THREATENED","Mammalia","Mammalia","Bison",3,2,"Blood/Tissue","Scaffold",104743180,4792200000,"species",FALSE
+"Camelus bactrianus","CRITICALLY ENDANGERED","Mammalia","Mammalia","Camelus",2,2,"Tissue","Chromosome",79915242,2577030000,"species",FALSE
+"Tragelaphus eurycerus","NEAR THREATENED","Mammalia","Mammalia","Tragelaphus",2,1,"Tissue","Contig",21206903,3853320000,"species",FALSE
+"Sus scrofa","LEAST CONCERN","Mammalia","Mammalia","Sus",2,2,"Tissue","Chromosome",88231837,2885100000,"species",FALSE
+"Oryx dammah","EXTINCT IN THE WILD","Mammalia","Mammalia","Oryx",3,2,"Tissue","Scaffold",100398400,3892440000,"species",FALSE
+"Rangifer tarandus","VULNERABLE","Mammalia","Mammalia","Rangifer",4,4,"Tissue/ovaries","Scaffold",69738971,3334980000,"species",TRUE
+"Capra hircus","NA","Mammalia","Mammalia","Capra",4,2,"Tissue","Chromosome",87277232,3168720000,"species",TRUE
+"Elaphurus davidianus","EXTINCT IN THE WILD","Mammalia","Mammalia","Elaphurus",5,5,"Tissue (ear)","Scaffold",3039716,3168720000,"species",TRUE
+"Dama dama","LEAST CONCERN","Mammalia","Mammalia","Dama",2,2,"Tissue","Chromosome",77069784,3168720000,"species",FALSE
+"Beatragus hunteri","CRITICALLY ENDANGERED","Mammalia","Mammalia","Beatragus",1,1,"Tissue","Scaffold",69303,3853320000,"species",FALSE
+"Bos grunniens","VULNERABLE","Mammalia","Mammalia","Bos",2,2,"Tissue","Chromosome",114386978,3569700000,"species",FALSE
+"Ovis aries musimon","NA","Mammalia","Mammalia","Ovis",3,3,"Tissue","Chromosome",107697089,3227400000,"species",FALSE
+"Bison bison","NEAR THREATENED","Mammalia","Mammalia","Bison",3,1,"Tissue","Scaffold",6873254,4792200000,"species",FALSE
+"Hippopotamus amphibius","VULNERABLE","Mammalia","Mammalia","Hippopotamus",2,2,"Tissue","Chromosome",141669128,3041580000,"species",FALSE
+"Muntiacus muntjak","LEAST CONCERN","Mammalia","Mammalia","Muntiacus",1,1,"Tissue (skin)","Chromosome",682452208,3080700000,"species",FALSE
+"Tursiops truncatus","LEAST CONCERN","Mammalia","Mammalia","Tursiops",1,1,"Tissue","Chromosome",108430135,3080700000,"species",FALSE
+"Delphinapterus leucas","LEAST CONCERN","Mammalia","Mammalia","Delphinapterus",1,1,"Tissue","Scaffold",31183418,3217620000,"species",FALSE
+"Megaptera novaeangliae","LEAST CONCERN","Mammalia","Mammalia","Megaptera",1,1,"Tissue","Chromosome",107416641,2865540000,"species",FALSE
+"Delphinus delphis","LEAST CONCERN","Mammalia","Mammalia","Delphinus",1,1,"Tissue","Chromosome",107080983,3080700000,"species",FALSE
+"Muntiacus reevesi","LEAST CONCERN","Mammalia","Mammalia","Muntiacus",2,2,NA,"Chromosome",114544513,2924220000,"species",FALSE
+"Phacochoerus africanus","LEAST CONCERN","Mammalia","Mammalia","Phacochoerus",5,4,"Tissue","Chromosome",141887063,2885100000,"species",TRUE
+"Connochaetes gnou","LEAST CONCERN","Mammalia","Mammalia","Connochaetes",1,1,"Tissue","Scaffold",366224,3853320000,"genus",FALSE
+"Axis axis","LEAST CONCERN","Mammalia","Mammalia","Axis",1,2,"Tissue","Scaffold",20764858,3168720000,"genus",FALSE
+"Potamochoerus porcus","LEAST CONCERN","Mammalia","Mammalia","Potamochoerus",2,2,"Tissue","Chromosome",141887063,2885100000,"family",FALSE
+"Capra pyrenaica hispanica","LEAST CONCERN","Mammalia","Mammalia","Capra",1,1,"Tissue","Chromosome",91317560,3163830000,"genus",FALSE

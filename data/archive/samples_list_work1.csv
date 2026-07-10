@@ -1,0 +1,415 @@
+﻿cell_line_ID,date,animal_species,coming_from,species_360_local_id,body_part,process,medium,person_in_charge,notes,vials_n2,pellet,micoplasma_test,dna_extr_technician,rna_extr_technician,karyotype
+A1,3/10/2019,Western Chimpanzee,Copenaghen ZOO,27717382-CHI003,blood,coagulated,NA,Armida,NA,/,NA,NA,NA,NA,NA
+A1,3/10/2019,Western Chimpanzee,Copenaghen ZOO,27717382-CHI003,muscle,dissection directly on plate,NA,Armida/Sira,NA,fibros P1 (4 vials),NA,NEGATIVE @P3,Armida,NA,done
+A1,3/10/2019,Western Chimpanzee,Copenaghen ZOO,27717382-CHI003,brain,frozen 4 vials,NA,Armida,NA,P2 (3 vials),NA,NA,NA,NA,NA
+A1,3/10/2019,Western Chimpanzee,Copenaghen ZOO,27717382-CHI003,entire ear,dissection directly on plate,NA,Sira,NA,P3 (4 vials),NA,NA,NA,NA,NA
+A1,3/10/2019,Western Chimpanzee,Copenaghen ZOO,27717382-CHI003,NA,NA,NA,NA,NA,P4 (5),NA,NA,NA,NA,NA
+A2,24/10/2019,Wolf (lobo iberico),BCN ZOO,MIG12-29349207/13451,blood,PBMc isolation,NA,Armida,NA,2 vials,Pellet for DNA,NA,done,NA,done
+A2,24/10/2019,Wolf (lobo iberico),BCN ZOO,MIG12-29349207/13451,tissue,dissection directly on plate,NA,Armida,NA,P1(2 vials),Pellet for RNA,NA,NA,NA,NA
+A2,24/10/2019,Wolf (lobo iberico),BCN ZOO,MIG12-29349207/13451,NA,NA,NA,NA,NA,P2(2 vials),NA,NA,NA,NA,NA
+A2,24/10/2019,Wolf (lobo iberico),BCN ZOO,MIG12-29349207/13451,NA,NA,NA,NA,NA,P3(3 vials),NA,NA,NA,NA,NA
+A3,6/11/2019,Calotriton Arnoldi,Torre Ferrusa (UAB),OR193 son of TOR18+TOR16,tongue/head,"frozen, dissection directly on plate",NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A3,6/11/2019,Calotriton Arnoldi,Torre Ferrusa (UAB),OR193 son of TOR18+TOR16,tail,"frozen, dissection directly on plate",NA,NA,NA,NA,NA,NA,NA,NA,NA
+A3,6/11/2019,Calotriton Arnoldi,Torre Ferrusa (UAB),OR193 son of TOR18+TOR16,skin,dissection directly on plate,NA,NA,NA,NA,NA,NA,NA,NA,NA
+A3,6/11/2019,Calotriton Arnoldi,Torre Ferrusa (UAB),OR193 son of TOR18+TOR16,trachea,dissection directly on plate,NA,NA,NA,NA,NA,NA,NA,NA,NA
+A3,6/11/2019,Calotriton Arnoldi,Torre Ferrusa (UAB),OR193 son of TOR18+TOR16,testicles,"frozen, dissection directly on plate",NA,NA,NA,NA,NA,NA,NA,NA,NA
+A3,6/11/2019,Calotriton Arnoldi,Torre Ferrusa (UAB),OR193 son of TOR18+TOR16,frozen tail,Liberase,NA,NA,NA,NA,NA,NA,NA,NA,NA
+A3,26/11/2019,second round,Torre Ferrusa (UAB),OR193 son of TOR18+TOR16,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+A4,7/11/2019,Dolphin,BCN ZOO,MIG12-30088917,tissue,dissection directly on plate,NA,Armida,NA,Fibros P1 (2vials),Pellet for DNA,NA,done,NA,done
+A4,7/11/2019,Dolphin,BCN ZOO,MIG12-30088917,tissue,NA,NA,NA,NA,P2(3 vials),NA,NA,NA,NA,NA
+A4,7/11/2019,Dolphin,BCN ZOO,MIG12-30088917,tissue,NA,NA,NA,NA,P3(1 vial),NA,NA,NA,NA,NA
+A5,8/11/2019,Ateles hybridus (mono arana),BCN ZOO,QGH19-05276/13598,Tissue,"dissection directly on plate, liberase",NA,Armida,NA,P2(2 vials),Pellet for DNA,NA,done,NA,NA
+A5,26/11/2019,second round,BCN ZOO,QGH19-05276/13598,Tissue,"dissection directly on plate, liberase",NA,NA,NA,P3(2 vials),Pellet for RNA,NA,NA,NA,NA
+A6,14/11/2019,Calotriton Arnoldi,BCN ZOO,QGH19-05277-IA/AP19-133,all body (new born),dissociation directly on plate,NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A7,15/11/2019,Connochaetes gnou,BCN ZOO,QGH19-05277-IA/AP19-133,blood,PBMc isolation,NA,NA,NA,2 vials PBMc,NA,NA,NA,NA,NA
+A8,22/11/2019,Lutra Lutra,BCN ZOO,10500/25402188,tissue,"frozen, dissociation directly on plate",NA,Armida,NA,Fibros P1 (2vials),Pellet for DNA,NA,done,NA,done
+A8,22/11/2019,Lutra Lutra,BCN ZOO,10500/25402188,tissue,NA,NA,NA,NA,P2(3 vials),Pellet for RNA,NA,NA,NA,NA
+A8,22/11/2019,Lutra Lutra,BCN ZOO,10500/25402188,tissue,NA,NA,NA,NA,P3(4vials),NA,NA,NA,NA,NA
+A9,26/11/2019,Nanger Dama Mhorr,BCN ZOO,10500/25402188,blood,PBMc isolation,NA,NA,NA,1 vial PMBc,Pellet for DNA,NA,done,NA,NA
+A9,26/11/2019,Nanger Dama Mhorr,BCN ZOO,10500/25402188,blood,"frozen ,dissection directly on plate",NA,Armida,NA,P1(4vials),Pellet for RNA,NA,NA,NA,NA
+A9,26/11/2019,Nanger Dama Mhorr,BCN ZOO,10500/25402188,blood,NA,NA,NA,NA,P2(4vials),NA,NA,NA,NA,NA
+A9,26/11/2019,Nanger Dama Mhorr,BCN ZOO,10500/25402188,blood,NA,NA,NA,NA,P4(6vials),NA,NA,NA,NA,NA
+A9,26/11/2019,Nanger Dama Mhorr,BCN ZOO,10500/25402188,placenta,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+A9,26/11/2019,Nanger Dama Mhorr,BCN ZOO,10500/25402188,ombelical cord,frozen,NA,NA,NA,NA,NA,NA,NA,NA,NA
+A10,12/9/2019,Panthera leo bleyenberghi,BCN ZOO,MIG12-29591105/8890,blood,PBMc isolation,NA,Armida,NA,1 vial PBMc,Pellet for DNA,NEGATIVE @P2,done,NA,NA
+A10,12/9/2019,Panthera leo bleyenberghi,BCN ZOO,MIG12-29591105/8890,abdominal skin,"frozen, dissection directly on plate, liberase",NA,NA,NA,P2 (4vials),Pellet for RNA,NA,NA,NA,NA
+A11,13/12/2019,Chimpanzee,BCN ZOO,MIG12-29591105/8890,blood,"PBMc isolation, DNA extraction",NA,NA,NA,1 vial PBMc,Pellet for DNA,NA,done,NA,NA
+A11,13/12/2019,Chimpanzee,BCN ZOO,MIG12-29591105/8890,tissue,freeze,NA,Armida,NA,1 vial,NA,NA,NA,NA,NA
+A11,13/12/2019,Chimpanzee,BCN ZOO,MIG12-29591105/8890,tissue,NA,NA,NA,NA,P2 (2vials),NA,NA,NA,NA,NA
+A11,13/12/2019,Chimpanzee,BCN ZOO,MIG12-29591105/8890,tissue,NA,NA,NA,NA,P3(1vial),NA,NA,NA,NA,NA
+A12,12/2/2020,Giraffa camelopardalis rothschildi,BCN ZOO,MIG12-29591105/8890,placenta post partum,dissection directly on plate,NA,Armida,NA,P0 (3 vials),Pellet for DNA,NEGATIVE @P2,NA,NA,NA
+A12,12/2/2020,Giraffa camelopardalis rothschildi,BCN ZOO,MIG12-29591105/8890,placenta post partum,NA,NA,NA,NA,P1 (4 vials),Pellet for RNA,NA,NA,NA,NA
+A12,12/2/2020,Giraffa camelopardalis rothschildi,BCN ZOO,MIG12-29591105/8890,placenta post partum,NA,NA,NA,NA,P2 (9 vials),NA,NA,NA,NA,NA
+A12,12/2/2020,Giraffa camelopardalis rothschildi,BCN ZOO,MIG12-29591105/8890,placenta post partum,NA,NA,NA,NA,P3 (1vial),NA,NA,NA,NA,NA
+A13,20/02/2020,Panthera Leo Bleyenberghi,BCN ZOO,26384182/8891,tissue,dissection directly on plate,NA,Armida,NA,P0  (1 vial),Pellet for DNA,NEGATIVE @P2,done,NA,NA
+A13,20/02/2020,"""RunRun""",BCN ZOO,26384182/8891,tissue,NA,NA,NA,NA,P1  (1 vial),Pellet for RNA,NA,NA,NA,NA
+A13,20/02/2020,"""RunRun""",BCN ZOO,26384182/8891,tissue,NA,NA,NA,NA,P2 (8vials),NA,NA,NA,NA,NA
+A14,20/02/2020,Panthera Leo Bleyenberghi,BCN ZOO,QGH16-04155/12780,tissue,dissection directly on plate,NA,Armida,NA,P0 (1 vial),Pellet for DNA,NEGATIVE @P2,NA,NA,NA
+A14,20/02/2020,"""Macho""",BCN ZOO,QGH16-04155/12780,tissue,NA,NA,NA,NA,P1 (1 vial),Pellet for RNA,NA,NA,NA,NA
+A14,20/02/2020,"""Macho""",BCN ZOO,QGH16-04155/12780,tissue,NA,NA,NA,NA,P2 (vials),NA,NA,NA,NA,NA
+A15,27/02/2020,Zebra,BCN ZOO,QGH16-04155/12780,tissue,dissection directly on plate,NA,Armida,NA,P0 (1 vial),Pellet for DNA,NEGATIVE @P2,NA,NA,NA
+A15,27/02/2020,Zebra,BCN ZOO,QGH16-04155/12780,tissue,NA,NA,NA,NA,P1 (5 vial),Pellet for RNA,NA,NA,NA,NA
+A15,27/02/2020,Zebra,BCN ZOO,QGH16-04155/12780,tissue,NA,NA,NA,NA,P3 (4vial),NA,NA,NA,NA,NA
+A16,6/5/2020,"Chimpanzee ""la vieja""",BCN ZOO,MIG12-30088851/BARCELONA / 11,tissue (oreja),dissection and freeze,NA,Armida,NA,P0 (2 vial),NA,NA,NA,NA,NA
+A16,6/5/2020,"Chimpanzee ""la vieja""",BCN ZOO,MIG12-30088851/BARCELONA / 11,tissue (oreja),NA,NA,NA,NA,P1 (6 vials),Pellet for DNA,NA,NA,NA,NA
+A16,6/5/2020,"Chimpanzee ""la vieja""",BCN ZOO,MIG12-30088851/BARCELONA / 11,tissue (oreja),NA,NA,NA,NA,P2(4vials),Pellet for RNA,NA,NA,NA,NA
+A16,6/5/2020,"Chimpanzee ""la vieja""",BCN ZOO,MIG12-30088851/BARCELONA / 11,tissue (oreja),NA,NA,NA,NA,P3(2 vials),NA,NA,NA,NA,NA
+A16,6/5/2020,"Chimpanzee ""la vieja""",BCN ZOO,MIG12-30088851/BARCELONA / 11,tissue (oreja),NA,NA,NA,NA,P4(2vials),NA,NA,NA,NA,NA
+A17,25/05/2020,Triton,BCN ZOO,QGH20-05351-IA,tissue ( 1paw),dissection and freeze,NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A18,12/6/2020,Gazela dorcas,BCN ZOO,MIG12-29435084/11047,tissue (oreja),dissection and freeze,NA,NA,NA,P0 (4 vials),Pellet for DNA,NA,NA,NA,NA
+A18,12/6/2020,Gazela dorcas,BCN ZOO,MIG12-29435084/11047,tissue (oreja),NA,NA,NA,NA,P1(4vials),Pellet for RNA,NA,NA,NA,NA
+A18,12/6/2020,Gazela dorcas,BCN ZOO,MIG12-29435084/11047,tissue (oreja),NA,NA,NA,NA,P2(4vials),NA,NA,NA,NA,NA
+A18,12/6/2020,Gazela dorcas,BCN ZOO,MIG12-29435084/11047,tissue (oreja),NA,NA,NA,NA,P3(2vials),NA,NA,NA,NA,NA
+A19,6/7/2020,Gazela dama mohor #13447,BCN ZOO,QGH19-05123/13447,Tissue (piel),dissection directly on plate,NA,Armida,NA,P1(6 vials),Pellet for DNA,NA,NA,NA,NA
+A19,6/7/2020,Gazela dama mohor #13447,BCN ZOO,QGH19-05123/13447,Tissue (piel),NA,NA,NA,NA,P2(8vials),Pellet for RNA,NA,NA,NA,NA
+A19,6/7/2020,Gazela dama mohor #13447,BCN ZOO,QGH19-05123/13447,Tissue (piel),NA,NA,NA,NA,P3(10vials),NA,NA,NA,NA,NA
+A19,6/7/2020,Gazela dama mohor #13447,BCN ZOO,QGH19-05123/13447,Tissue (piel),NA,NA,NA,NA,P4 (4vials),NA,NA,NA,NA,NA
+A20,6/7/2020,Gazela dama mohor,BCN ZOO,QGH19-05159/13483,Tissue (piel),dissection directly on plate,NA,Armida,TO REPEAT,NA,NA,NA,NA,NA,NA
+A21,8/7/2020,Gazela Dorcas,BCN ZOO,MIG12-29435079/BARCELONA / 10606,Tissue (oreja),dissection directly on plate,NA,Armida,NA,Biopsia (4vials),Pellet for DNA,NA,NA,NA,NA
+A21,8/7/2020,Gazela Dorcas,BCN ZOO,MIG12-29435079/BARCELONA / 10606,Tissue (oreja),NA,NA,NA,NA,P2 (6 vials),NA,NA,NA,NA,NA
+A21,8/7/2020,Gazela Dorcas,BCN ZOO,MIG12-29435079/BARCELONA / 10606,Tissue (oreja),NA,NA,NA,NA,P3 (6 vials),NA,NA,NA,NA,NA
+A22,8/7/2020,Scissirostrum Dubium,BCN ZOO,QGH16-04022/12687,Tissue (piel),dissection directly on plate,NA,Armida,tried to grown @37 not result,NA,NA,NA,NA,NA,NA
+A23,7/10/2020,Lemur Catta,BCN ZOO,QGH13-00741,Tissue (piel),dissection directly on plate,NA,Armida,Contaminated to repeat!,TO REPEAT,NA,NA,NA,NA,NA
+A24,7/10/2020,Otus Scops Scops,BCN ZOO,MIG12-28179259/8751,Tissue (piel),dissection directly on plate,NA,Armida,tried to grown @37 not result,NA,NA,NA,NA,NA,NA
+A25,17/7/2020,Amazona Lilacina,BCN ZOO,MIG12-28179259/8751,Tissue (piel),dissection directly on plate,NA,Armida,tried to grown @37 not result,Fibros but not expanding. Try again,NA,NA,NA,NA,NA
+A26,20/7/2020,Alytes Muletensis,BCN ZOO,MIG12-28179259/8751,Tissue (piel),dissection and freeze,NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A27,20/7/2020,Lemur Catta,BCN ZOO,QGH20-05335,Tissue (piel),dissection directly on plate and freeze,NA,"Armida
+",NA,P1 (4 vials),PD_1040,AL1448,QGH20-05335 ; BARCELONA / 13644,"Tomas, via BCN Zoo",CGL_38
+A28,21/7/2020,Triton Del Montseny,BCN ZOO,QGH20-05351-IA,Tissue (paw),dissection and freeze,NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A29,7/29/2020,Hippopotamus amphibus,BCN ZOO (frozen),QGH20-05351-IA,Heart from 2012,"dissection, in culture + more frozen",NA,Isa,necrotic-contaminated - tried 3 times,NA,NA,NA,NA,NA,NA
+A30,7/29/2020,Suricata suricatta,BCN ZOO (frozen),QGH20-05351-IA,Spleen from 2012,"dissection, in culture + more frozen",NA,Armida,necrotic-contaminated - tried 3 times,NA,NA,NA,NA,NA,NA
+A31,8/3/2020,Guanaco,BCN ZOO,QGH20-05351-IA,Tissue (ear),Dissection and freeze,NA,Isa,NA,P1 (1 vial),Pellet for DNA,NA,done,NA,NA
+A31,8/3/2020,Guanaco,BCN ZOO,QGH20-05351-IA,Tissue (ear),NA,NA,NA,NA,P2 (2vials),Pellet for RNA,NA,NA,NA,NA
+A31,8/3/2020,Guanaco,BCN ZOO,QGH20-05351-IA,Tissue (ear),NA,NA,NA,NA,P3(2vials),NA,NA,NA,NA,NA
+A32,8/13/2020,Panthera onca,Rio safari Elche,QGH20-05351-IA,Tissue (skin),"Dissection, in culture + freeze",NA,Isa,NA,P1 (3 vials),Pellet for DNA,NEGATIVE @P3,NA,NA,NA
+A32,8/13/2020,Panthera onca,Rio safari Elche,QGH20-05351-IA,Tissue (skin),NA,NA,NA,NA,P2 (2 vials),NA,NA,NA,NA,NA
+A32,8/13/2020,Panthera onca,Rio safari Elche,QGH20-05351-IA,Tissue (skin),NA,NA,NA,NA,P3 (3vials),NA,NA,NA,NA,NA
+A33,8/13/2020,Panthera onca,Rio safari Elche,QGH20-05351-IA,Tissue (skin),"Dissection, in culture + freeze",NA,Isa,on going,NA,NA,NA,NA,NA,NA
+A34,8/19/2020,Aepyceros melampus petersi,BCN ZOO,AP20-00114 / 13729,Tissue (ear),"Dissection, in culture + freeze",NA,Isa,NA,P0 (1 vial),Pellet DNA,NA,NA,NA,NA
+A34,8/19/2020,Aepyceros melampus petersi,BCN ZOO,AP20-00114 / 13729,Tissue (ear),NA,NA,NA,NA,P1 (1vial),Pellet RNA,NA,NA,NA,NA
+A34,8/19/2020,Aepyceros melampus petersi,BCN ZOO,AP20-00114 / 13729,Tissue (ear),NA,NA,NA,NA,P2 (1 vial),NA,NA,NA,NA,NA
+A34,8/19/2020,Aepyceros melampus petersi,BCN ZOO,AP20-00114 / 13729,Tissue (ear),NA,NA,NA,NA,P3 (2vials),NA,NA,NA,NA,NA
+A35,8/13/2020,Hippopotamus amphibus***,BCN ZOO (frozen),AP20-00114 / 13729,Spleen from 2012,"Dissection, in culture + freeze",NA,Isa,Necrotic + contaminated,NA,NA,NA,NA,NA,NA
+A36,8/24/2020,Aepyceros melampus petersi***,BCN ZOO,QGH17-04591/BARCELONA / 13010,Tissue (ear),"Dissection, in culture + freeze",NA,Isa,Contaminated--> to repeat,NA,NA,NA,NA,NA,NA
+A37,8/24/2020,Choeropsis liberiensis (hippopotamus),BCN ZOO,8759764/BARCELONA / 4173,Tissue (skin),"Dissection, in culture + freeze",NA,Isa,on going,P1 (2vials),Pellet DNA,NEGATIVE @P2,done,NA,NA
+A37,8/24/2020,Choeropsis liberiensis (hippopotamus),BCN ZOO,8759764/BARCELONA / 4173,Tissue (skin),NA,NA,NA,NA,P2 (2 vials),Pellet RNA,NA,NA,NA,NA
+A37,8/24/2020,Choeropsis liberiensis (hippopotamus),BCN ZOO,8759764/BARCELONA / 4173,Tissue (skin),NA,NA,NA,NA,P3 (3 vials),NA,NA,NA,NA,NA
+A38,10/9/2020,Ficedula Hypoleuca,BCN ZOO,QGH20-05449-IA,Tissue,dissection and freeze,NA,Armida,NA,biopsia (3 vials),NA,NA,NA,NA,NA
+A39,10/9/2020,Lamprotornis superbus,BCN ZOO,MIG12-28643043,Tissue,dissection and freeze,NA,Armida,NA,biopsia (3 vials),NA,NA,NA,NA,NA
+A40,10/9/2020,Erinaceus europaeus,BCN ZOO,QGH20-05451-IA,Tissue,dissection and freeze,NA,Armida,"tried one time, contaminated, to repeat",biopsia (3 vials),NA,NA,NA,NA,NA
+A41,12/9/2020,Ambistoma mexicanum,BCN ZOO,MIG12-30088849,Tissue,dissection and freeze,NA,Armida,NA,biopsia (1 vials),NA,NA,NA,NA,NA
+A42,9/23/2020,Nycticorax Nycticorax 13733,BCN ZOO,QGH20-05437/13733,Tissue,dissection and freeze,NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A43,9/23/2020,Nycticorax Nycticorax 13728,BCN ZOO,QGH20-05427/BARCELONA / 13724,Tissue,dissection and freeze,NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A44,9/23/2020,Ammotragus lervia fassini,BCN ZOO,QGH20-05466/13759,Tissue,"Dissection, in culture + freeze",NA,Armida,placenta only red part,biopsia (3vials),NA,NA,NA,NA,NA
+A45,9/28/2020,Ammotragus lervia fassini 144,BCN ZOO,QGH20-05470-IA,Tissue,"Dissection, in culture + freeze",NA,Armida,NA,P1 (3 vials),Pellet DNA,NA,done,NA,NA
+A45,9/28/2020,Ammotragus lervia fassini 144,BCN ZOO,QGH20-05470-IA,Tissue,NA,NA,NA,NA,P3 (1vial),Pellet RNA,NA,NA,NA,NA
+A46,9/28/2020,Ammotragus lervia fassini 143,BCN ZOO,QGH20-05469-IA,Tissue,"Dissection, in culture + freeze",NA,Isa,NA,biopsia (3vials),NA,NA,NA,NA,NA
+A46,9/28/2020,Ammotragus lervia fassini 143,BCN ZOO,QGH20-05469-IA,Tissue,NA,NA,NA,NA,P1 (2 vials),Pellet DNA,NA,NA,NA,NA
+A46,9/28/2020,Ammotragus lervia fassini 143,BCN ZOO,QGH20-05469-IA,Tissue,NA,NA,NA,NA,P2 (2 vials),NA,NEGATIVE @P2,NA,NA,NA
+A46,9/28/2020,Ammotragus lervia fassini 143,BCN ZOO,QGH20-05469-IA,Tissue,NA,NA,NA,NA,P3(2 vials),NA,NA,NA,NA,NA
+A47,9/28/2020,Nycticorax Nycticorax 13724,BCN ZOO,QGH20-05427/13724,Tissue,dissection and freeze,NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A48,9/28/2020,Giraffa camelopardalis angolensis,Rio safari Elche,GGW12-00029,Tissue,"Dissection, in culture + freeze",NA,Armida,placenta post partum,biopsia (3vials),NA,NA,done,NA,NA
+A48,9/28/2020,Giraffa camelopardalis angolensis,Rio safari Elche,GGW12-00029,Tissue,NA,NA,NA,NA,P1,NA,NA,NA,NA,NA
+A48,9/28/2020,Giraffa camelopardalis angolensis,Rio safari Elche,GGW12-00029,Tissue,NA,NA,NA,NA,P2 (2 vials),NA,NA,NA,NA,NA
+A48,9/28/2020,Giraffa camelopardalis angolensis,Rio safari Elche,GGW12-00029,Tissue,NA,NA,NA,NA,P3(4 vials),NA,NA,NA,NA,NA
+A48,9/28/2020,Giraffa camelopardalis angolensis,Rio safari Elche,GGW12-00029,Tissue,NA,NA,NA,NA,P6 (1 vial),NA,NA,NA,NA,NA
+A49,10/2/2020,Agapurnis nigrigenis,BCN ZOO,GGW12-00029,tissue,dissection and freeze,NA,Armida,NA,biopsia (3 vials),NA,NA,NA,NA,NA
+A50,10/2/2020,Mungos mungo,BCN ZOO,GGW12-00029,tissue,dissection and freeze,NA,Armida,Growing @ 37C,biopsia (1 vial),Pellet DNA,NA,done,NA,NA
+A50,10/2/2020,Mungos mungo,BCN ZOO,GGW12-00029,tissue,NA,NA,NA,NA,P1 (1 vial),Pellet RNA,NA,NA,NA,NA
+A50,10/2/2020,Mungos mungo,BCN ZOO,GGW12-00029,tissue,NA,NA,NA,NA,P2 (4 vials),NA,NA,NA,NA,NA
+A50,10/2/2020,Mungos mungo,BCN ZOO,GGW12-00029,tissue,NA,NA,NA,NA,P3 (3vials),NA,NA,NA,NA,NA
+A51,11/5/2020,Hamadryas baboon ***,Copenaghen Zoo,GGW12-00029,tongue/ear,"Dissection, in culture + freeze",NA,Isa,NA,NA,NA,NA,NA,NA,NA
+A52,11/5/2020,Hammerhead shark***,Copenaghen Zoo,GGW12-00029,muscle/liver,"Dissection, in culture + freeze",NA,Isa,NA,NA,NA,NA,NA,NA,NA
+A53,11/5/2020,Indian Elephant ***,Copenaghen Zoo,GGW12-00029,muscle/heart,"Dissection, in culture + freeze",NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A54,11/5/2020,Red Panda***,Copenaghen Zoo,GGW12-00029,tongue/ovary,"Dissection, in culture + freeze",NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A55,11/5/2020,Armadillo***,Marcelle Naturaleza,GGW12-00029,vesícula/riñón/adrenal/estómago/duodeno/colon/pulmón/corazón//páncreas,"Dissection, in culture + freeze",NA,Sira,"Frozen samples in the sampe package, we can not identify the processed tissue. Bacteria contamination in some cultures, pen/strep washes the next days.",NA,NA,NA,NA,NA,NA
+A56,11/5/2020,Bisonte Americano***,Marcelle Naturaleza,GGW12-00029,Testículo/Abomaso/ID/Rumen/bazo/vesícular biliar/retículo/riñón/corazón/colon descendente,"Dissection, in culture + freeze",NA,Sira,"BA3 bag.Frozen samples in the sampe package, we can not identify the processed tissue. Bacteria contamination in some cultures, pen/strep washes the next days.",NA,NA,NA,NA,NA,NA
+A57,11/5/2020,Puercoespin Africano***,Marcelle Naturaleza,GGW12-00029,corazón/pulmón/tráquea/esófago/intestinodelgado/ciego/hígado/bazo,"Dissection, in culture + freeze",NA,Sira,"PC2 bag.Frozen samples in the sampe package, we can not identify the processed tissue. Bacteria contamination in some cultures, pen/strep washes the next days.",NA,NA,NA,NA,NA,NA
+A58,11/5/2020,Mangosta rallada***,Marcelle Naturaleza,GGW12-00029,adrenales/riñón/bazo/pancreas/yeyuno/colón/testículo/estómago/hígao/pulmón/tráquea y esofago/ corazón/tiroides/extremidad delanterar derecha.,"Dissection, in culture + freeze",NA,Sira,"Ref. Number:956000004338502. Male.Frozen samples in the sampe package, we can not identify the processed tissue. Bacteria contamination in some cultures, pen/strep washes the next days.",NA,NA,NA,NA,NA,NA
+A59,11/5/2020,Surricata***,Marcelle Naturaleza,GGW12-00029,Hígado/estómago/ID/colon/bazo/riñón/corazón/pulmón/ovario/útero/esófago,"Dissection, in culture + freeze",NA,Sira,"SU1 bag.Ref.Number:981098102623735Frozen samples in the sampe package, we can not identify the processed tissue. Bacteria contamination in some cultures, pen/strep washes the next days.",NA,NA,NA,NA,NA,NA
+A60,11/12/2020,Hydrochoerus hydrochaeris,BCN ZOO,MIG12-28055016/10868,piel,"Dissection, in culture + freeze",NA,Armida,Contaminated...trashed 19.11,NA,NA,NA,NA,NA,NA
+A61,11/13/2020,Rino blanco,Parque de la Naturaleza Caberceno,MIG12-28055016/10868,blood,PBMc isolation,NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A62,11/13/2020,Monchi 1,Parque de la Naturaleza Caberceno,MIG12-28055016/10868,blood,PBMc isolation,NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A63,11/13/2020,Monchi 2,Parque de la Naturaleza Caberceno,MIG12-28055016/10868,blood,PBMc isolation,NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A64,11/17/2020,Suncus Etruscus,Praga Zoo,MIG12-28055016/10868,legs/heart/chest/head/tail,"Dissection, in culture",NA,Armida,No sample left,NA,NA,NA,NA,NA,NA
+A65,12/4/2020,Panthera leo bleyenberghi,BCN ZOO,27181719/8940,Skin,"Dissection, in culture",NA,Armida,fibros @day 4,P0 (1 vial),Pellet DNA  x2,NA,done,NA,NA
+A65,12/4/2020,Panthera leo bleyenberghi,BCN ZOO,27181719/8940,Skin,NA,NA,NA,NA,P1 (2 vials),Pellet RNA  x2,NA,NA,NA,NA
+A65,12/4/2020,Panthera leo bleyenberghi,BCN ZOO,27181719/8940,Skin,NA,NA,NA,NA,P2 (4 vials),NA,NA,NA,NA,NA
+A65,12/4/2020,Panthera leo bleyenberghi,BCN ZOO,27181719/8940,Skin,NA,NA,NA,NA,P3 (2 vials),NA,NA,NA,NA,NA
+A66,12/15/2020,Black crested mangabey,Zoo Safari Elche,27181719/8940,Skin,"Dissection, in culture",NA,Armida,"very small piece, in culture all in 2 wells. One got contaminated the day after, the other one at day 3 ...nothing left.",NA,NA,NA,NA,NA,NA
+A67,11/18/2020,Impala,BCN ZOO,QGH19-05174/13498,Ear,"Dissection, in culture",NA,Isa,NA,P1 (2 vials),NA,NA,NA,NA,NA
+A67,11/18/2020,Impala,BCN ZOO,QGH19-05174/13498,Ear,NA,NA,NA,NA,P3 (5 vials),NA,NA,NA,NA,NA
+A68,1/14/2021,Geronticus Eremita,Zoologico Jerez de la Frontera,QGH19-05174/13498,Tissue/muscle,"Dissection, in culture + freeze",NA,Isa,NA,NA,NA,NA,NA,NA,NA
+A69,1/14/2021,Geronticus Eremita,Zoologico Jerez de la Frontera,QGH19-05174/13498,Tissue,"Dissection, in culture + freeze",NA,Isa,NA,NA,NA,NA,NA,NA,NA
+A70,1/14/2021,Dolochites patagonum,Zoologico Jerez de la Frontera,QGH19-05174/13498,Tissue,Dissection- freeze,NA,Isa,NA,biopsia  (piel?)= 3 cryotubes,NA,NA,NA,NA,NA
+A70,1/14/2021,Dolochites patagonum,Zoologico Jerez de la Frontera,QGH19-05174/13498,Tissue,NA,NA,NA,NA,P2 (2 cryotube),NA,NA,NA,NA,NA
+A70,1/14/2021,Dolochites patagonum,Zoologico Jerez de la Frontera,QGH19-05174/13498,Tissue,NA,NA,NA,NA,P3 (3 cryotube),NA,NA,NA,NA,NA
+A71,1/14/2021,Aldabrachelys gigantea,Zoologico Jerez de la Frontera,QGH19-05103/JEREZ / ALDABRA2,Tissue,Dissection- freeze,NA,Isa,look like there is a contamination,biopsia= 3 cryotubes. No sample left?,NA,NA,NA,NA,NA
+A72,1/27/2021,Jaguar,Parque de la Naturaleza Caberceno,QGH19-05103/JEREZ / ALDABRA2,Tissue (dermal biopsy),Dissection- freeze,NA,Armida,Perfect cut,biopsy= 3 cryotubes,NA,NA,NA,NA,NA
+A72,1/27/2021,Jaguar,Parque de la Naturaleza Caberceno,QGH19-05103/JEREZ / ALDABRA2,Tissue (dermal biopsy),NA,NA,NA,fibros @day 5,NA,NA,NA,NA,NA,NA
+A73,2/2/2021,Ateles hybridus,BCN ZOO,MIG12-28734764/6040,Placenta,"Dissection, in culture + freeze",NA,Armida,NA,biopsy= 3 cryotubes,2 pellets,NA,done,NA,NA
+A74,2/5/2021,Addax,Parque de la Naturaleza Caberceno,MIG12-28734764/6040,Blood 4ml,PMBc isolation,NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A75,2/10/2021,Tito Alba,Zoologico Jerez de la Frontera,MIG12-28734764/6040,Tissue,Dissection- freeze,NA,Armida,NA,biopsy=2 cryotubes,NA,NA,NA,NA,NA
+A76,2/11/2021,Saguinus imperator subgrisescens,BCN ZOO,27780193/BARCELONA / 11295,Tissue,Dissection- freeze,NA,Isa,Fibros @ day 6,P3 (1 tubes),2 pellets,NA,done,NA,NA
+A77,2/11/2021,Saguinus imperator subgrisescens,BCN ZOO,QGH17-04651/BARCELONA / 13040,Tissue,Dissection- freeze,NA,Isa,Fibros @ day 6,P2 (2 vials),2 pellets,NA,done,NA,NA
+A77,2/11/2021,Saguinus imperator subgrisescens,BCN ZOO,QGH17-04651/BARCELONA / 13040,Tissue,NA,NA,NA,NA,P3 (1 tubes),NA,NA,NA,NA,NA
+A78,2/16/2021,Oryx gazella,Parque de la Naturaleza Caberceno,ORGA-02,Tissue,"Dissection, in culture + freeze",NA,Armida,NA,biopsy=3 cryotubes,4 pellets,NA,done,NA,NA
+A78,2/16/2021,Oryx gazella,Parque de la Naturaleza Caberceno,ORGA-02,Tissue,NA,NA,NA,NA,(P1 2 cryotube),NA,NA,NA,NA,NA
+A78,2/16/2021,Oryx gazella,Parque de la Naturaleza Caberceno,ORGA-02,Tissue,NA,NA,NA,NA,(P4 3 cryotube),NA,NA,NA,NA,NA
+A79,2/16/2021,Gazella cuvieri,Parque de la Naturaleza Caberceno,Cuvier1,Tissue,"Dissection, in culture + freeze",NA,Armida,fibros @ day 6,biopsy=3 cryotubes,4 pellets,NA,done,NA,NA
+A79,2/16/2021,Gazella cuvieri,Parque de la Naturaleza Caberceno,Cuvier1,Tissue,NA,NA,NA,NA,P2 (2 vials),NA,NA,NA,NA,NA
+A79,2/16/2021,Gazella cuvieri,Parque de la Naturaleza Caberceno,Cuvier1,Tissue,NA,NA,NA,NA,P4 (2 vials),NA,NA,NA,NA,NA
+A80,2/17/2021,Ciconia Ciconia,Zoologico Jerez de la Frontera,CRAS 21/21,Tissue,"Dissection, in culture + freeze",NA,Armida,fibros @ day 6 Cont?,biopsy=2 cryotubes,NA,NA,NA,NA,NA
+A81,2/24/2021,Callithrix geoffroyi,Zoologico Jerez de la Frontera,TGD16-00658/ JEREZ TG5,Tissue,NA,NA,Isa,fibros,P1 ( 1cryotube),NA,NA,NA,NA,NA
+A81,2/24/2021,Callithrix geoffroyi,Zoologico Jerez de la Frontera,TGD16-00658/ JEREZ TG5,Tissue,NA,NA,NA,NA,P2 (2 cryotube),NA,NA,NA,NA,NA
+A82,2/24/2021,Terrapene nelsoni,Zoologico Jerez de la Frontera,FRW17-00798/JEREZ TENE06,NA,NA,NA,Isa,NA,NA,NA,NA,NA,NA,NA
+A83,2/25/2021,Calotriton Arnoldi,Torreferrusa,"OR192, Any 2012, male",Tissues,"Dissection, in culture + freeze",NA,Armida,NA,Biopsy= tail 2cryotubes,NA,NA,NA,NA,NA
+A83,2/25/2021,Calotriton Arnoldi,Torreferrusa,"OR192, Any 2012, male",NA,NA,NA,NA,NA,muscle / toes / tongue/ skin,NA,NA,NA,NA,NA
+A84,3/5/2021,Nanger Dama,BCN ZOO,12876,biopsia skin,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+A85,3/5/2021,Nanger Dama,BCN ZOO,11268,biopsia ear,"Dissection, in culture + freeze",NA,Armida,fibros @day 8,P1 (1 vial),2 pellet,NA,NA,NA,NA
+A85,3/5/2021,Nanger Dama,BCN ZOO,11268,biopsia ear,NA,NA,NA,NA,P2 (2 vials),NA,NA,NA,NA,NA
+A85,3/5/2021,Nanger Dama,BCN ZOO,11268,biopsia ear,NA,NA,NA,NA,P3 (2 vials),NA,NA,NA,NA,NA
+A85,3/5/2021,Nanger Dama,BCN ZOO,11268,biopsia ear,NA,NA,NA,NA,P4 (2 vial),NA,NA,NA,NA,NA
+A86,3/9/2021,Geronticus Eremita,Zoologico Jerez de la Frontera,IE2023-VVM20-02434,biopsia,"Dissection, in culture + freeze",NA,NA,NA,NA,NA,NA,NA,NA,NA
+A87,3/9/2021,Marmaronetta Angustirostris,Zoologico Jerez de la Frontera,CEP12-24953210,biopsia,"Dissection,  freeze",NA,NA,NA,NA,NA,NA,NA,NA,NA
+A88,3/9/2021,Stigmochelys pardalis,Zoologico Jerez de la Frontera,PAR-5-FRW18-00897,biopsia,"Dissection,  freeze",NA,NA,NA,NA,NA,NA,NA,NA,NA
+A89,3/9/2021,Gallinula chloropus,Zoologico Jerez de la Frontera,CRAS 25/21,biopsia,NA,NA,NA,NA,biopsy (3 cryotubes),NA,NA,NA,NA,NA
+A90,3/16/2021,Saguinus oedipus,Zoologico Jerez de la Frontera,FRW20-01066     SO06,biopsia,"Dissection, in culture + freeze",NA,NA,Fibros @ day 14,biopsy (1 cryotube),NA,NA,NA,NA,NA
+A90,3/16/2021,Saguinus oedipus,Zoologico Jerez de la Frontera,FRW20-01066     SO06,"Tissue, not defined",NA,NA,NA,NA,P2 (3 cryotube),NA,NA,NA,NA,NA
+A90,3/16/2021,Saguinus oedipus,Zoologico Jerez de la Frontera,FRW20-01066     SO06,"Tissue, not defined",NA,NA,NA,NA,P3 (3 cryotube),NA,NA,NA,NA,NA
+A91,3/16/2021,Chamaeleo chamaeleon,Zoologico Jerez de la Frontera,CRAS 663/20,biopsia,To repeat,NA,NA,NA,NA,NA,NA,NA,NA,NA
+A92,3/18/2021,Cercocebus lunulatus,BCN ZOO,QGH16-04243,"Tissue, not defined",NA,NA,NA,Fibros,biopsy (1 cryotube),NA,NA,NA,NA,NA
+A92,3/18/2021,Cercocebus lunulatus,BCN ZOO,QGH16-04243,"Tissue, not defined",NA,NA,NA,NA,P4 (1 cryotube),NA,NA,NA,NA,NA
+A93,3/18/2021,Eurasian spoonbill,BCN ZOO,QGH16-02512,"Tissue, not defined",to repeat,NA,NA,NA,biopsy (2 cryotube),NA,NA,NA,NA,NA
+A94,3/18/2021,Ammotragus lervia,BCN ZOO,QGH21-05618,Biopsia,"Dissection, in culture",NA,Isa,NA,biopsy (2 cryotube),NA,NA,NA,NA,NA
+A94,3/18/2021,Ammotragus lervia,BCN ZOO,QGH21-05618,"Tissue, not defined",NA,NA,NA,NA,1 cryotube p1,NA,NA,NA,NA,NA
+A95,3/24/2021,Leopardus pardalis,Zoologico Jerez de la Frontera,OCE2,Biopsia,"Dissection, in culture",NA,Armida,Re- try samples (SILVIA),biopsy (2 cryotube),2P0 2P1,NA,NA,NA,NA
+A96,3/24/2021,Gazella dorcas osiris,Zoologico Jerez de la Frontera,GDO333,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+A97,3/24/2021,Bennet Macropus rufogriseus,Zoologico Jerez de la Frontera,GDO333,NA,NA,NA,NA,NA,biopsy (2 cryotube),NA,NA,NA,NA,NA
+A98,4/13/2021,Nyctalus leisleri,Zoologico Jerez de la Frontera,CRAS 33/21,biopsia,"Dissection, in culture",NA,Armida,NA,no cryotube*,NA,NA,NA,NA,NA
+A98,4/13/2021,Nyctalus leisleri,Zoologico Jerez de la Frontera,CRAS 33/21,NA,(small),NA,NA,NA,NA,NA,NA,NA,NA,NA
+A99,4/13/2021,Apus pallidus,Zoologico Jerez de la Frontera,CRAS 45/21,biopsia,"Dissection, in culture + freeze",NA,Armida,"no fibros, contamination",biopsia (3 vials),NA,NA,NA,NA,NA
+A100,4/13/2021,Psophia crepitans,Zoologico Jerez de la Frontera,TROMP01,biopsia,"Dissection, in culture + freeze",NA,Armida,Fibros @ day 4? Cont?,biopsia (3 vials),NA,NA,NA,NA,NA
+A101,4/13/2021,Ciconia ciconia,Zoologico Jerez de la Frontera,CRAS 47/21,biopsia,"Dissection, in culture + freeze",NA,Armida,fibros @day 3,biopsia (3 vials),NA,NA,NA,NA,NA
+A101,4/13/2021,Ciconia ciconia,Zoologico Jerez de la Frontera,CRAS 47/21,"Tissue, not defined",NA,NA,NA,NA,P2 (1 cryotube),NA,NA,NA,NA,NA
+A101,4/13/2021,Ciconia ciconia,Zoologico Jerez de la Frontera,CRAS 47/21,"Tissue, not defined",NA,NA,NA,NA,P3 (1 cryotube),NA,NA,NA,NA,NA
+A102,4/15/2021,Cercocebus lunulatus,BCN ZOO,QGH16-04193,biopsia,"Dissection, in culture",NA,Armida,NA,P1 (1 Cryotube),NA,NA,NA,NA,NA
+A102,4/15/2021,Cercocebus lunulatus,BCN ZOO,QGH16-04193,"Tissue, not defined",NA,NA,NA,NA,P2 (1 cryotube),NA,NA,NA,NA,NA
+A102,4/15/2021,Cercocebus lunulatus,BCN ZOO,QGH16-04193,"Tissue, not defined",NA,NA,NA,NA,P3 (3 cryotube),NA,NA,NA,NA,NA
+A102,4/15/2021,Cercocebus lunulatus,BCN ZOO,QGH16-04193,"Tissue, not defined",NA,NA,NA,NA,P4 (1 cryotube),NA,NA,NA,NA,NA
+A103,4/15/2021,Cercocebus lunulatus,BCN ZOO,MIG12-29918008,biopsia,"Dissection, in culture",NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A104,4/15/2021,Netta peposaca,BCN ZOO,17967857/BARCELONA / 8374,biopsia traquea,"Dissection, in culture + freeze",NA,Armida,fibros @ day 3,biopsia (3 vials),NA,NA,NA,NA,NA
+A105,4/20/2021,Lutra lutra,Zoologico Jerez de la Frontera,2.54E+07,biopsia skin,"Dissection, in culture + freeze",NA,Isa,NA,biopsia ( 2 vials),NA,NA,NA,NA,NA
+A106,4/20/2021,Gallineta chloropus,Zoologico Jerez de la Frontera,CRAS 56/21,biopsia skin,"Dissection, in culture + freeze",NA,Isa,NA,biopsia ( 2 vials),NA,NA,NA,NA,NA
+A107,4/20/2021,Butorides striata,BCN ZOO,QGH17-04483/BARCELONA / 12948,biopsia traquea,"Dissection, in culture + freeze",Re- try samples (SILVIA),Isa,Fibros (retray samples),biopsia ( 2 vials),NA,NA,NA,NA,NA
+A108,4/20/2021,Terrapene nelsoni,Zoologico Jerez de la Frontera,FRW17-00799,biopsia skin,"Dissection, in culture + freeze",NA,Armida/ Ona,NA,biopsia ( 2 vials),NA,NA,NA,NA,NA
+A109,4/23/2021,Panthera onca,BCN ZOO,RMC17-00248/BARCELONA / 13814,biopsia left forelimb,"Dissection, in culture + freeze",NA,Armida,Fibros @day 4,biopsia (1 vial),NA,NA,NA,NA,NA
+A109,4/23/2021,Panthera onca,BCN ZOO,RMC17-00248/BARCELONA / 13814,"Tissue, not defined",NA,NA,NA,NA,P2 (1 cryotube),NA,NA,NA,NA,NA
+A110,4/27/2021,Chlamydosaurus kingii,Zoologico Jerez de la Frontera,RMC17-00248/BARCELONA / 13814,biopsia skin,"Dissection, in culture + freeze",NA,Armida/ Ona,NA,biopsia ( 2 vials),NA,NA,NA,NA,NA
+A111,4/27/2021,Vencejo común (Apus apus),Zoologico Jerez de la Frontera,55/21,Biopsia,"Dissection, in culture + freeze",NA,Armida,NA,Biopsia ( 2 vials),NA,NA,NA,NA,NA
+A112,4/27/2021,Añade real,Zoologico Jerez de la Frontera,EC 11/21,Biopsia,"Dissection, freeze",NA,Armida,NA,biopsia (  2 vials),NA,NA,NA,NA,NA
+A113,4/27/2021,Vencejo pálido (Apus pallidus).,Zoologico Jerez de la Frontera,CRAS 58/21,Biopsia,"Dissection, in culture + freeze",NA,Isa,cont,biopsia ( 2 vials),NA,NA,NA,NA,NA
+A114,4/27/2021,Plegasid falcinellus,Zoologico Jerez de la Frontera,42/21,Biopsia,"Dissection, in culture + freeze",NA,Isa,fibros growing p1 not expanding,biopsia ( 2 vials),NA,NA,NA,NA,NA
+A115,4/29/2021,Tragelaphus spekii,Aquarium Madrid,MIG12-28842211,Biopsia (placenta),"Dissection, in culture + freeze",NA,Armida,fibros @ day 4?,biopsia (  3 vials),NA,NA,NA,NA,NA
+A116,3/23/2021,Orangutan (Pongo),Antoine Blancher (Chris Tyler-Smith),MIG12-28842211,Fibros,NA,NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A117,5/4/2021,Hirundo rustica,Zoologico Jerez de la Frontera,CRAS 60/21,Biopsia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+A118,5/4/2021,Streptopelia decaocto,Zoologico Jerez de la Frontera,CRAS 65/21,Biopsia,NA,NA,NA,NA,P1 (1 cryotube) P0 (1CT) P4 (1CT),NA,NA,NA,NA,NA
+A119,5/4/2021,Plegadis falcinellus,Zoologico Jerez de la Frontera,CRAS 67/21,Biopsia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+A120,5/4/2021,Columba livia,Zoologico Jerez de la Frontera,CRAS 68/21,Biopsia,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+A121,5/11/2021,Conejo Oryctolagus cuniculus,Zoologico Jerez de la Frontera,SM2,Biopsia,"Dissection, in culture + freeze",NA,Isa,"error on the cryotube, there is #115",biopsia ( 2 vials),cont,NA,NA,NA,NA
+A122,5/11/2021,Verderón Carduelis chloris,Zoologico Jerez de la Frontera,CRAS 75/21,Biopsia,"Dissection, in culture + freeze",NA,Isa,"error on the cryotube, there is #116",biopsia ( 2 vials),cont,NA,NA,NA,NA
+A123,5/11/2021,Paloma torcaz Columba palumbus,Zoologico Jerez de la Frontera,SM4,Biopsia,"Dissection, in culture + freeze",NA,Isa,"error on the cryotube, there is #117",biopsia ( 2 vials),cont,NA,NA,NA,NA
+A124,5/11/2021,Espátula Platalea leucorida,Zoologico Jerez de la Frontera,SM1,Biopsia,"Dissection, in culture + freeze",NA,Isa,"error on the cryotube, there is #118",biopsia ( 2 vials),cont,NA,NA,NA,NA
+A125,5/11/2021,Martinete Nycticorax nycticoras,Zoologico Jerez de la Frontera,SM3,Biopsia,"Dissection, in culture + freeze",NA,Isa,"error on the cryotube, there is #119",biopsia ( 2 vials),cont,NA,NA,NA,NA
+A126,5/11/2021,Cigüeña blanca Ciconia ciconia,Zoologico Jerez de la Frontera,CRAS 78/21,Biopsia,"Dissection, in culture + freeze",NA,Isa,"error on the cryotube, there is #120",biopsia ( 2 vials),cont,NA,NA,NA,NA
+A127,5/18/2021,Sanguinus imperator,BCN ZOO,A76(11295)same specimen,Biopsia,"Dissection, in culture + freeze",NA,Isa,NA,biopsia ( 2 vials),fibros 26/05,NA,NA,NA,NA
+A127,5/18/2021,Sanguinus imperator,BCN ZOO,A76(11295)same specimen,"Tissue, not defined",NA,NA,NA,NA,NA,P2 (2 ct),NA,NA,NA,NA
+A128,5/18/2021,Nycticorax Nycticorax,BCN ZOO,13854/QGH21-05659,Biopsia,"Dissection, in culture + freeze",NA,Isa,NA,biopsia ( 2 vials),fibros 04.06,NA,NA,NA,NA
+A129,5/21/2021,Aepyceros melampus petersi,BCN ZOO,QGH19-05221/ BARCELONA / 13544,Biopsia,"Dissection, in culture + freeze",NA,Isa,NA,biopsia ( 2 vials),fibros 26/05,NA,NA,NA,NA
+A129,5/21/2021,Aepyceros melampus petersi,BCN ZOO,QGH19-05221/ BARCELONA / 13544,"Tissue, not defined",NA,NA,NA,NA,NA,P2 (1ct),NA,NA,NA,NA
+A130,5/28/2021,Sanguinus imperator,BCN ZOO,MIG12-29016886/BARCELONA / 10860,Biopsia (oreja),"Dissection, in culture + freeze",NA,Isa,NA,biopsia ( 2 vials),fibros  02.06,NA,NA,NA,NA
+A130,5/28/2021,Sanguinus imperator,BCN ZOO,MIG12-29016886/BARCELONA / 10860,Tissue,NA,NA,NA,NA,NA,P2 (2 ct),NA,NA,NA,NA
+A130,5/28/2021,Sanguinus imperator,BCN ZOO,MIG12-29016886/BARCELONA / 10860,Tissue,NA,NA,NA,NA,NA,P3 (1 ct),NA,NA,NA,NA
+A131,6/8/2021,Geronticus eremita,Zoologico Jerez de la Frontera,SN1,NA,dissection + 2 cryotubes,NA,Isa,NA,biopsia ( 2 vials),cont,NA,NA,NA,NA
+A132,6/8/2021,Eliomys quercinus,Zoologico Jerez de la Frontera,CRAS 133/21,Skin,"Dissection, in culture + freeze",NA,Armida,fibros @ day 3 and 5,3CT p2,P2 (2 ct),NA,NA,NA,NA
+A132,6/8/2021,Eliomys quercinus,Zoologico Jerez de la Frontera,CRAS 133/21,Skin,"(5 pieces for tube, total 4 cryotubes)",NA,NA,NA,NA,NA,NA,NA,NA,NA
+A133,6/8/2021,Gazella dorcas osiris,Zoologico Jerez de la Frontera,GDO379,NA,dissection + 2 cryotubes,NA,Isa,NA,biopsia ( 2 vials),cont,NA,NA,NA,NA
+A134,6/8/2021,Carduelis carduelis,Zoologico Jerez de la Frontera,SN1,NA,dissection + 2 cryotubes,NA,Isa,NA,biopsia ( 2 vials),cont,NA,NA,NA,NA
+A135,6/8/2021,Delichon urbica,Zoologico Jerez de la Frontera,CRAS 111/21,NA,dissection + 2 cryotubes,NA,Isa,NA,biopsia ( 2 vials),cont,NA,NA,NA,NA
+A136,6/10/2021,Cobo lichi,Parque de la Naturaleza Caberceno,CRAS 111/21,Blood,PBMC (2 cryoutubes),NA,NA,NA,NA,NA,NA,NA,NA,NA
+A137,6/10/2021,Bisonte,Parque de la Naturaleza Caberceno,BI-37,Blood,PBMC (2 cryoutubes),NA,NA,NA,NA,NA,NA,NA,NA,NA
+A138,6/11/2021,Salmo salar,Parque de la Naturaleza Caberceno,BI-37,Kidney- reproductive tissue-heart,"Dissection, in culture + freeze",NA,Armida,Fibros @ day 3 (from skin),NA,NA,NA,NA,NA,NA
+A138,6/11/2021,Salmo salar,Parque de la Naturaleza Caberceno,BI-37,dorsal fin,"(5 pieces for tube, total 3 cryotubes)",NA,NA,NA,NA,NA,NA,NA,NA,NA
+A138,6/11/2021,Salmo salar,Parque de la Naturaleza Caberceno,BI-37,NA,"(5 pieces for tube, total 6 cryotubes)",NA,NA,NA,NA,NA,NA,NA,NA,NA
+A139,6/11/2021,Gazela Dorcas,Zoo Madrid,BI-37,Placenta,"Dissection, in culture + freeze",NA,Isa,"2 different falcons with placenta, 2CT per falcon with same number (139-1, 139-2)",NA,NA,NA,NA,NA,NA
+A140,6/15/2021,Elephas maximus,BCN ZOO,1.14E+07,Blood,PBMC (1 cryoutubes),NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A141,6/15/2021,Elephas maximus,BCN ZOO,JLG15-00724,Blood,PBMC (1 cryoutubes),NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A142,6/15/2021,Elephas maximus,BCN ZOO,1.53E+07,Blood,PBMC ( 5 cryoutubes),NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A143,6/23/2021,Camelus bactranius,BCN ZOO,MG12-28066788/BARCELONA / 8336,Tissue ear,1 cryoutubes,Re- try samples (SILVIA),Isa,2P0 2P1,NA,NA,NA,NA,NA,NA
+A144,6/29/2021,Spheniscidae,Zoo Madrid,MG12-28066788/BARCELONA / 8336,Skin,3 cryotubes,NA,Isa,NA,1 cryotube p2,NA,NA,NA,NA,NA
+A144,6/29/2021,Pingüino,Zoo Madrid,MG12-28066788/BARCELONA / 8336,Skin,NA,NA,NA,NA,1 cryotube p3,NA,NA,NA,NA,NA
+A145,6/29/2021,Carcharhinus amblyrhynchos,Zoo Madrid,TG-05,Skin,3 cryotubes,NA,Isa,NA,NA,NA,NA,NA,NA,NA
+A145,6/29/2021,Grey shark,Zoo Madrid,TG-05,Gonade,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+A146,6/30/2021,Tragelaphus eurycerus,BCN ZOO,QGH19-05305/BARCELONA / 13622,skin,no biopsia left,NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A146,6/30/2021,Antilope,BCN ZOO,QGH19-05305/BARCELONA / 13622,skin,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+A147,7/1/2021,Aepyceros melampus,BCN ZOO,QGH21-05739/ BARCELONA / 13905,placenta,no biopsia left,NA,Armida,NA,Fibros not growing well. No expanded. Trash,NA,NA,NA,NA,NA
+A148,7/2/2021,Gacela dorcas,BCN ZOO,WKP15-00424/ BARCELONA / 13589,skin,NA,NA,Armida,NA,2 cryotubes p1,NA,NA,NA,NA,NA
+A148,7/2/2021,Gacela dorcas,BCN ZOO,WKP15-00424/ BARCELONA / 13589,blood,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+A149,7/7/2021,Ailurus fulgens,Zoo Madrid,2.01E+07,Skin,NA,NA,Armida,fibros,1 cryotube p2,NA,NA,NA,NA,NA
+A150,7/8/2021,Elephas maximus,Parque de la Naturaleza Caberceno,2.01E+07,Blood,NA,NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A151,7/8/2021,Tortuga boba pequena,Acuario Gijon,2.01E+07,Blood,NA,NA,Armida,NA,PBMC,NA,NA,NA,NA,NA
+A152,7/8/2021,Tortuga boba grande,Acuario Gijon,2.01E+07,Blood,NA,NA,Armida,NA,PBMC,NA,NA,NA,NA,NA
+A153,7/13/2021,Ursus thibetanus,Zoo Madrid,OT4,Skin,"Dissection, in culture + freeze",Re- try samples (SILVIA),Isa,Try again/ Fibros,NA,NA,NA,NA,NA,NA
+A153,7/13/2021,Ursus thibetanus,Zoo Madrid,OT4,Skin,3 cryotubes,NA,NA,2P0 2P1 3P2,NA,NA,NA,NA,NA,NA
+A154,7/13/2021,Lophocebus aterrimus,Zoo safari Elche,QVG16-00005/ELCHE SAF / 1301,Placenta,"Dissection, in culture + freeze",NA,Isa,Try again,NA,NA,NA,NA,NA,NA
+A155,7/16/2021,Halcyon malimbica,BCN Zoo,QGH15-02460/:BARCELONA / 12615,Paw,"Dissection, in culture + freeze",NA,NA,@no fibros,NA,NA,NA,NA,NA,NA
+A156,7/16/2021,Nanger Dama Mhorr,BCN Zoo,MIG12-29591142/BARCELONA / 11341,Skin,"Dissection, in culture + freeze",NA,NA,@no fibros,NA,NA,NA,NA,NA,NA
+A157,3/23/2021,Orangutan (Pongo),Antoine Blancher (Chris Tyler-Smith),MIG12-29591142/BARCELONA / 11341,Fibros,NA,NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A158,7/20/2021,Dromaius novaehollandiae,Zoo Madrid,2.79E+07,Skin,"Dissection, in culture + freeze",NA,NA,Try again,NA,NA,NA,NA,NA,NA
+A159,7/22/2021,Sus scrofa,Zoo Madrid,2.79E+07,Skin,"Dissection, in culture + freeze",Re- try samples (SILVIA),NA,Try again,NA,NA,NA,NA,NA,NA
+A160,7/27/2021,Macropus rufogriseus,Zoo Madrid,WKP21-01924,Skin,"Dissection, in culture + freeze",NA,NA,@fibros day 3,NA,NA,NA,NA,NA,NA
+A161,7/29/2021,Artibeus jamaicensis,Zoologico Jerez de la Frontera,WKP21-01924,Skin,"Dissection, in culture + freeze",NA,NA,@no fibros,NA,NA,NA,NA,NA,NA
+A162,7/29/2021,Cercocebus lunulatus,Zoologico Jerez de la Frontera,MC21,Skin,"Dissection, in culture + freeze",NA,NA,@no fibros,NA,NA,NA,NA,NA,NA
+A163,7/29/2021,Mandrillus sphinx,Zoo Madrid,WKP21-01923,Skin- Uterus,"Dissection, in culture + freeze",NA,NA,@fibros at day 5,(P5 2 cryotubes),NA,NA,NA,NA,NA
+A164,8/3/2021,Otario de patagonia (león marino),Zoo Madrid,LMA-29,Skin - ovary,"Dissection, in culture + freeze",NA,Isa,@fibros at day 7,NA,NA,NA,NA,NA,NA
+A165,8/10/2010,Miopithecus ogounensis (talapoin),BCN ZOO,QGH21-05798/ BARCELONA / 13935,placenta,"Dissection, in culture + freeze",NA,Isa,cont. Try again. Fibros 16/9. EGF2 (no change). 28/9 FBM.,NA,NA,NA,NA,NA,NA
+A166,8/10/2010,Aepycerus Melampus (Impala),BCN ZOO,QGH21-05797,placenta,"Dissection, in culture + freeze",NA,Isa,cont. Try again. Fibros 27/9,NA,NA,NA,NA,NA,NA
+A167,8/19/2010,Gacela Dorcas,BCN ZOO,29435071/BARCELONA / 13096,ear,"Dissection, in culture + freeze",NA,Isa,Fibros day 11.,(P2 3 cryotube),NA,NA,NA,NA,NA
+A168,8/19/2021,Lama Guanicoe (guanaco),BCN ZOO,20702,ear,"Dissection, in culture + freeze",NA,Isa,"1 CT p0, 2 CT p2, 3 CT p3",NA,NA,NA,NA,NA,NA
+A169,8/31/2021,Oryx dammah,BCN ZOO,1.80E+07,ear,"Dissection, in culture + freeze",NA,Armida,cont fungi. Fibros 15/9,(P4 1 cryotube),NA,NA,NA,NA,NA
+A170,8/31/2021,Eulemur fulvus mayottensis,Madrid Zoo,2.79E+07,skin,"Dissection, in culture + freeze",NA,Armida,1CT fibros from biopsy,(P2 2 cryotube),NA,NA,NA,NA,NA
+A171,9/2/2021,Nanger Dama,BCN zoo,MIG12-28152170,skin,"Dissection, in culture + freeze",NA,Isa,fibros appearing 8/9,NA,NA,NA,NA,NA,NA
+A172,9/7/2021,Bisonte,Zoo Madrid,2.79E+07,skin,"Dissection, in culture + freeze",NA,Isa,fibros appearing 13/9,NA,NA,NA,NA,NA,NA
+A173,9/7/2021,Varano,BCN zoo,QGH18-0489,skin?,"Dissection, in culture + freeze",NA,Isa,cont!,NA,NA,NA,NA,NA,NA
+A174,9/8/2021,Cercopithecus neglectus,BCN ZOO,26674024/13192,skin,"Dissection, in culture",NA,Isa,fibros 14/9,(P0 1 cryotube),NA,NA,NA,NA,NA
+A175,9/8/2021,Ailuropoda melanoleuca,ZOO MADRID,WKP21-01929?,cordón umbilical,"Dissection, in culture + freeze",NA,Isa,fibros appearing 14/9,NA,NA,NA,NA,NA,NA
+A176,9/8/2021,Ailuropoda melanoleuca,ZOO MADRID,WKP21-01929?,cordón umbilical,"Dissection, in culture + freeze",NA,Isa,fibros appearing 13/9,(P0 2 cryotube),NA,NA,NA,NA,NA
+A176,9/8/2021,Ailuropoda melanoleuca,ZOO MADRID,WKP21-01928?,cordón umbilical,3CT,NA,NA,Expanding p1,(P1 1cryotube),NA,NA,NA,NA,NA
+A176,9/8/2021,Ailuropoda melanoleuca,ZOO MADRID,WKP21-01928?,cordón umbilical,grande,NA,NA,NA,( P2 2cryotubes),NA,NA,NA,NA,NA
+A176,9/8/2021,Ailuropoda melanoleuca,ZOO MADRID,WKP21-01928?,cordón umbilical,NA,NA,NA,NA,(P3 1 cryotube),NA,NA,NA,NA,NA
+A177,9/10/2021,Buho rival,ZOO MADRID,2.49E+07,skin,"Dissection, in culture + freeze",NA,Isa,cont!,NA,NA,NA,NA,NA,NA
+A177,9/10/2021,Buho rival,ZOO MADRID,2.49E+07,traquea,3CT skin + 2 CT traquea,NA,NA,NA,NA,NA,NA,NA,NA,NA
+A178,9/15/2021,Tritó del montseny,BCN ZOO,2.49E+07,larva,"Dissection, in culture",NA,Isa / Armida,"@trying matrigel, gelatin and non-coated wells",NA,NA,NA,NA,NA,NA
+A179,9/15/2021,Tritó del montseny,BCN ZOO,2.49E+07,larva,"Dissection, in culture",NA,Isa / Armida,@non-coated plate with alphaMEM:FBM at 28ºC,NA,NA,NA,NA,NA,NA
+A180,9/21/2021,Apus pallidus,Zoologico Jerez de la Frontera,CRAS 365/21,Skin,"Dissection, in culture",NA,Armida,Fibros 28/9   To repeat from biopsia,NA,NA,NA,NA,NA,NA
+A181,9/21/2021,Phoenicopterus roseus,Zoologico Jerez de la Frontera,FRW21-01235,Skin,"Dissection, in culture",NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A182,9/28/2021,Connochaetes taurinus,BCN ZOO,1.95E+07,Skin,"Dissection, in culture",NA,Isa,Fibros 8/10,(P0 1 cryotube),NA,NA,NA,NA,NA
+A182,9/28/2021,Connochaetes taurinus,BCN ZOO,1.95E+07,Skin,3CT,NA,NA,NA,(P1 2 cryotubes),NA,NA,NA,NA,NA
+A183,10/1/2021,Cercocebus torquatus,BCN ZOO,QGH14-02193,Skin,"Dissection, in culture",NA,Armida,Fibros 8/10,P1 1 cryotube,NA,NA,NA,NA,NA
+A183,10/1/2021,Cercocebus torquatus,BCN ZOO,QGH14-02193,Skin,NA,NA,NA,NA,P2 1 cryotube,NA,NA,NA,NA,NA
+A183,10/1/2021,Cercocebus torquatus,BCN ZOO,QGH14-02193,Skin,NA,NA,NA,NA,P3 1 cryotube,NA,NA,NA,NA,NA
+A184,10/1/2021,Testudo hermanni hermanni,BCN ZOO,2.09E+07,Skin,"Dissection, in culture",NA,Armida,fibros 8/11/2021,NA,NA,NA,NA,NA,NA
+A185,A185,ARATINGA SOLSTITIALIS,BCN ZOO,2.09E+07,Trachea,1CT traquea,AlfaMEM/FBM,NA,NA,NA,NA,NA,NA,NA,NA
+A185,A185,ARATINGA SOLSTITIALIS,BCN ZOO,2.09E+07,Skin,1CT skin,NA,NA,NA,NA,NA,NA,NA,NA,NA
+A186,06/10121,Ateles hybridus,BCN ZOO,QGH16-04259/12875,Skin,"Dissection, in culture",AlfaMEM/FBM,Armida,fibros 18/10,P2 1 cryotube,NA,NA,NA,NA,NA
+A186,06/10121,Ateles hybridus,BCN ZOO,QGH16-04259/12875,Skin,NA,NA,NA,NA,P2 1 cryotube,NA,NA,NA,NA,NA
+A187,10/6/2021,Áteles hybridus,BCN ZOO,16879/2354,Skin,"Dissection, in culture",AlfaMEM/FBM,Armida,fibros 18/10,P2 1 cryotube,NA,NA,NA,NA,NA
+A187,10/6/2021,Áteles hybridus,BCN ZOO,16879/2354,Skin,NA,NA,NA,NA,P2 1 cryotube,NA,NA,NA,NA,NA
+A188,10/6/2021,Calotriton arnoldi,BCN ZOO,16879/2354,Larva,"Dissection, freeze",NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A189,10/14/2021,Pan troglodytes,Rio Safari Elche,QVG16-00019,Skin biopsy/ EDTA blood/Serum,"Dissection, in culture",AlfaMEM/FBM,Armida/Isa,fibros,P1  1 cryotuve,NA,NA,NA,NA,NA
+A190,10/14/2021,Pan troglodytes,Rio Safari Elche,QVG16-00023,Skin biopsy/ EDTA blood/Serum,"Dissection, in culture",AlfaMEM/FBM,Armida/Isa,fibros,NA,NA,NA,NA,NA,NA
+A191,10/14/2021,Pan troglodytes,Rio Safari Elche,QVG16-00022,Skin biopsy/ EDTA blood/Serum,"Dissection, in culture",AlfaMEM/FBM,Armida/Isa,fibros,NA,NA,NA,NA,NA,NA
+A192,10/14/2021,Pan troglodytes,Rio Safari Elche,QVG16-00018,Skin biopsy/ EDTA blood/Serum,"Dissection, in culture",AlfaMEM/FBM,Armida/Isa,fibros,NA,NA,NA,NA,NA,NA
+A194,10/19/2021,Lyle's flying fox,BCN ZOO,1.80E+07,Skin biopsy (ear/ skin?),"Dissection, in culture/freeze","DMEM/F12, 15%FBS",Sira,3CT (2 fragments each one),NA,NA,NA,NA,NA,NA
+A194,10/19/2021,Lyle's flying fox,BCN ZOO,1.80E+07,ear,NA,NA,NA,fibros 5 days / CT p0,NA,NA,NA,NA,NA,NA
+A194,10/19/2021,Lyle's flying fox,BCN ZOO,1.80E+07,skin,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+A195,10/20/2021,Suricata Suricatta,ZOO Madrid,MIG12-28842317,Skin biopsy(trachea/ skin),"Dissection, in culture/freeze",AlfaMEM/FBM,Sira/Isa,3CT (3fragments each one),NA,NA,NA,NA,NA,NA
+A195,10/20/2021,Suricata Suricatta,ZOO Madrid,MIG12-28842317,Trachea,NA,NA,NA,"fibros 5 days / CT p0, p1, p2",NA,NA,NA,NA,NA,NA
+A195,10/20/2021,Suricata Suricatta,ZOO Madrid,MIG12-28842317,Skin,NA,NA,NA,"Cont, discard",NA,NA,NA,NA,NA,NA
+A196,10/20/2021,Patagonian Mara,ZOO Madrid,WKP21-01890,Skin biopsy (ear/ingle),"Dissection, in culture/freeze",AlfaMEM/FBM,Isa,3CT (3 fragments each one),NA,NA,NA,NA,NA,NA
+A197,10/22/2021,Panthera Leo,BCN ZOO,26130694 BARCELONA / 8939,Skin,"Dissection, in culture/freeze",NA,Armida,fibros day 6,P0  1 Cryotube,NA,NA,NA,NA,NA
+A197,10/22/2021,Panthera Leo,BCN ZOO,26130694 BARCELONA / 8939,Skin,3 CT with 5 pieces each,NA,NA,NA,P1  1 cryotube,NA,NA,NA,NA,NA
+A198,10/22/2021,Cercocebus Torquatus? ES lunulatus,BCN ZOO,MIG12-29917992/ BARCELONA / 10539,Skin,"Dissection, in culture",NA,Armida,Cont. No sample left,NA,NA,NA,NA,NA,NA
+A199,10/22/2021,Netta Rufina,Zoologico Jerez de la Frontera,PC028,Skin,"Dissection, in culture",AlfaMEM/FBM,Isa,@fibros day 5,NA,NA,NA,NA,NA,NA
+A199,10/22/2021,Netta Rufina,Zoologico Jerez de la Frontera,PC028,Skin,NA,NA,NA,Expanding p0,NA,NA,NA,NA,NA,NA
+A200,10/22/2021,Pinna Nobilis,BCN ZOO,PC028,whole specimen?,"Dissection, in culture /freeze",AlfaMEM/FBM,Sira,Culture sample 1,439,NA,NA,NA,NA,NA
+A200,10/22/2021,Pinna Nobilis,BCN ZOO,PC028,whole specimen?,NA,NA,NA,"Sample 3 (5 CT, 2 PART1 and 3 PART2)",NA,NA,NA,NA,NA,NA
+A200,10/22/2021,Pinna Nobilis,BCN ZOO,PC028,whole specimen?,NA,NA,NA,Sampe  2 (2CT),NA,NA,NA,NA,NA,NA
+A200,10/22/2021,Pinna Nobilis,BCN ZOO,PC028,NA,NA,NA,NA,No fibros,NA,NA,NA,NA,NA,NA
+A201,10/29/2021,Addax,Parque de la Naturaleza Caberceno,PC028,Blood,4 cryotubes PBMc,NA,NA,NA,NA,NA,NA,NA,NA,NA
+A202,10/29/2021,Gorilla gorilla,Parque de la Naturaleza Caberceno,PC028,Blood,4 cryotubes PBMc,NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A202,10/29/2021,Gorilla gorilla,Parque de la Naturaleza Caberceno,PC028,Hair,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+A203,10/30/2021,Pleurodeles walt,CSIC,PC028,larvas,1CT,NA,Armida,NA,NA,NA,NA,NA,NA,NA
+A204,11/4/2021,Connochaetes gnou,ZOO Madrid,MIG12-29654178,ear/ skin,3 cryotubes,AlfaMEM/FBM,Armida,fibros 9/11,NA,NA,NA,NA,NA,NA
+A205,11/5/2021,Panthera pardus kotiya,BCN ZOO,2.78E+07,skin,"Dissection, in culture",AlfaMEM/FBM,Sira,fibros 11/11,NA,NA,NA,NA,NA,NA
+A206,11/5/2021,Cercocebus lunulatus,BCN ZOO,QGH16-04193,skin,"Dissection, in culture",AlfaMEM/FBM,Sira,fibros 9/11,(two samples same specimen A102),NA,NA,NA,NA,NA
+A207,11/5/2021,Nanger dama mhorr,BCN ZOO,QGH20-05342/13650,skin,"Dissection, in culture",AlfaMEM,Sira,fibros,(two samples same specimen),NA,NA,NA,NA,NA
+A208,11/5/2021,Rangifer tarandus,ZOO Madrid,MIG12-29480586,ear/skin/ovaries,"Dissection, in culture /freeze",AlfaMEM,Sira,*CT biopsias pone 218,NA,NA,NA,NA,NA,NA
+A209,11/9/2021,Pandion haliaetus,Zoologico Jerez de la Frontera,PES5,skin,"Dissection, in culture",AlfaMEM,Sira,Cont.,NA,NA,NA,NA,NA,NA
+A210,11/9/2021,Scolopax rusticola,Zoologico Jerez de la Frontera,CRAS 509/21,skin,"Dissection, in culture",AlfaMEM,Sira,Cont.,NA,NA,NA,NA,NA,NA
+A211,11/9/2021,Erinaceus europaeus,Zoologico Jerez de la Frontera,ERIZO1,skin,"Dissection, in culture",AlfaMEM,Sira,Cont.,NA,NA,NA,NA,NA,NA
+A212,11/9/2021,Turdus philomelos,Zoologico Jerez de la Frontera,CRAS 504/21,skin,"Dissection, in culture",AlfaMEM,Sira,Cont.,NA,NA,NA,NA,NA,NA
+A213,11/9/2021,Chamaeleo chamaeleon,Zoologico Jerez de la Frontera,CRAS 504/21,skin/tail/eyes,"Dissection, in culture",DMEM,Sira,@ add ITS 100x,NA,NA,NA,NA,NA,NA
+A214,11/15/2021,Ateles hybrydus (mono araña),BCN zoo,121663/QGH16-02496,skin,"Dissection, in culture",aMEM,Isa,No fibros.,NA,NA,NA,NA,NA,NA
+A215,11/17/2021,Gacela Mhorr,BCN zoo,13640/ZIMS?,skin,"Dissection, in culture",aMEM,Isa,@fibros d9,NA,NA,NA,NA,NA,NA
+A216,11/17/2021,Gacela Mhorr,BCN zoo,13650/QGH20-05342,skin,"Dissection, in culture",aMEM,Isa,@fibros d9,(two samples same specimen),NA,NA,NA,NA,NA
+A217,11/18/2021,Jaguar Lola (Panthera onca),BCN zoo,RMC17-00248,skin,"Dissection, in culture",aMEM 1 well,Isa,No fibros,(two samples same specimen),NA,NA,NA,NA,NA
+A218,11/5/2021,Rangifer tarandus,ZOO Madrid,MIG12-29480586,ear/skin/ovaries,"Dissection, in culture /freeze",AlfaMEM,Sira,*CT biopsias pone 218 pero es la muestra 208,NA,NA,NA,NA,NA,NA
+A219,11/26/2021,White-napped Mangabey,BCN Zoo,QGH16-04243,small skin biopsy,"Dissection, in culture",AlfaMEM:FBM,Isa,@fibros d10,(two samples same specimen/A92),NA,NA,NA,NA,NA
+A220,12/1/2021,Tritó del montseny,Salvis,QGH16-04243,skin/leg/tongue/tail,"Dissection, in culture","@FBM, DMEM/F12, L15",Isa,NA,NA,NA,NA,NA,NA,NA
+A221,12/1/2021,Sitatunga,Zoo Madrid,QGH16-04243,cordón umbilical,"Dissection, in culture",@fibros d6,Isa,NA,NA,NA,NA,NA,NA,NA
+A222,12/1/2021,hyena,BCN zoo,MIG12-29918001,skin,"Dissection, in culture",@fibros d6,Isa,NA,NA,NA,NA,NA,NA,NA
+A223,12/3/2021,Salmo salar,Acuario de Gijon,MIG12-29918001,skin,"Dissection, in culture","DMEM/F12,L15",Sira,Cont.,NA,NA,NA,NA,NA,NA
+A224,12/3/2021,Syngnathus acus (hembra),Acuario de Gijon,MIG12-29918001,skin,"Dissection, in culture","DMEM/F12,L15",Sira,Cont.,NA,NA,NA,NA,NA,NA
+A225,12/3/2021,Scyliorhinus stellaris (macho),Acuario de Gijon,MIG12-29918001,skin,"Dissection, in culture","DMEM/F12,L15",Sira,Cont.,NA,NA,NA,NA,NA,NA
+A226,12/14/2021,Chimpancé,BCN zoo,MIG12-30088854/4368,skin,"Dissection, in culture",fibros,Isa,Fibros 2CT p0   1CT p1,NA,NA,NA,NA,NA,NA
+A227,12/10/2021,Gacela dorcas osiris,BCN zoo,WKP15-00424/AP21-00223,ear,"Dissection, in culture",@fibros d4,Isa,NA,NA,NA,NA,NA,NA,NA
+A228,12/10/2021,Gacela dorcas osiris,BCN zoo,MIG12-29435073/AP21-00224,ear,"Dissection, in culture",@cont. fungi,Isa,NA,NA,NA,NA,NA,NA,NA
+A229,12/10/2021,Nycoticorax,BCN zoo,QGH18-04841,tendons,"Dissection, in culture",fibros,Isa,NA,NA,NA,NA,NA,NA,NA
+A230,12/10/2021,Ibis sagrado,Zoo Madrid,2.79E+07,piel y traquea,"Dissection, in culture",@fibros d4 traquea,Isa,NA,NA,NA,NA,NA,NA,NA
+A231,12/10/2021,flamenco (Phoenicopterus ruber),Zoo Madrid,2.79E+07,piel y traquea,"Dissection, in culture",@tejido no fresco,Isa,NA,NA,NA,NA,NA,NA,NA
+A232,12/10/2021,Tyto alba (lechuza),Zoo Madrid,2.79E+07,piel y traquea,"Dissection, in culture",@tejido no fresco,Isa,"1 CT p0, 2CT p1 and 1 CT p2",NA,NA,NA,NA,NA,NA
+A232,12/10/2021,Tyto alba (lechuza),Zoo Madrid,2.79E+07,NA,1CT each,@fibros d4 traquea,NA,Cont?,NA,NA,NA,NA,NA,NA
+A233,12/14/2021,Uromastyx acanthinura,BCN zoo,MIG12-29661834/11362,skin,"Dissection, in culture",@DMEM+20%FBS,Isa,Cont. No sample left,NA,NA,NA,NA,NA,NA
+A233,12/14/2021,Uromastyx acanthinura,BCN zoo,MIG12-29661834/11362,NA,"(no CT, small biopsy)",fibros d11,NA,NA,NA,NA,NA,NA,NA,NA
+A234,12/16/2021,Panda rojo,BCN zoo,QGH13-01156/11932,NA,"(no CT, small biopsy)",fibros d5,NA,NA,NA,NA,NA,NA,NA,NA
+A235,12/16/2021,Eudocimus ruber,BCN zoo,MIG12-28706350,skin,"Dissection, in culture",fibros d5,Isa,NA,NA,NA,NA,NA,NA,NA
+A236,12/16/2021,Otario de patagonia,Zoo Madrid,MIG12-29480708/Z / LMA38,ear + skin,"Dissection, in culture",fibros d5,Isa,NA,NA,NA,NA,NA,NA,NA
+A237,12/17/2021,Chimpancé,BCN zoo,MIG12-29480708/Z / LMA38,frotis nasal + gengival + skin biopsy,"in culture, no CT",@nasal: DMEM10%FBS (on gel),Isa,Cont fungi! Trash,NA,NA,NA,NA,NA,NA
+A237,12/17/2021,Chimpancé,BCN zoo,MIG12-29480708/Z / LMA38,NA,NA,@bucal: FBM,NA,NA,NA,NA,NA,NA,NA,NA
+A237,12/17/2021,Chimpancé,BCN zoo,MIG12-29480708/Z / LMA38,NA,NA,@biopsy: aMEM,NA,NA,NA,NA,NA,NA,NA,NA
+A237,12/17/2021,Chimpancé,BCN zoo,MIG12-29480708/Z / LMA38,NA,NA,Fibros p0,silvia,2 vials P0 fibros stored,NA,NA,NA,NA,NA,NA
+A238,12/23/2021,Panthera leo,BCN zoo,27181719/8940,ear,"in culture, 2CT",@tissue sent dry (no media),Isa,NA,NA,NA,NA,NA,NA,NA
+A238,12/23/2021,Panthera leo,BCN zoo,27181719/8940,ear,NA,fibros day 5,NA,NA,NA,NA,NA,NA,NA,NA
+A239,12/23/2021,Axis Axis,BCN zoo,QGH14-02142,ear,"in culture, 2CT",@tissue sent dry (no media),Isa,NA,NA,NA,NA,NA,NA,NA
+A239,12/23/2021,Axis Axis,BCN zoo,QGH14-02142,ear,NA,fibros day 5,NA,NA,NA,NA,NA,NA,NA,NA
+A240,12/24/2021,Tiburón,Zoo Madrid,Gynglimostoma cirratum/Female,skin + utero,"in culture, 3CT each",@coating with gelatin,Isa,Fibros skin LDF,NA,NA,NA,NA,NA,NA
+A241,12/30/2021,Cercocebus lunulatus,Jerez,4858688/JEREZ / MC2,skin,"in culture, 1CT",NA,Isa,NA,NA,NA,NA,NA,NA,NA
+A242,12/30/2021,Uromastyx acantiuia,BCN zoo,QGH20-05511/13788,traquea,"in culture, 2CT",@DMEM+20%FBS,Isa,Cont.,NA,NA,NA,NA,NA,NA
+A243,12/30/2021,Colius striatus,BCN zoo,QGH21-05850,traquea,"in culture, 2CT",NA,Isa,NA,NA,NA,NA,NA,NA,NA
+A244,1/10/2022,heosemys spinosa,BCN zoo,6169827/7683,traquea,"in culture, 1CT",@sample from 05.01,Isa,Cont.,NA,NA,NA,NA,NA,NA
+A245,1/10/2022,oryx hembra,BCN zoo,QGH20-05339/13648,skin,"small biopsy, no CT",@sample from 05.01,Isa,Fibros,NA,NA,NA,NA,NA,NA
+A246,1/10/2022,oryx,BCN zoo,QGH20-05394/13692,skin,"small biopsy, no CT",@sample from 05.01,Isa,NA,NA,NA,NA,NA,NA,NA
+A247,1/10/2022,"phachoeros africanus ""pumba""",BCN zoo,MIG12-28621074/11036,ear,"in culture, 4CT",@sample from 07.01,Isa,Fibros starting 17/1,NA,NA,NA,NA,NA,NA
+A248,1/10/2022,guaraba guarouba,BCN zoo,MIG12-28325141,traquea,"in culture, 2CT",@sample from 07.01,Isa,Fibros starting 17/1,NA,NA,NA,NA,NA,NA
+A249,1/11/2022,Tiburon bambú,Zoo Madrid,MIG12-28325141,skin and uterus,"in culture, 2CT each",NA,NA,Death Date:6/1 Sample collection Date:10/1,NA,NA,NA,NA,NA,NA
+A250,1/11/2022,Aguila calva (Haliaeetus leucocephalus),Zoo Madrid,2.79E+07,skin and traquea,"in culture, 1CT each",@sample from 05.01,Isa,Fibros skin+traquea,NA,NA,NA,NA,NA,NA
+A250,1/11/2022,Aguila calva (Haliaeetus leucocephalus),Zoo Madrid,2.79E+07,skin and traquea,NA,@gelatin coating. 2 conditions: LDF and DMEM,NA,NA,NA,NA,NA,NA,NA,NA
+A251,1/11/2022,Plegadus falcinellus,BCN zoo,2.53E+07,traquea,"in culture, 2CT",NA,Isa,Fribros,NA,NA,NA,NA,NA,NA
+A251,1/11/2022,Plegadus falcinellus,BCN zoo,2.53E+07,traquea,NA,NA,NA,Cong 2 cryotubos P1,NA,NA,NA,NA,NA,NA
+A252,1/13/2022,Tiburon ocelado,Zoo Madrid,2.53E+07,skin and uterus,"in culture, 2CT skin, 1 CT uterus",@gelatin coating. 2 conditions: LDF and DMEM,Isa,Cont.,NA,NA,NA,NA,NA,NA
+A253,1/17/2022,Ptilinopus melanospilus,BCN zoo,MIG12-28149323,traquea,"in culture, 2CT",NA,Isa,Fibros,NA,NA,NA,NA,NA,NA
+A254,1/17/2022,Geronticus eremita,BCN zoo,ZDW17-03177/13500,traquea,"in culture, 1CT",NA,Isa,Fibros,NA,NA,NA,NA,NA,NA
+A255,1/17/2022,Zenaida graysoni,BCN zoo,DMP17-00807/13762,traquea,"in culture, 2CT",NA,Isa,Re- try samples (SILVIA),NA,NA,NA,NA,NA,NA
+A256,1/20/2022,Caroba,Jerez,CRAS 03/22,skin+traquea,"in culture, 1CT each",NA,Isa,NA,NA,NA,NA,NA,NA,NA
+A256,1/20/2022,Strix aluco,Jerez,CRAS 03/22,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+A257,1/20/2022,Eurypyga helias,BCN zoo,TPC14-02438/12461,traquea,"in culture, 2CT",NA,Isa,NA,NA,NA,NA,NA,NA,NA
+A258,1/20/2022,suricatta suricatta,BCN zoo,AP22-00022,skin,"in culture, 2CT",Fibros,Isa,NA,NA,NA,NA,NA,NA,NA
+A259,1/20/2022,suricatta suricatta,BCN zoo,AP22-00023,skin,"in culture, 2CT",Fibros,Isa,NA,NA,NA,NA,NA,NA,NA
+A260,1/24/2022,Equus uagga,BCN zoo,QGH16-04272/BARCELONA / 12887,skin,"in culture, no CT",Fibros,Isa,NA,NA,NA,NA,NA,NA,NA
+A261,1/24/2022,Musophaga Violacea,BCN zoo,NGK18-00247/BARCELONA / 13586,traquea,"in culture, 2CT",Cont. Trash,Isa,NA,NA,NA,NA,NA,NA,NA
+A262,1/31/2022,Capra Hircus,BCN zoo,QGH22-05906-IA,skin,"in culture, 2CT",@sample from 28.01,Isa,NA,NA,NA,NA,NA,NA,NA
+A262,1/31/2022,Capra Hircus,BCN zoo,QGH22-05906-IA,NA,NA,Fibros,NA,NA,NA,NA,NA,NA,NA,NA
+A263,1/31/2022,Platalea leucorodia,BCN zoo,MIG12-28179109/BARCELONA7847,traquea,"in culture, 2CT",DMEM20% + fgf2 40 ng/ml,Isa,si,1 P0 3 P1 1 P2,si,Crescen lentos,NA,NA,NA
+A264,2/3/2022,Paleosunchus palpebrosus,BCN zoo,MIG12-29661824/BARCELONA / 11356,traquea,"in culture, 2CT",@DMEM-20%FBS,Isa,NO SUCCESS,NA,NA,NA,NA,NA,NA
+A265,2/3/2022,Eulemur fulvus mayottensis,Zoo Madrid,27921801/MADRID Z / LM11,skin,"in culture, 2CT",alphamem complete,Isa,si,"2 P0, 2 P1 and 2 P2",NA,NA,NA,NA,NA
+A266,2/8/2022,Gallicolumba luzonica,BCN zoo,15949977/11634,traquea,"in culture, 2CT",Cont.,Isa,NA,NA,NA,NA,NA,NA,NA
+A267,2/10/2022,Panthera tigris sumatrae,BCN zoo,24000056/24000056,skin,"in culture, small biopsy (no CT)",NA,Isa,NA,NA,NA,NA,NA,NA,NA
+A268,2/11/2021,Varanus parsinus,BCN zoo,BHG15-00445/BARCELONA / 12643,traquea,"in culture, 2CT",FBM + fgf2 40 ng/ml,Isa,SI,Split but they do not attached,"Tirato  split p0, porque los fibros no crecian ni en matrigel",NA,NA,NA,NA
+A269,2/11/2021,Macropus rufogriseus,BCN zoo,QGH15-02472/BARCELONA / 12639,ear,"in culture, 2CT",alphamem complete,Isa,si,"2 P0, 2 P1 and 2 P2",NA,NA,NA,NA,NA
+A270,2/16/2022,Capra hircus rasquera,BCN zoo,QGH22-05914/BARCELONA / 13989,ear,"in culture, 2CT",alphamem complete,Isa,si,"2 P0, 2 P1 2P2",NA,NA,NA,NA,NA
+A271,2/16/2022,Ciervo de Padre David,BCN zoo,23574543/ BARCELONA / 255,ear,"in culture, 2CT",alphamem complete,Isa,si,"2 P0, 1 P1 2 P2",si,NA,NA,NA,NA
+A272,2/18/2022,Talapoin,BCN zoo,YRV19-03423/13504/BARCELONA,skin,"in culture, 2CT",alphamem,silvia,Re- try samples (SILVIA),2P0 1P1,si,NA,NA,NA,NA
+A272,2/18/2022,Talapoin,BCN zoo,YRV19-03423/13504/BARCELONA,ear,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+A273,2/18/2022,Loris arcoiris,ZOO de Madrid,WKP17-01371/ MADRID Z / LOR64,NA,"in culture, 2CT",FBM + 20 ng/ml fgf2,Isa,no,tirado,NA,NA,NA,NA,NA
+A273,2/18/2022,Loris arcoiris,ZOO de Madrid,WKP17-01371/ MADRID Z / LOR64,NA,NA,NA,NA,no crescen,NA,NA,NA,NA,NA,NA

@@ -1,0 +1,78 @@
+---
+title: "Reading the Working sheet"
+output: html_notebook
+---
+
+Reading in the information from the sample working list because it contains information on tge sampled tissue
+
+```{r}
+library(readxl)
+library(runner)
+
+
+theme_set(theme_classic())
+
+here::here()
+
+path<-here::here()
+```
+
+
+```{r}
+working_list1 <- read_excel("data/SAMPLES LIST WORK .xlsx", 
+    sheet = "SAMPLES", skip = 2)[2:982,1:16] 
+colnames(working_list1)<-janitor::make_clean_names(colnames(working_list1))
+colnames(working_list1)[c(1,6)] <- c("cell_line_ID","body_part") 
+
+working_list1
+
+working_list1<-working_list1 %>% 
+  filter(rowSums(!is.na(working_list1))>0) %>% 
+  mutate(cell_line_ID=fill_run(cell_line_ID,run_for_first = F),
+         date=fill_run(date),
+         animal_species=fill_run(animal_species),
+         coming_from=fill_run(coming_from),
+         species_360_local_id=fill_run(species_360_local_id))
+
+write_excel_csv(working_list1,paste0(path,"/data/samples_list_work1.csv"))
+
+working_list2 <- read_excel("data/SAMPLES LIST WORK .xlsx", 
+    sheet = "SAMPLES",skip=985)[,1:17] 
+colnames(working_list2)<-janitor::make_clean_names(colnames(working_list2))
+colnames(working_list2)[c(1,6,14,17)] <- c("cell_line_ID","body_part","DNA","comment") 
+
+working_list2<-working_list2 %>% 
+  select(-x15,-x16) %>% 
+  filter(!is.na(cell_line_ID)) %>% 
+  write_excel_csv(paste0(path,"/data/samples_list_work_silvia.csv"))
+
+```
+## Identifying failed cell lines
+
+```{r}
+library(tidyxl)
+
+x<-xlsx_cells("data/SAMPLES LIST WORK .xlsx", 
+    sheet = "SAMPLES")
+
+xl<-xlsx_formats("data/SAMPLES LIST WORK .xlsx")
+
+x %>% 
+  filter(local_format_id %in% 
+  which(xl$local$font$color$rgb != "FF000000")) %>%
+  select(address, row, data_type) %>% 
+  filter(str_detect(address,"C")) %>% 
+  mutate(tibblerow = row - 1) %>% 
+  select(address,tibblerow) ->
+test_rows
+
+table(xl$local$font$color$rgb)
+```
+
+
+```{r}
+
+
+
+```
+

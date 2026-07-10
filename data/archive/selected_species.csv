@@ -1,0 +1,126 @@
+﻿"scientific_name","species","iucn_category","superclass","genus","family","order","zoonomia","illumina","silencer"
+"Chlamydosaurus kingii","Chlamydosaurus kingii","LEAST CONCERN","Reptil","Chlamydosaurus","Agamidae","Squamata",FALSE,TRUE,FALSE
+"Bucorvus leadbeateri","Bucorvus leadbeateri","VULNERABLE","Birds","Bucorvus","Bucorvidae","Bucerotiformes",FALSE,TRUE,FALSE
+"Chamaeleo chamaeleon","Chamaeleo chamaeleon","LEAST CONCERN","Reptil","Chamaeleo","Chamaeleonidae","Squamata",FALSE,TRUE,FALSE
+"Gallicolumba luzonica","Gallicolumba luzonica","NEAR THREATENED","Birds","Gallicolumba","Columbidae","Columbiformes",FALSE,TRUE,FALSE
+"Crocodylus rhombifer","Crocodylus rhombifer","CRITICALLY ENDANGERED","Reptil","Crocodylus","Crocodylidae","Crocodylia",FALSE,TRUE,FALSE
+"Osteolaemus tetraspis","Osteolaemus tetraspis","VULNERABLE","Reptil","Osteolaemus","Crocodylidae","Crocodylia",FALSE,TRUE,FALSE
+"Graptemys pseudogeographica","Graptemys pseudogeographica","LEAST CONCERN","Reptil","Graptemys","Emydidae","Testudines",FALSE,TRUE,FALSE
+"Eliomys quercinus","Eliomys quercinus","NEAR THREATENED","Mammalia","Eliomys","Gliridae","Rodentia",FALSE,TRUE,FALSE
+"Notamacropus rufogriseus","Notamacropus rufogriseus","LEAST CONCERN","Mammalia","Notamacropus","Macropodidae","Diprotodontia",FALSE,TRUE,FALSE
+"Musophaga violacea","Musophaga violacea","LEAST CONCERN","Birds","Musophaga","Musophagidae","Musophagiformes",FALSE,TRUE,FALSE
+"Pteropus lylei","Pteropus lylei","VULNERABLE","Mammalia","Pteropus","Pteropodidae","Chiroptera",FALSE,TRUE,FALSE
+"Cynomys ludovicianus","Cynomys ludovicianus","LEAST CONCERN","Mammalia","Cynomys","Sciuridae","Rodentia",FALSE,TRUE,FALSE
+"Otus scops scops","Otus scops","LEAST CONCERN","Birds","Otus","Strigidae","Strigiformes",FALSE,TRUE,FALSE
+"Scissirostrum dubium","Scissirostrum dubium","LEAST CONCERN","Birds","Scissirostrum","Sturnidae","Passeriformes",FALSE,TRUE,FALSE
+"Dracaena guianensis","Dracaena guianensis","LEAST CONCERN","Reptil","Dracaena","Teiidae","Squamata",FALSE,TRUE,FALSE
+"Varanus albigularis","Varanus albigularis","LEAST CONCERN","Reptil","Varanus","Varanidae","Squamata",FALSE,TRUE,FALSE
+"Varanus prasinus","Varanus prasinus","LEAST CONCERN","Reptil","Varanus","Varanidae","Squamata",FALSE,TRUE,FALSE
+"Pleurodeles waltl","Pleurodeles waltl","NEAR THREATENED","Amphibia","Pleurodeles","Salamandridae","Caudata",FALSE,TRUE,FALSE
+"Jacana jacana","Jacana jacana","LEAST CONCERN","Birds","Jacana","Jacanidae","Charadriiformes",FALSE,TRUE,FALSE
+"Ciconia ciconia","Ciconia ciconia","LEAST CONCERN","Birds","Ciconia","Ciconiidae","Ciconiiformes",FALSE,TRUE,FALSE
+"Colius striatus","Colius striatus","LEAST CONCERN","Birds","Colius","Coliidae","Coliiformes",FALSE,TRUE,FALSE
+"Rhea americana","Rhea americana","NEAR THREATENED","Birds","Rhea","Rheidae","Rheiformes",FALSE,TRUE,FALSE
+"Apus apus","Apus apus","LEAST CONCERN","Birds","Apus","Apodidae","Apodiformes",FALSE,TRUE,FALSE
+"Spheniscus demersus","Spheniscus demersus","ENDANGERED","Birds","Spheniscus","Spheniscidae","Sphenisciformes",FALSE,TRUE,FALSE
+"Spheniscus humboldti","Spheniscus humboldti","VULNERABLE","Birds","Spheniscus","Spheniscidae","Sphenisciformes",FALSE,TRUE,FALSE
+"Casuarius casuarius","Casuarius casuarius","LEAST CONCERN","Birds","Casuarius","Casuariidae","Casuariiformes",FALSE,TRUE,FALSE
+"Ramphastos toco","Ramphastos toco","LEAST CONCERN","Birds","Ramphastos","Ramphastidae","Piciformes",FALSE,TRUE,FALSE
+"Haliaeetus leucocephalus","Haliaeetus leucocephalus","LEAST CONCERN","Birds","Haliaeetus","Accipitridae","Accipitriformes",FALSE,TRUE,FALSE
+"Gallus gallus domestic","Gallus gallus","LEAST CONCERN","Birds","Gallus","Phasianidae","Galliformes",FALSE,TRUE,FALSE
+"Pavo cristatus","Pavo cristatus","LEAST CONCERN","Birds","Pavo","Phasianidae","Galliformes",FALSE,TRUE,FALSE
+"Psophia crepitans","Psophia crepitans","NEAR THREATENED","Birds","Psophia","Psophiidae","Gruiformes",FALSE,TRUE,FALSE
+"Tyto alba","Tyto alba","LEAST CONCERN","Birds","Tyto","Tytonidae","Strigiformes",FALSE,TRUE,FALSE
+"Lophura edwardsi","Lophura edwardsi","CRITICALLY ENDANGERED","Birds","Lophura","Phasianidae","Galliformes",FALSE,TRUE,FALSE
+"Chauna torquata","Chauna torquata","LEAST CONCERN","Birds","Chauna","Anhimidae","Anseriformes",FALSE,TRUE,FALSE
+"Cygnus atratus","Cygnus atratus","LEAST CONCERN","Birds","Cygnus","Anatidae","Anseriformes",FALSE,TRUE,FALSE
+"Nycticorax nycticorax","Nycticorax nycticorax","LEAST CONCERN","Birds","Nycticorax","Ardeidae","Pelecaniformes",FALSE,TRUE,FALSE
+"Threskiornis aethiopicus","Threskiornis aethiopicus","LEAST CONCERN","Birds","Threskiornis","Threskiornithidae","Pelecaniformes",FALSE,TRUE,FALSE
+"Pelecanus crispus","Pelecanus crispus","VULNERABLE","Birds","Pelecanus","Pelecanidae","Pelecaniformes",FALSE,TRUE,FALSE
+"Guaruba guarouba","Guaruba guarouba","VULNERABLE","Birds","Guaruba","Psittacidae","Psittaciformes",FALSE,TRUE,FALSE
+"Eclectus roratus","Eclectus roratus","LEAST CONCERN","Birds","Eclectus","Psittacidae","Psittaciformes",FALSE,TRUE,FALSE
+"Anodorhynchus hyacinthinus","Anodorhynchus hyacinthinus","VULNERABLE","Birds","Anodorhynchus","Psittacidae","Psittaciformes",FALSE,TRUE,FALSE
+"Aratinga solstitialis","Aratinga solstitialis","ENDANGERED","Birds","Aratinga","Psittacidae","Psittaciformes",FALSE,TRUE,FALSE
+"Ara chloropterus","Ara chloropterus","LEAST CONCERN","Birds","Ara","Psittacidae","Psittaciformes",FALSE,TRUE,FALSE
+"Ara ararauna","Ara ararauna","LEAST CONCERN","Birds","Ara","Psittacidae","Psittaciformes",FALSE,TRUE,FALSE
+"Eos reticulata","Eos reticulata","NEAR THREATENED","Birds","Eos","Psittaculidae","Psittaciformes",FALSE,TRUE,FALSE
+"Procavia capensis","Procavia capensis","LEAST CONCERN","Mammalia","Procavia","Procaviidae","Hyracoidea",TRUE,TRUE,TRUE
+"Myrmecophaga tridactyla","Myrmecophaga tridactyla","VULNERABLE","Mammalia","Myrmecophaga","Myrmecophagidae","Pilosa",TRUE,TRUE,TRUE
+"Oryctolagus cuniculus","Oryctolagus cuniculus","ENDANGERED","Mammalia","Oryctolagus","Leporidae","Lagomorpha",TRUE,TRUE,TRUE
+"Loxodonta africana","Loxodonta africana","ENDANGERED","Mammalia","Loxodonta","Elephantidae","Proboscidea",TRUE,TRUE,TRUE
+"Elephas maximus","Elephas maximus","ENDANGERED","Mammalia","Elephas","Elephantidae","Proboscidea",TRUE,TRUE,TRUE
+"Ceratotherium simum","Ceratotherium simum","NEAR THREATENED","Mammalia","Ceratotherium","Rhinocerotidae","Perissodactyla",TRUE,TRUE,TRUE
+"Equus caballus","Equus caballus","ENDANGERED","Mammalia","Equus","Equidae","Perissodactyla",TRUE,TRUE,TRUE
+"Equus quagga","Equus quagga","NEAR THREATENED","Mammalia","Equus","Equidae","Perissodactyla",TRUE,TRUE,TRUE
+"Hydrochoerus hydrochaeris","Hydrochoerus hydrochaeris","LEAST CONCERN","Mammalia","Hydrochoerus","Hydrochaeridae","Rodentia",TRUE,TRUE,TRUE
+"Dolichotis patagonum","Dolichotis patagonum","NEAR THREATENED","Mammalia","Dolichotis","Caviidae","Rodentia",TRUE,TRUE,TRUE
+"Hystrix cristata","Hystrix cristata","LEAST CONCERN","Mammalia","Hystrix","Hystricidae","Rodentia",TRUE,TRUE,TRUE
+"Lutra lutra","Lutra lutra","NEAR THREATENED","Mammalia","Lutra","Mustelidae","Carnivora",TRUE,TRUE,TRUE
+"Panthera leo","Panthera leo","VULNERABLE","Mammalia","Panthera","Felidae","Carnivora",TRUE,TRUE,TRUE
+"Panthera onca","Panthera onca","NEAR THREATENED","Mammalia","Panthera","Felidae","Carnivora",TRUE,TRUE,FALSE
+"Canis lupus","Canis lupus","LEAST CONCERN","Mammalia","Canis","Canidae","Carnivora",TRUE,TRUE,FALSE
+"Mungos mungo","Mungos mungo","LEAST CONCERN","Mammalia","Mungos","Herpestidae","Carnivora",TRUE,TRUE,FALSE
+"Ursus thibetanus","Ursus thibetanus","VULNERABLE","Mammalia","Ursus","Ursidae","Carnivora",TRUE,TRUE,FALSE
+"Otaria byronia","Otaria byronia","LEAST CONCERN","Mammalia","Otaria","Otariidae","Carnivora",FALSE,TRUE,FALSE
+"Ailuropoda melanoleuca","Ailuropoda melanoleuca","VULNERABLE","Mammalia","Ailuropoda","Ursidae","Carnivora",TRUE,TRUE,FALSE
+"Suricata suricatta","Suricata suricatta","LEAST CONCERN","Mammalia","Suricata","Herpestidae","Carnivora",TRUE,TRUE,FALSE
+"Crocuta crocuta","Crocuta crocuta","LEAST CONCERN","Mammalia","Crocuta","Hyaenidae","Carnivora",TRUE,TRUE,FALSE
+"Zalophus californianus","Zalophus californianus","LEAST CONCERN","Mammalia","Zalophus","Otariidae","Carnivora",TRUE,TRUE,TRUE
+"Mustela lutreola novikovi","Mustela lutreola","CRITICALLY ENDANGERED","Mammalia","Mustela","Mustelidae","Carnivora",FALSE,TRUE,TRUE
+"Panthera tigris","Panthera tigris","ENDANGERED","Mammalia","Panthera","Felidae","Carnivora",TRUE,TRUE,TRUE
+"Pteronura brasiliensis","Pteronura brasiliensis","ENDANGERED","Mammalia","Pteronura","Mustelidae","Carnivora",TRUE,TRUE,FALSE
+"Panthera pardus","Panthera pardus","VULNERABLE","Mammalia","Panthera","Felidae","Carnivora",TRUE,TRUE,FALSE
+"Ailurus fulgens","Ailurus fulgens","ENDANGERED","Mammalia","Ailurus","Ailuridae","Carnivora",TRUE,TRUE,FALSE
+"Ateles hybridus","Ateles hybridus","CRITICALLY ENDANGERED","Mammalia","Ateles","Atelidae","Primates",FALSE,TRUE,FALSE
+"Lemur catta","Lemur catta","ENDANGERED","Mammalia","Lemur","Lemuridae","Primates",TRUE,TRUE,FALSE
+"Saguinus imperator subgrisescens","Saguinus imperator","LEAST CONCERN","Mammalia","Saguinus","Cebidae","Primates",FALSE,TRUE,FALSE
+"Pan troglodytes troglodytes","Pan troglodytes","ENDANGERED","Mammalia","Pan","Hominidae","Primates",FALSE,TRUE,TRUE
+"Cercocebus atys lunulatus","Cercocebus atys","ENDANGERED","Mammalia","Cercocebus","Cercopithecidae","Primates",FALSE,TRUE,FALSE
+"Pongo pygmaeus","Pongo pygmaeus","CRITICALLY ENDANGERED","Mammalia","Pongo","Hominidae","Primates",FALSE,TRUE,TRUE
+"Mandrillus sphinx","Mandrillus sphinx","VULNERABLE","Mammalia","Mandrillus","Cercopithecidae","Primates",TRUE,TRUE,FALSE
+"Eulemur fulvus","Eulemur fulvus","VULNERABLE","Mammalia","Eulemur","Lemuridae","Primates",TRUE,TRUE,FALSE
+"Cercopithecus neglectus","Cercopithecus neglectus","LEAST CONCERN","Mammalia","Cercopithecus","Cercopithecidae","Primates",TRUE,TRUE,FALSE
+"Gorilla gorilla","Gorilla gorilla","CRITICALLY ENDANGERED","Mammalia","Gorilla","Hominidae","Primates",TRUE,TRUE,TRUE
+"Mandrillus leucophaeus","Mandrillus leucophaeus","VULNERABLE","Mammalia","Mandrillus","Cercopithecidae","Primates",TRUE,TRUE,FALSE
+"Hylobates pileatus","Hylobates pileatus","ENDANGERED","Mammalia","Hylobates","Hylobatidae","Primates",FALSE,TRUE,FALSE
+"Callithrix geoffroyi","Callithrix geoffroyi","LEAST CONCERN","Mammalia","Callithrix","Cebidae","Primates",FALSE,TRUE,TRUE
+"Saguinus oedipus","Saguinus oedipus","CRITICALLY ENDANGERED","Mammalia","Saguinus","Cebidae","Primates",FALSE,TRUE,FALSE
+"Miopithecus ogouensis","Miopithecus ogouensis","NEAR THREATENED","Mammalia","Miopithecus","Cercopithecidae","Primates",FALSE,TRUE,FALSE
+"Cercocebus torquatus","Cercocebus torquatus","ENDANGERED","Mammalia","Cercocebus","Cercopithecidae","Primates",FALSE,TRUE,FALSE
+"Papio cynocephalus","Papio cynocephalus","LEAST CONCERN","Mammalia","Papio","Cercopithecidae","Primates",FALSE,TRUE,TRUE
+"Hylobates muelleri","Hylobates muelleri","ENDANGERED","Mammalia","Hylobates","Hylobatidae","Primates",FALSE,TRUE,FALSE
+"Macaca sylvanus","Macaca sylvanus","ENDANGERED","Mammalia","Macaca","Cercopithecidae","Primates",FALSE,TRUE,FALSE
+"Cebuella pygmaea","Cebuella pygmaea","VULNERABLE","Mammalia","Cebuella","Cebidae","Primates",TRUE,TRUE,FALSE
+"Leontopithecus chrysomelas","Leontopithecus chrysomelas","ENDANGERED","Mammalia","Leontopithecus","Cebidae","Primates",FALSE,TRUE,FALSE
+"Hylobates lar","Hylobates lar","ENDANGERED","Mammalia","Hylobates","Hylobatidae","Primates",FALSE,TRUE,FALSE
+"Callimico goeldii","Callimico goeldii","VULNERABLE","Mammalia","Callimico","Cebidae","Primates",FALSE,TRUE,FALSE
+"Nanger dama","Nanger dama","CRITICALLY ENDANGERED","Mammalia","Nanger","Bovidae","Artiodactyla",FALSE,TRUE,FALSE
+"Aepyceros melampus","Aepyceros melampus","LEAST CONCERN","Mammalia","Aepyceros","Bovidae","Artiodactyla",TRUE,TRUE,FALSE
+"Hexaprotodon liberiensis","Hexaprotodon liberiensis","ENDANGERED","Mammalia","Hexaprotodon","Hippopotamidae","Artiodactyla",FALSE,TRUE,TRUE
+"Oryx gazella","Oryx gazella","LEAST CONCERN","Mammalia","Oryx","Bovidae","Artiodactyla",TRUE,TRUE,FALSE
+"Giraffa camelopardalis","Giraffa camelopardalis","VULNERABLE","Mammalia","Giraffa","Giraffidae","Artiodactyla",TRUE,TRUE,FALSE
+"Lama guanicoe","Lama guanicoe","LEAST CONCERN","Mammalia","Lama","Camelidae","Artiodactyla",TRUE,TRUE,FALSE
+"Connochaetes taurinus","Connochaetes taurinus","LEAST CONCERN","Mammalia","Connochaetes","Bovidae","Artiodactyla",TRUE,TRUE,FALSE
+"Camelus bactrianus","Camelus bactrianus","CRITICALLY ENDANGERED","Mammalia","Camelus","Camelidae","Artiodactyla",TRUE,TRUE,FALSE
+"Tragelaphus eurycerus","Tragelaphus eurycerus","NEAR THREATENED","Mammalia","Tragelaphus","Bovidae","Artiodactyla",FALSE,TRUE,FALSE
+"Sus scrofa","Sus scrofa","LEAST CONCERN","Mammalia","Sus","Suidae","Artiodactyla",TRUE,TRUE,FALSE
+"Oryx dammah","Oryx dammah","EXTINCT IN THE WILD","Mammalia","Oryx","Bovidae","Artiodactyla",TRUE,TRUE,FALSE
+"Rangifer tarandus","Rangifer tarandus","VULNERABLE","Mammalia","Rangifer","Cervidae","Artiodactyla",TRUE,TRUE,FALSE
+"Capra hircus","Capra hircus","NA","Mammalia","Capra","Bovidae","Artiodactyla",TRUE,TRUE,FALSE
+"Elaphurus davidianus","Elaphurus davidianus","EXTINCT IN THE WILD","Mammalia","Elaphurus","Cervidae","Artiodactyla",TRUE,TRUE,FALSE
+"Beatragus hunteri","Beatragus hunteri","CRITICALLY ENDANGERED","Mammalia","Beatragus","Bovidae","Artiodactyla",TRUE,TRUE,FALSE
+"Bos grunniens","Bos grunniens","VULNERABLE","Mammalia","Bos","Bovidae","Artiodactyla",TRUE,TRUE,TRUE
+"Ovis aries musimon","Ovis aries","NA","Mammalia","Ovis","Bovidae","Artiodactyla",FALSE,TRUE,FALSE
+"Bison bison","Bison bison","NEAR THREATENED","Mammalia","Bison","Bovidae","Artiodactyla",TRUE,TRUE,FALSE
+"Hippopotamus amphibius","Hippopotamus amphibius","VULNERABLE","Mammalia","Hippopotamus","Hippopotamidae","Artiodactyla",TRUE,TRUE,TRUE
+"Tursiops truncatus","Tursiops truncatus","LEAST CONCERN","Mammalia","Tursiops","Delphinidae","Artiodactyla",TRUE,TRUE,FALSE
+"Delphinapterus leucas","Delphinapterus leucas","LEAST CONCERN","Mammalia","Delphinapterus","Monodontidae","Artiodactyla",TRUE,TRUE,FALSE
+"Megaptera novaeangliae","Megaptera novaeangliae","LEAST CONCERN","Mammalia","Megaptera","Balaenopteridae","Artiodactyla",TRUE,TRUE,FALSE
+"Delphinus delphis","Delphinus delphis","LEAST CONCERN","Mammalia","Delphinus","Delphinidae","Artiodactyla",FALSE,TRUE,FALSE
+"Muntiacus reevesi","Muntiacus reevesi","LEAST CONCERN","Mammalia","Muntiacus","Cervidae","Artiodactyla",TRUE,TRUE,TRUE
+"Phacochoerus africanus","Phacochoerus africanus","LEAST CONCERN","Mammalia","Phacochoerus","Suidae","Artiodactyla",FALSE,TRUE,TRUE
+"Tragelaphus spekii","Tragelaphus spekii","LEAST CONCERN","Mammalia","Tragelaphus","Bovidae","Artiodactyla",FALSE,TRUE,FALSE
+"Bison bonasus","Bison bonasus","NEAR THREATENED","Mammalia","Bison","Bovidae","Artiodactyla",FALSE,TRUE,FALSE
+"Connochaetes gnou","Connochaetes gnou","LEAST CONCERN","Mammalia","Connochaetes","Bovidae","Artiodactyla",FALSE,TRUE,FALSE
+"Axis axis","Axis axis","LEAST CONCERN","Mammalia","Axis","Cervidae","Artiodactyla",FALSE,TRUE,FALSE
+"Capra pyrenaica hispanica","Capra pyrenaica","LEAST CONCERN","Mammalia","Capra","Bovidae","Artiodactyla",FALSE,TRUE,FALSE

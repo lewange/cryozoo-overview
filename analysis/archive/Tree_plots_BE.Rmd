@@ -1,0 +1,200 @@
+---
+title: "Cryozoo - Mammals tree Binninda-Emonds"
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+##
+library(tidyverse)
+library(cowplot)
+library(treedataverse)
+library(magrittr)
+library(RColorBrewer)
+library(readxl)
+
+## plotting options
+theme_set(theme_bw())
+
+
+here::here()
+
+path<-here::here()
+
+```
+
+
+## Binninda-Emonds
+
+match with tree annotation (tip.lables)
+```{r}
+# Mammalian supertree fron Binninda Edmonds et al. 2007
+library(ggtree)
+
+mammaltree<-read.tree(paste0(path,"/data/mammaltree.txt"))
+
+mammaltree$tip.label[1:10]
+```
+## subset tree for cryozoo species
+
+```{r}
+
+summary_species<-readRDS(paste0(path,"/output/Species_List_with_genome_and_cl_info2.rds")) %>%
+  filter(superclass=="Mammalia") %>% 
+  mutate(selected=if_else(cat=="Both","selected","FALSE")) %>% 
+  mutate(orders_num=as.integer(as.factor(order)))
+
+summary_species$tree_BE<-summary_species$species_%in%mammaltree$tip.label
+
+table(summary_species$tree_BE)
+
+summary_species[!(summary_species$species_%in%mammaltree$tip.label),"species_"]
+
+summary_species %<>%  
+  mutate(alternative_name=if_else(is.na(alternative_name),species,alternative_name),
+         scientific_name2=species,
+         species=if_else(tree_BE,species,alternative_name),
+         alternative_name=if_else(tree_BE,alternative_name,scientific_name2),
+         species_=gsub(species,pattern = " ",replacement = "_"))
+
+summary_species$tree_BE<-summary_species$species_%in%mammaltree$tip.label
+
+table(summary_species$tree_BE)
+
+summary_species[!(summary_species$species_%in%mammaltree$tip.label),"species_"]
+
+#Lets drop those species for now
+
+selection_tree<-drop.tip(mammaltree, mammaltree$tip.label[!mammaltree$tip.label %in%
+                                                      summary_species$species_ ])
+
+selection_cryozoo<-summary_species[summary_species$species_%in%
+                                      selection_tree$tip.label,]
+
+selection_cryozoo<-selection_cryozoo[match(selection_tree$tip.label,selection_cryozoo$species_),]
+pos<-which(colnames(selection_cryozoo)=="species_")
+selection_cryozoo<-selection_cryozoo[,c(pos,1:(pos-1),(pos+1):ncol(selection_cryozoo))]
+
+table(selection_tree$tip.label==selection_cryozoo$species_)
+
+```
+
+
+```{r}
+
+
+tree<-ggtree(selection_tree, color="grey60", lwd=0.5, mrsd = "01/08/2023")+
+  ggtree::theme_tree2()
+
+selection_cryozoo %>% mutate(cat=factor(cat,levels=rev(c("No Genome\n No Fibro","Fibro","Genome","Both"))))
+
+cols<-colorRampPalette(brewer.pal("RdPu",n = 9)[-c(1:3)])(length(unique(selection_cryozoo$order)))
+
+tree2<-tree %<+% selection_cryozoo+
+  geom_tippoint(aes(color=order), size=2)+
+  geom_tiplab(size=3)+
+  theme(legend.position = c(0.1,0.8))+
+  scale_colour_manual(values = cols)+
+  xlim(NA,15)+
+  xlab("divergence time (MYA)")
+
+
+tree2
+
+select_tree_ord<-tree$data[which(tree$data$isTip),]
+
+desiredOrder  <- select_tree_ord[order(select_tree_ord$y),]$label
+
+selection_cryozoo$sort_order<-match(selection_cryozoo$species_, desiredOrder)
+selection_cryozoo<-arrange(selection_cryozoo,sort_order)
+
+```
+
+
+### Combine with cryozoo metadata
+
+```{r}
+### plot number of individuals
+
+available_bar<-ggplot(selection_cryozoo)+
+  geom_col(aes(y=reorder(species_,sort_order),x=fibro,fill=order))+
+  theme_minimal()+
+  theme(plot.margin = unit(c(0, 0, 0,-1), "cm"),
+        plot.background = element_blank())+
+  theme(legend.position = "none",
+        axis.text.y=element_blank())+
+  scale_fill_manual(values = cols)+
+  xlab("# of Fibroblasts")+
+  ylab("")+
+  scale_x_continuous(breaks = c(0:9))
+
+
+
+plot_grid(nrow=1,tree2,
+                 available_bar,
+                 rel_widths = c(0.5,0.15),align = "hv",axis = "tb")
+
+# ggsave(plot_grid(nrow=1,select_tree,
+#                  available_bar,
+#                  fibro_point,
+#                  rel_widths = c(0.5,0.15,0.15)),
+#        filename = "availability_tree.pdf",
+#        path="C:/Users/Lucas/Desktop/",
+#        device = "pdf",
+#        width = 240,
+#        height = 400,
+#        units = "mm",
+#        
+#       )
+
+```
+
+
+###  Add heatmap to tree
+```{r}
+
+
+# tree<-ggtree(selection_tree, layout="circular", lwd=0.5)
+# 
+# tree<-tree %<+% selection_cryozoo+
+#   geom_tippoint(aes(color=order), size=2)
+
+rownames(selection_cryozoo)<-NULL
+
+selection_cryozoo[duplicated(selection_cryozoo$species_),]
+
+ mat_sel<-selection_cryozoo %>% 
+   ungroup() %>% 
+   filter(!(duplicated(species_))) %>% 
+   mutate(fibro=fibro_l,
+          replicates=individuals>1,
+          zoonomia=if_else(zoonomia,"Zoonomia","FALSE")) %>% 
+   dplyr::select(species_,fibro,genome,replicates,selected,zoonomia) %>%
+   column_to_rownames("species_") %>% 
+   as.matrix
+ 
+
+heatmap.colours <- c("purple","darkblue","grey75","red")
+
+names(heatmap.colours) <- c("selected","TRUE","FALSE","Zoonomia")
+
+ tree_map<-gheatmap(tree2,mat_sel, width=.2, offset=35, colnames=T,legend_title = "",
+          colnames_position = "top",colnames_angle = 90,colnames_offset_y = 6,font.size = 4)   +
+   scale_fill_manual(values=heatmap.colours,
+                     na.value = "grey75",limits=force)+
+   ylim(NA,100)+
+   xlim(NA,70)+
+   labs(colour="",fill="",shape="")+
+   theme(legend.position = c(0.3,0.9))+
+   theme(legend.direction = "horizontal")+
+   theme(legend.text = element_text(size=7))+
+   guides(fill=guide_legend(order = 2,reverse = -1))
+   
+tree_map
+
+```

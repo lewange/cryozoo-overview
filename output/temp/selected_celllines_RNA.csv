@@ -1,0 +1,32 @@
+﻿animal_ID,species_short,species,subspecies,family,superclass,zims_species360,origin,sex,sample_id,animal_ID2,line2,line3,cnag_id,pellet,pellet_type,CT_total,n_passages,max_passage,n_samples,reps,DNA_ex_wgs,RNA_ex,DNA_me,ATAC,collection_batch,Medium,Additives,Temp,Coating,Tissue
+A460,Dol_Pat,Dolichotis patagonum,NA,Caviidae,Mammalia,-,NA,NA,Dol_Pat_3,NA,NA,NA,NA,1,DNA,2,1,0,2,biorep,TRUE,TRUE,FALSE,FALSE,0,DMEM complete,,37,,Skin
+A308,Equ_Cab,Equus caballus,przewalskii,Equidae,Mammalia,MQH17-01033/JEREZ / CP13,CAPTIVE,F,Equ_Cab_1,NA,NA,NA,NA,1,DNA,4,3,5,1,techrep1,TRUE,TRUE,FALSE,FALSE,0,AlphaMEM complete,,37,,Skin
+A15,Equ_Qua,Equus quagga,NA,Equidae,Mammalia,NA,NA,NA,Equ_Qua_2,NA,NA,NA,NA,2,DNA,1,1,4,2,biorep,TRUE,TRUE,FALSE,FALSE,0,DMEM complete,,37,,Skin
+A14,Pan_Leo,Panthera leo,NA,Felidae,Mammalia,QGH16-04155/12780,NA,NA,Pan_Leo_1,NA,NA,NA,NA,0,NA,1,1,0,8,biorep,TRUE,TRUE,FALSE,FALSE,0,DMEM complete,,37,,Skin
+A13,Pan_Leo,Panthera leo,NA,Felidae,Mammalia,26384182/BARCELONA / 8891,NA,NA,Pan_Leo_4,NA,NA,NA,NA,0,NA,4,2,3,8,biorep,TRUE,TRUE,FALSE,FALSE,0,DMEM complete,,37,,Skin
+A439,Pan_Tig,Panthera tigris,NA,Felidae,Mammalia,MIG12-29901177/ MADRID Z / TBL8,CAPTIVE,F,Pan_Tig_1,NA,NA,NA,NA,1,DNA,4,2,1,2,biorep,TRUE,TRUE,FALSE,FALSE,0,AlphaMEM complete,,37,,Skin
+A462,Pan_Tig,Panthera tigris,NA,Felidae,Mammalia,QRD10-00370/MADRID Z / TBL6,CAPTIVE,M,Pan_Tig_2,NA,NA,NA,NA,0,NA,4,2,1,2,biorep,TRUE,TRUE,FALSE,FALSE,0,DMEM complete,,37,,Skin
+A37,Hex_Lib,Hexaprotodon liberiensis,NA,Hippopotamidae,Mammalia,8759764,CAPTIVE,F,Hex_Lib_1,NA,NA,NA,NA,0,NA,5,3,6,1,techrep1,TRUE,TRUE,FALSE,FALSE,0,DMEM complete,,37,,Skin
+A322,Pan_Tro,Pan troglodytes,troglodytes,Hominidae,Mammalia,MIG12-30088895,WILD,M,Pan_Tro_8,NA,NA,NA,NA,1,RNA,3,3,5,9,biorep,FALSE,TRUE,FALSE,FALSE,0,AlphaMEM complete,,37,,Skin
+A461,Pon_Pyg,Pongo pygmaeus,NA,Hominidae,Mammalia,QGH22-06066/BARCELONA / 14107,CAPTIVE,M,Pon_Pyg_3,NA,NA,NA,NA,0,NA,4,2,1,3,biorep,TRUE,TRUE,FALSE,FALSE,0,DMEM complete,,37,,Ear
+A453,Hys_Cri,Hystrix cristata,NA,Hystricidae,Mammalia,17968565/BARCELONA / 6798,CAPTIVE,M,Hys_Cri_2,NA,NA,NA,NA,1,DNA,4,2,1,2,biorep,TRUE,TRUE,FALSE,FALSE,0,DMEM complete,,37,,Ear
+A469,Pro_Cap,Procavia capensis,NA,Procaviidae,Mammalia,NA,CAPTIVE,NA,Pro_Cap_2,NA,NA,NA,NA,1,RNA,4,2,1,2,biorep,TRUE,TRUE,FALSE,FALSE,0,DMEM complete,,37,,Skin
+A423,Pha_Afr,Phacochoerus africanus,NA,Suidae,Mammalia,26179436/BARCELONA / 10958,CAPTIVE,F,Pha_Afr_4,NA,NA,NA,NA,1,DNA,2,1,0,4,biorep,TRUE,TRUE,FALSE,FALSE,0,AlphaMEM complete,,37,,Ear
+A424,Bos_Gru,Bos grunniens,NA,Bovidae,Mammalia,27917608/MADRID Z / Y12,CAPTIVE,F,Bos_Gru_1,NA,NA,NA,NA,0,NA,4,1,0,1,techrep1,TRUE,FALSE,FALSE,FALSE,1,AlphaMEM complete,,37,,Skin
+A81,Cal_Geo,Callithrix geoffroyi,NA,Callitrichidae,Mammalia,TGD16-00658/ JEREZ TG5,CAPTIVE,F,Cal_Geo_1,NA,NA,NA,AX8913,1,DNA,6,5,7,1,techrep1,TRUE,FALSE,FALSE,FALSE,1,DMEM complete,,37,,Skin
+A70,Dol_Pat,Dolichotis patagonum,NA,Caviidae,Mammalia,23574609/JEREZ / MAR038,CAPTIVE,F,Dol_Pat_2,NA,NA,NA,NA,0,NA,6,4,4,2,biorep,FALSE,FALSE,FALSE,FALSE,1,DMEM complete,,37,,Skin
+A391,Hyd_Hyd,Hydrochoerus hydrochaeris,NA,Caviidae,Mammalia,DKL20-06414/BARCELONA / 13876,CAPTIVE,M,Hyd_Hyd_2,NA,NA,NA,NA,0,NA,4,2,1,1,techrep1,FALSE,FALSE,FALSE,FALSE,1,AlphaMEM complete,,37,,Skin
+A274,Pap_Cyn,Papio cynocephalus,NA,Cercopithecidae,Mammalia,NO ZIMS (F/HYBRDID?),NA,NA,Pap_Cyn_1,NA,NA,NA,AY5183,0,NA,3,2,2,1,techrep1,FALSE,FALSE,FALSE,FALSE,1,AlphaMEM complete,,37,,Skin
+A446,Mun_Ree,Muntiacus reevesi,NA,Cervidae,Mammalia,WKP13-00240/MADRID Z / MU9,CAPTIVE,F,Mun_Ree_1,NA,NA,NA,NA,0,NA,4,2,1,1,techrep1,TRUE,FALSE,FALSE,FALSE,1,AlphaMEM complete,,37,,Skin
+A357,Lox_Afr,Loxodonta africana,NA,Elephantidae,Mammalia,NA,CAPTIVE,NA,Lox_Afr_1,NA,NA,NA,NA,0,NA,13,4,3,1,techrep1,FALSE,FALSE,FALSE,FALSE,1,AlphaMEM complete,,37,0.1% Gelatin,Skin
+A260,Equ_Qua,Equus quagga,NA,Equidae,Mammalia,QGH16-04272,CAPTIVE,M,Equ_Qua_1,NA,NA,NA,NA,0,NA,4,3,2,2,biorep,FALSE,FALSE,FALSE,FALSE,1,DMEM complete,,37,,Skin
+A278,Gor_Gor,Gorilla gorilla,NA,Hominidae,Mammalia,QGH15-02323,CAPTIVE,F,Gor_Gor_1,NA,NA,NA,AX8909,0,NA,4,3,2,1,techrep1,FALSE,FALSE,FALSE,FALSE,1,AlphaMEM complete,,37,0.1% Gelatin,Skin
+A11,Pan_Tro,Pan troglodytes,troglodytes,Hominidae,Mammalia,-,NA,NA,Pan_Tro_9,NA,NA,NA,L-AD11,1,DNA,6,3,3,9,biorep,TRUE,FALSE,FALSE,FALSE,1,DMEM complete,,37,,Skin
+A301,Hys_Cri,Hystrix cristata,NA,Hystricidae,Mammalia,MIG12-29239594,CAPTIVE,F,Hys_Cri_1,NA,NA,NA,NA,0,NA,3,2,1,2,biorep,TRUE,FALSE,FALSE,FALSE,1,AlphaMEM complete,,37,,Skin
+A286,Ory_Cun,Oryctolagus cuniculus,ibicea,Leporidae,Mammalia,NA,NA,NA,Ory_Cun_2,NA,NA,NA,NA,0,NA,3,2,1,1,techrep1,FALSE,FALSE,FALSE,FALSE,2,AlphaMEM complete,,37,,Skin
+A8,Lut_Lut,Lutra lutra,NA,Mustelidae,Mammalia,2.54E+07,CAPTIVE,M,Lut_Lut_1,NA,NA,NA,NA,0,NA,9,4,5,1,techrep1,FALSE,FALSE,FALSE,FALSE,2,DMEM complete,,37,,Skin
+A422,Mus_Lut,Mustela lutreola,novikovi,Mustelidae,Mammalia,THV16-02170/MADRID Z / V11,CAPTIVE,F,Mus_Lut_1,NA,NA,NA,NA,1,DNA,2,2,1,1,techrep1,TRUE,FALSE,FALSE,FALSE,2,AlphaMEM complete,,37,,Ear
+A342,Myr_Tri,Myrmecophaga tridactyla,NA,Myrmecophagidae,Mammalia,-,NA,NA,Myr_Tri_1,NA,NA,NA,NA,1,DNA,2,2,1,1,techrep1,FALSE,FALSE,FALSE,FALSE,2,AlphaMEM complete,,37,,Skin
+A345,Zal_Cal,Zalophus californianus,NA,Otariidae,Mammalia,QGH12-00115,CAPTIVE,F,Zal_Cal_1,NA,NA,NA,NA,0,NA,3,1,0,1,techrep1,FALSE,FALSE,FALSE,FALSE,2,DMEM high glucose,"1% S.Piruv.,1%NEAA",37,,Skin
+A353,Pro_Cap,Procavia capensis,NA,Procaviidae,Mammalia,CGK10-00254/BIOPARCVA / V11164,CAPTIVE,F,Pro_Cap_1,NA,NA,NA,NA,1,DNA,4,2,1,2,biorep,FALSE,FALSE,FALSE,FALSE,2,AlphaMEM complete,,37,,Skin
+A157,Pon_Pyg,Pongo pygmaeus,NA,Hominidae,Mammalia,Antoine Blancher (Chris Tyler-Smith),-,NA,Pon_Pyg_2,NA,NA,NA,AX8918/ORGONE_07,0,NA,1,1,0,3,biorep,TRUE,FALSE,FALSE,FALSE,2,DMEM complete,,37,,Skin

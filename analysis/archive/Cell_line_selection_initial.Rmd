@@ -1,0 +1,526 @@
+---
+title: "Cell line selection"
+output: html_notebook
+---
+
+!!!!!!!!!!!!This script was used for the initial selection and is not used anymore!!!!!!!!!!!!!!!!!!!!
+Based on the species that were selected to be included in the illumina or silencer projects we have to select which cell lines to use in case there is more than one.
+
+```{r}
+library(tidyverse)
+library(cowplot)
+library(readxl)
+library(googlesheets4)
+
+theme_set(theme_classic())
+
+here::here()
+
+path<-here::here()
+```
+
+# read species selection
+
+```{r}
+selection <- read_sheet(
+  "https://docs.google.com/spreadsheets/d/1k-0sFR4AuaA0hAM2qeUZ8IMvLx96vY2JIQbwrNQtLj0/edit?usp=drive_link"
+) %>%
+  arrange(-silencer, -illumina, species) %>%
+  select(silencer, illumina, species)
+
+species_list <- readRDS(paste0(path, "/output/Species_List_with_genome_and_cl_info2.rds")) %>%
+  full_join(selection) %>%
+  mutate(
+    illumina = if_else(is.na(illumina), F, illumina),
+    silencer = if_else(is.na(silencer), F, silencer),
+    tetrapod = !illumina & superclass != "Fish",
+    selected = illumina | silencer | tetrapod
+  ) %>%
+  select(
+    "scientific_name",
+    "species",
+    "iucn_category",
+    "individuals",
+    "taxon_id",
+    "genus" ,
+    "family",
+    "order",
+    "class",
+    "superclass",
+    "contig_n50",
+    "assembly_level",
+    "scaffold_n50",
+    "genome_size",
+    "gene_count",
+    "genome_match",
+    "species_genome",
+    "fibro_l",
+    "cat",
+    "illumina",
+    "silencer",
+    "tetrapod",
+    "selected"
+  )
+
+
+sample_table <- readRDS(paste0(path, "/output/Sample_List_all_species_clean.rds")) %>%
+  mutate(cryotube = animal_ID %in% cryo$animal_ID) %>%
+  left_join(select(species_list, species, illumina, silencer, tetrapod, selected)) %>%
+  select(animal_ID, 1:11, 13:ncol(.)) %>%
+  left_join(rownames_to_column(as.data.frame(summary), var = "animal_ID")) %>%
+  arrange(-silencer, -illumina, -tetrapod, -selected)
+
+cryo <- readRDS(paste0(path, "/data/Cryo_stocks_summary.rds")) %>%
+  group_by(animal_ID) %>%
+  filter(type2 == "Fibroblast") %>%
+  filter(CT_total > 0) %>%
+  filter(!is.na(CT_total)) %>%
+  select(animal_ID, n_passages, max_passage, CT_total)
+```
+
+
+```{r}
+cryzoo_seq <- read_sheet(
+  "https://docs.google.com/spreadsheets/d/1YI-0bB7OFfjaUM4af9Lv3BAd1X0x9CoCTKZN3BQM4KA/edit?usp=sharing"
+)
+
+ggplot(cryzoo_seq) +
+  geom_tile(aes(paste(species, animal_ID), type, fill = processed_by), col =
+              "black") +
+  coord_flip() +
+  xlab("")
+
+summary <- cryzoo_seq %>%
+  group_by(animal_ID, species, type) %>%
+  summarize(sum = n()) %>%
+  pivot_wider(
+    id_cols = c(animal_ID),
+    names_from = type,
+    values_from = sum
+  )
+
+summary[is.na(summary)] <- 0
+colnames(summary)[3:4]<-paste0(colnames(summary)[3:4],"-seq")
+
+summary_species <- cryzoo_seq %>%
+  group_by(species, type) %>%
+  summarize(sum = n()) %>%
+  pivot_wider(
+    id_cols = c(species),
+    names_from = type,
+    values_from = sum
+  )
+
+summary_species[is.na(summary_species)] <- 0
+
+
+#write_sheet(data = summary_species, ss = "https://docs.google.com/spreadsheets/d/1YI-0bB7OFfjaUM4af9Lv3BAd1X0x9CoCTKZN3BQM4KA/edit?usp=sharing", sheet = "Sequencing_summary_per_Species")
+
+summary<-summary %>% 
+  column_to_rownames(var = "animal_ID")
+
+summary<-summary>0
+
+```
+
+check which sample have RNA extracted already or at least have a pellet with cells ready for extraction
+
+```{r}
+RNA <- read_sheet(
+  "https://docs.google.com/spreadsheets/d/1SRid9RGRfcCpGAWsAXG8h0wE-7p1fhOtwvkMJgR1s8w/edit?usp=sharing",
+  sheet = "RNA Extractions",
+  .name_repair = "universal"
+) %>%
+  rename(animal_ID = Cryozoo.Number,
+         Volume_RNA = ul,
+         c_RNA = Ribonucleic.Acid.ng.µl.) %>%
+  select(c(animal_ID, Volume_RNA, c_RNA, Bioanalyzer.result..RIN.))
+
+
+pellet <- read_sheet(
+  "https://docs.google.com/spreadsheets/d/1SRid9RGRfcCpGAWsAXG8h0wE-7p1fhOtwvkMJgR1s8w/edit?usp=drive_link",
+  sheet = "Pelet recollit per DNA i RNA",
+  col_names = c("animal_ID", "species", "vials_collected", "DNA_ex", "RNA_ex"),
+  col_types = c("ccccc")
+) %>%
+  mutate(
+    pellet = case_when(
+      str_detect(vials_collected, pattern = "\\s*(RNA|DNA)") ~ str_count(vials_collected, pattern =
+                                                                           "\\s*(RNA|DNA)"),
+      is.na(vials_collected) ~ 0,
+      .default = as.numeric(vials_collected)
+    ),
+    pellet = if_else(is.na(pellet), 1, pellet),
+    pellet_type = case_when(
+      str_detect(vials_collected, pattern = "\\s*(RNA&DNA)") ~ "both",
+      str_detect(vials_collected, pattern = "\\s*(DNA)") ~
+        "DNA",
+      str_detect(vials_collected, pattern = "\\s*(RNA)") ~
+        "RNA",
+      pellet == 0 ~ NA_character_,
+      T ~ "DNA"
+    )
+  ) %>%
+  left_join(RNA) %>%
+  mutate(DNA_ex = !is.na(DNA_ex),
+         RNA_ex = !is.na(RNA_ex) | !is.na(c_RNA)) %>%
+  separate(
+    animal_ID,
+    remove = F,
+    sep = "[^[:alnum:]]+",
+    into = c("animal_ID1", "animal_ID2")
+  ) %>%
+  mutate(animal_ID = if_else(
+    as.numeric(str_remove(animal_ID1, "\\D")) > as.numeric(str_remove(animal_ID2, "\\D")) &
+      !is.na(animal_ID2),
+    animal_ID2,
+    animal_ID1
+  )) %>%
+  mutate(animal_ID2 = if_else(animal_ID == animal_ID1, animal_ID2, animal_ID1)) %>%
+  group_by(animal_ID, animal_ID2) %>%
+  summarise(
+    DNA_ex = sum(DNA_ex) > 0,
+    RNA_ex = sum(RNA_ex) > 0,
+    pellet = sum(pellet),
+    pellet_type = paste(pellet_type, collapse = ",")
+  ) %>%
+  separate(pellet_type, sep = ",", c("pellet_type1", "pellet_type2")) %>%
+  ungroup() %>%
+  mutate(
+    pellet_type = case_when(
+      pellet_type1 == "RNA" & pellet_type2 == "RNA" ~ "RNA",
+      pellet_type1 == "DNA" & pellet_type2 == "DNA" ~ "DNA",
+      pellet_type1 == "RNA" & pellet_type2 == "DNA" ~ "both",
+      pellet_type1 == "DNA" & pellet_type2 == "RNA" ~ "both",
+      pellet_type2 == "NA" ~ NA_character_,
+      pellet_type1 == "NA" ~ pellet_type2,
+      T ~ pellet_type1
+    )
+  ) %>%
+  select(-c(pellet_type1, pellet_type2))
+
+```
+
+```{r}
+selected_samples <- sample_table %>%
+  filter(cell_type == "Fibro") %>%
+  filter(illumina | silencer) %>%
+  left_join(pellet) %>%
+  left_join(cryo) %>%
+  mutate(
+    from_cryo = CT_total > 4 & n_passages > 2,
+    RNA_ex = if_else(is.na(RNA_ex), F, RNA_ex),
+    DNA_ex = if_else(is.na(DNA_ex), F, DNA_ex),
+    pellet = if_else(is.na(pellet), 0, pellet),
+    pellet_RNA = pellet > 0 & pellet_type %in% c("RNA", "both")
+  ) %>%
+  group_by(species) %>%
+  mutate(
+    selected = case_when(
+      is.na(CT_total) ~ F,
+      RNA_ex ~ T,
+      DNA_ex ~ T,
+      pellet_RNA ~ T,
+      seq ~ T,
+      from_cryo ~ T,
+      n() < 3 ~ T,
+      T ~ F
+    ),
+    n_samples = n()
+  ) %>%
+  arrange(-selected) %>%
+  mutate(rep_type = if_else(n_samples > 1, "biorep", "techrep"),
+         rep = row_number()) %>%
+  arrange(species, rep)
+
+
+#write_excel_csv(selected_samples,paste0(path,"/data/selected_celllines_RNA.csv"))
+```
+
+
+
+
+```{r}
+selected_samples_short <- selected_samples %>%
+  mutate(species_in = if_else(silencer, "silencer", "illumina")) %>%
+  select(
+    c(
+      animal_ID,
+      sample_id,
+      species,
+      superclass,
+      seq,
+      DNA_ex,
+      RNA_ex,
+      pellet,
+      CT_total,
+      n_passages,
+      rep_type,
+      rep,
+      species_in,
+      selected
+    )
+  ) %>%
+  arrange(species, -selected)
+
+#write_sheet(species_list, ss = "https://docs.google.com/spreadsheets/d/1csFMpLFtTr1_-hF1Nncduzjl9uIjKHRh0w7kntRZM2A/edit?usp=drive_link", sheet = "Species")
+
+#write_sheet(selected_samples_short, ss = "https://docs.google.com/spreadsheets/d/1csFMpLFtTr1_-hF1Nncduzjl9uIjKHRh0w7kntRZM2A/edit?usp=drive_link", sheet = "Cell_lines")
+
+#write_sheet(selected_samples, ss = "https://docs.google.com/spreadsheets/d/1csFMpLFtTr1_-hF1Nncduzjl9uIjKHRh0w7kntRZM2A/edit?usp=drive_link", sheet = "Cell_lines_full")
+
+#write_sheet(sample_table, ss = "https://docs.google.com/spreadsheets/d/1csFMpLFtTr1_-hF1Nncduzjl9uIjKHRh0w7kntRZM2A/edit?usp=drive_link", sheet = "All_samples")
+
+
+selected_samples2 <- subset(selected_samples, selected)
+
+table(selected_samples2$sex)
+table(selected_samples2$origin)
+
+hist(table(selected_samples2$species))
+
+
+
+selected_samples_full <- bind_rows(selected_samples2,
+                                   selected_samples2[which(selected_samples2$reps == "techrep1"), ] %>%
+                                     mutate(reps = "techrep2"))
+
+hist(table(selected_samples_full$species))
+
+```
+
+
+
+# check which of the already extracted RNAs to use
+
+```{r}
+
+# read_sheet("https://docs.google.com/spreadsheets/d/1y4QBygDAAi7GRdSAZ9N4S1k7vz2r0SjkLIdhfUAZ1XY/edit?usp=sharing",range = "Extractions") %>% 
+#  mutate(project2=if_else(animal_ID%in%selected_samples$animal_ID|animal_ID%in%selected_samples$animal_ID2,"illumina","cryozoo")) %>% write_sheet("https://docs.google.com/spreadsheets/d/1y4QBygDAAi7GRdSAZ9N4S1k7vz2r0SjkLIdhfUAZ1XY/edit?usp=sharing",sheet =  "Extractions")
+
+```
+
+
+# Cell lines harvesting
+
+```{r}
+
+
+harvesting <- read_sheet(
+  "https://docs.google.com/spreadsheets/d/1vyBZwssG8ndUcGmDg4kLEPwOJJk15bOrXztO876HCOs/edit?usp=sharing",
+  "tracking",
+  col_types = "nccccnccccDlDnccccnlllnnnDc"
+)
+
+summary <- harvesting %>%
+  group_by(species) %>%
+  summarize(
+    vials_tested = n(),
+    lines_tested = length(unique(animal_ID)),
+    lines_harvested = sum(Harvested, na.rm = T),
+    DNA = sum(DNA, na.rm = T),
+    RNA = sum(RNA, na.rm = T),
+    ATAC = sum(ATAC, na.rm = T),
+    lines = paste(unique(animal_ID), collapse = ",")
+  )
+
+# write_sheet(
+#   summary,
+#   "https://docs.google.com/spreadsheets/d/1vyBZwssG8ndUcGmDg4kLEPwOJJk15bOrXztO876HCOs/edit?usp=sharing",
+#   "summary"
+# )
+
+missing_species <- setdiff(subset(selection, silencer)$species, summary$species)
+
+missing_species
+
+
+# new_lines <- summary %>%
+#   filter(lines_harvested < 2) %>%
+#   select(species, lines_tested) %>%
+#   left_join(selected_samples) %>%
+#   filter(!(animal_ID %in% harvesting$animal_ID)) %>%
+#   filter(!is.na(animal_ID)) %>%
+#   
+#   write_sheet(
+#     "https://docs.google.com/spreadsheets/d/1vyBZwssG8ndUcGmDg4kLEPwOJJk15bOrXztO876HCOs/edit?usp=sharing",
+#     "new_lines"
+#   )
+
+# harvesting %>%
+#   group_by(animal_ID, species) %>%
+#   summarize(tries = n(), Harvested = sum(Harvested) > 0) %>%
+#   filter(tries < 2 & !Harvested) %>%
+#   left_join(selected_samples) %>%
+#   filter(CT_total > 2) %>%
+#   
+#   
+#   write_sheet(
+#     "https://docs.google.com/spreadsheets/d/1vyBZwssG8ndUcGmDg4kLEPwOJJk15bOrXztO876HCOs/edit?usp=sharing",
+#     "repeat"
+#   )
+
+```
+
+
+
+
+```{r}
+
+
+plot_df <- selected_samples %>%
+  mutate(ispellet = pellet > 0) %>%
+  select(species,
+         animal_ID,
+         RNA_ex,
+         from_cryo,
+         silencer,
+         illumina,
+         pellet_RNA) %>%
+  rownames_to_column(var = "index") %>%
+  pivot_longer(
+    cols = c(pellet_RNA, RNA_ex, from_cryo),
+    names_to = "type",
+    values_to = "value"
+  ) %>%
+  mutate(
+    index = as.numeric(index),
+    quarter = case_when(
+      index < nrow(selected_samples) / 4 ~ "top",
+      index < nrow(selected_samples) / 2 ~ "middle1",
+      index > nrow(selected_samples) / 2 &
+        index < (nrow(selected_samples) / 4) * 3 ~ "middle2",
+      T ~ "bottom"
+    ),
+    type = factor(type, levels = rev(c(
+      "from_cryo", "pellet_RNA", "RNA_ex"
+    )))
+  )
+
+table(plot_df$quarter)
+
+
+plot_df[is.na(plot_df)] <- F
+
+ggplot(plot_df) +
+  geom_tile(aes(
+    x = type,
+    y = reorder(animal_ID, value),
+    fill = value
+  ), col = "white") +
+  facet_wrap( ~ silencer, ncol = 4, scales = "free") +
+  theme(
+    strip.text = element_blank(),
+    strip.background = element_blank(),
+    axis.text.x = element_text(angle = 90, vjust = 0.3)
+  ) +
+  ggsci::scale_fill_npg() +
+  xlab("")
+
+
+table(plot_df$type, plot_df$value)
+```
+
+## Find Cryo tubes
+
+```{r}
+
+
+
+extr_long <- readRDS(paste0(path, "/data/Extractions_long.rds"))
+
+
+IDs <- c(
+  "A495
+A524
+A345
+A78
+A514
+A50
+A469
+A15
+A542
+A182
+A537
+A357
+A8
+A260
+A476
+A544
+A37
+A529
+A422
+A65
+A434
+A322
+A511
+A289
+A262
+A424
+A102
+A489
+A533
+A472
+A247
+A446
+A493
+A81
+A77
+A462
+A274
+A532
+A157
+A439
+A522
+A353
+A73
+A67
+A92
+A526
+A403
+A374
+A288
+A509
+A70
+A278
+A312
+A286
+A482
+A558
+A392
+A422
+A391
+A81
+A461
+A308
+A460
+A394
+A11
+A13"
+) %>%
+  str_split(pattern = "\n", simplify = F) %>%
+  unlist()
+
+positions <- extr_long %>%
+  filter(type == "RNA") %>%
+  mutate(column = as.numeric(str_extract(column, "\\d+"))) %>%
+  mutate(row = as.numeric(str_extract(row, "\\d+"))) %>%
+  mutate(animal_ID = str_extract(cryotube, pattern = "[Aa]\\d+")) %>%
+  filter(animal_ID %in% IDs)
+
+ggplot(positions) +
+  geom_raster(aes(column, row)) +
+  geom_hline(yintercept = 0.5:10.5) +
+  geom_vline(xintercept = 0.5:10.5) +
+  scale_y_reverse(breaks = 1:10) +
+  scale_x_continuous(breaks = 1:12, position = "top") +
+  geom_text(aes(column, row, label = cryotube),
+            col = "white",
+            size = 2) +
+  facet_wrap( ~ box)
+
+
+
+#write_excel_csv(positions_pellet,paste0(path,"/output/positions_pellet.csv"))
+```
+

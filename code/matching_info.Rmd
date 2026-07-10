@@ -1,0 +1,276 @@
+---
+title: "Match Cryozoo and Metadata with Genome Info"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r ,warning=F,message=FALSE}
+library(readr)
+library(tidyverse)
+library(magrittr)
+library(treedataverse)
+
+```
+
+
+## Check which species have decent reference genomes in NCBI or ENSEMBL
+
+make one table for NCBI and ENSEMBL:
+```{r}
+Mammalian_genomes_NCBI <- read_csv("PostDoc/Marques_Bonet/Cryozoo_project/sample_info/Mammalian_genomes_NCBI.csv")
+
+colnames(Mammalian_genomes_NCBI)<-janitor::make_clean_names(colnames(Mammalian_genomes_NCBI))
+
+Mammalian_genomes_NCBI_sum<-Mammalian_genomes_NCBI %>%
+  mutate(level_num=as.integer(factor(level,levels=rev(c("Complete","Chromosome","Scaffold","Contig"))))) %>% 
+  #mutate(level_num=if_else(is.na(level_num),as.integer(0),level_num)) %>% 
+  group_by(number_organism_name) %>% 
+  summarize(nGenomes=n(),level_num=max(level_num),modify_date=max(modify_date)) %>% 
+  mutate(level=case_when(level_num==4~"Complete",
+                         level_num==3~"Chromosome",
+                         level_num==1~"Contig",
+                         level_num==2~"Scaffold"
+                         ))
+table(duplicated(Mammalian_genomes_NCBI_sum$number_organism_name))
+
+Species_genomes_Ensembl <- read_csv("PostDoc/Marques_Bonet/Cryozoo_project/sample_info/Species_genomes_Ensembl.csv")
+
+colnames(Species_genomes_Ensembl)<-janitor::make_clean_names(colnames(Species_genomes_Ensembl))
+
+sum(duplicated(Species_genomes_Ensembl$scientific_name))
+
+Species_genomes_Ensembl_sum<-Species_genomes_Ensembl %>% 
+  group_by(scientific_name,taxon_id) %>%
+  summarize(nGenomes=n())
+
+
+NCBI_ENS<-full_join(Species_genomes_Ensembl_sum,Mammalian_genomes_NCBI_sum,c("scientific_name"="number_organism_name")) %>% 
+  rename(nGenomes_ENS=nGenomes.x,
+         nGenomes_NCBI=nGenomes.y)
+
+sum(duplicated(NCBI_ENS$scientific_name))
+```
+
+
+```{r}
+
+summary_species<-read_csv("C:/Users/Lucas/Documents/List_of_mammals_full.csv") %>% 
+  filter(specie_name_cites!="Ibicean rabbit")
+
+summary_species<-summary_species %>% 
+  left_join(NCBI_ENS,by=c("specie_name_cites"="scientific_name")) %>% 
+  mutate(Genome=case_when((is.na(level))&is.na(taxon_id)~ "NoGenome",
+                          !(is.na(level))&!is.na(taxon_id)~ "NCBI/ENSEMBL",
+                          (is.na(taxon_id))~"NCBI",
+                          (is.na(level))~"ENSEMBL")) 
+
+summary_species2 <-summary_species %>% 
+  filter(fibro>0)
+
+
+heatmap.colours <- c("darkblue",
+                    "blue","lightblue","yellow")
+
+names(heatmap.colours) <- c("Chromosome","Scaffold","Contig","ENSEMBL")
+
+ggplot(summary_species2)+
+  geom_bar(aes(x=fibro>1,fill=level))+
+  #coord_flip()+
+  labs(x="",fill="",y="species")+
+  theme(legend.position = "bottom")+
+  scale_fill_manual(values=heatmap.colours,limits=force)+
+  scale_x_discrete(labels=c("FALSE"="Fibro=1","TRUE"="Fibro>1"))
+
+ggplot(summary_species2)+
+  geom_tile(aes(x=specie_name_cites,y="",fill=level),colour="white")+
+  coord_flip()+
+  theme(axis.text.y = element_text(size=6))+
+  labs(x="",y="")+
+  scale_fill_manual(values=heatmap.colours,limits=force)
+
+
+summary_species2[with(summary_species2,which(is.na(level_num))),] 
+
+nrow(summary_species2[with(summary_species2,which(is.na(level_num))),] )
+
+saveRDS(summary_species,"Mammals_info_with_genome.rds")
+write_excel_csv(summary_species,"Mammals_info_with_genome.csv")
+
+```
+
+
+## Genome on a tree
+
+```{r}
+GOAT_info <- read_delim("PostDoc/Marques_Bonet/Cryozoo_project/sample_info/GenomeOnATree_full.tsv", 
+    delim = "\t", escape_double = FALSE, 
+    col_types = cols(subspecies = col_skip(), 
+        species = col_skip(), genome_size_kmer = col_skip(), 
+        genome_size_draft = col_skip()), 
+    trim_ws = TRUE) 
+  
+
+List_of_species<-readRDS("C:/Users/Lucas/Documents/Cleaned_list of_species.rds") %>% 
+  rename(scientific_name=specie_name_cites) %>% 
+  mutate(class=if_else(class=="BIRD","Aves",stringr::str_to_title(class))) %>% 
+  filter(class=="Mammalia") %>% 
+  filter(scientific_name!= "Ibicean rabbit")
+
+table((List_of_species$scientific_name %in% GOAT_info$scientific_name),List_of_species$class)
+
+List_of_species_new<-inner_join(List_of_species,GOAT_info,by=c("scientific_name")) %>% 
+  mutate(common_name=case_when(is.na(common_name.x)~common_name.y,
+                               common_name.x==common_name.y~common_name.y,
+                               common_name.x!=common_name.y~paste(common_name.x,common_name.y,sep=","),
+                               T~NA_character_),
+         family=case_when(is.na(family.x)~family.y,
+                               family.x==family.y~family.y,
+                               family.x!=family.y~paste(family.x,family.y,sep=","),
+                               T~NA_character_),
+         class=case_when(is.na(class.x)~class.y,
+                         class.x==class.y~class.y,
+                               class.x!=class.y~paste(class.x,class.y,sep=","),
+                               T~NA_character_),
+         order=case_when(is.na(order.x)~order.y,
+                               order.x==order.y~order.y,
+                               order.x!=order.y~paste(order.x,order.y,sep=","),
+                               T~NA_character_)) %>%
+  select(-c(ends_with(".x"),ends_with(".y")))
+
+
+## try to match additional species with common name etc.
+
+List_of_species[!(List_of_species$scientific_name %in% GOAT_info$scientific_name),]
+
+
+
+unmatched<-List_of_species %>% 
+  separate(scientific_name,sep = " ",into = c("genus","species_2"),remove = F) %>% 
+  filter(!(List_of_species$scientific_name %in% GOAT_info$scientific_name)) %>% 
+  filter(cell_line!="No cell line")
+
+write_excel_csv(unmatched,"C:/Users/Lucas/Documents/unmatched_list1.csv")
+
+## Manual curation of missing species
+
+```
+
+```{r}
+
+unmatched2<-read_csv2("C:/Users/Lucas/Documents/PostDoc/Marques_Bonet/Cryozoo_project/sample_info/unmatched_list_curated2.csv")
+
+unmatched2 %<>% inner_join(GOAT_info,by=c("alternative_name"="scientific_name"),suffix=c("L","")) %>% 
+  select(-ends_with("L",ignore.case = F)) %>% 
+  bind_rows(inner_join(unmatched2,
+                       GOAT_info,
+                       by=c("alternative_genome"="scientific_name"),
+                       suffix=c("L",""))) %>%
+  select(-ends_with("L",ignore.case = F))
+  
+# unmatched3 <- unmatched %>% 
+#   anti_join(unmatched2,by="scientific_name") %>% 
+#   filter(class=="Mammalia")
+
+full_list<-bind_rows(List_of_species_new,unmatched2) %>% 
+    bind_rows() %>% 
+  mutate(name_genome=if_else(is.na(alternative_name),scientific_name,alternative_name),
+         name_genome=if_else(is.na(alternative_genome),scientific_name,alternative_genome))
+
+order<-c("scientific_name","scientific_name_","synonym","common_name","alternative_name","alternative_genome",
+                         "name_genome","taxon_id","taxon_rank","subspecies","species_2","genus","subfamily",
+                         "family","order","class","phylum","kingdom","superkingdom", "cites_annex",
+                         "iucn_category","samples","sex","cell_line","karyotype","dna","rna","sequencing",
+                         "i_psc","sample","assembly_level","assembly_span","bioproject","biosample",
+                         "contig_n50","assembly_date","scaffold_n50","gene_count","busco_completeness","gc_percent",
+                         "n_percent","chromosome_number","haploid_number","country_list","c_value",
+                         "genome_size","sample_collected","sample_collected_by","sample_acquired","in_progress",
+                         "insdc_open","published","sequencing_status")
+
+colnames(full_list)[!(colnames(full_list)%in%order)]
+
+full_list2<-full_list[,c("scientific_name","scientific_name_","synonym","common_name","alternative_name","alternative_genome",
+                         "name_genome","taxon_id","taxon_rank","subspecies","species_2","genus","subfamily",
+                         "family","order","class","phylum","kingdom","superkingdom", "cites_annex",
+                         "iucn_category","samples","sex","cell_line","karyotype","dna","rna","sequencing",
+                         "i_psc","sample","assembly_level","assembly_span","bioproject","biosample",
+                         "contig_n50","assembly_date","scaffold_n50","gene_count","busco_completeness","gc_percent",
+                         "chromosome_number","haploid_number","country_list",
+                         "c_value","genome_size","insdc_open","published","sequencing_status")]
+
+
+full_list3<-full_list2 %>%
+  mutate(genome=is.na(alternative_genome))%>%
+  mutate(assembly_level=if_else(is.na(assembly_level),"No_Assembly",assembly_level),
+         genome=if_else(assembly_level=="No_Assembly",F,genome)) %>% 
+  full_join(List_of_species[which(!(List_of_species$scientific_name%in%full_list2$scientific_name)),]) 
+
+
+table(full_list3$genome,full_list3$assembly_level)
+
+full_list3$assembly_level<-factor(full_list3$assembly_level,levels=c("No_Assembly","Contig","Scaffold","Chromosome"))
+
+ggplot(full_list3)+
+  geom_bar(aes(x="",fill=assembly_level))+
+  scale_fill_viridis_d(direction = -1)+
+  labs(x="",fill="Assembly Level")+
+  coord_flip()+
+  theme_minimal()+
+  theme(legend.position = "top",
+        axis.ticks.y=element_blank(),
+        axis.line.y = element_blank())+
+  guides(fill=guide_legend(reverse = T))
+  
+
+```
+
+
+```{r}
+
+mammals_all_genomes<-full_list3 %>% 
+  filter(class=="Mammalia") %>% 
+  select(c(-order,-taxon_id,-samples)) %>% 
+  inner_join(summary_species) %>% 
+  mutate(Genome=case_when(genome & Genome!="NoGenome" ~ "GOAT & NCBI",
+                          genome & Genome=="NoGenome"| is.na(Genome)~ "GOAT",
+                          !genome &Genome!="NoGenome"~ "NCBI",
+                          T~"NoGenome")) 
+
+mammals_all_genomes %<>% 
+  mutate(cat=case_when(genome & fibro==0 ~ "Only Genome",
+                       !(genome) & fibro==0 ~ "No Genome, No Fibro",
+                       !(genome) & fibro>0 ~ "Only Fibro",
+                       genome & fibro>0 ~ "Both"))
+
+
+ggplot(mammals_all_genomes)+
+  geom_bar(aes(x=cat))+
+  labs(y="Number of Species",x= "")+
+  theme_bw()
+
+selection<-mammals_all_genomes %>% 
+  filter(cat=="Both") %>% 
+  mutate(to_process=if_else(fibro>1,2,fibro))
+
+
+sum(selection$to_process)
+
+selection %>% 
+  pivot_longer(cols=c(scaffold_n50,contig_n50), names_to="metric",values_to = "value") %>% 
+  group_by(order) %>% 
+  mutate(nspecies=n(),
+         order2=if_else(nspecies>4,order,"Other")) %>% 
+ggplot()+
+  geom_boxplot(aes(x=order2,y=value),col="grey75",outlier.shape = NA)+
+  ggbeeswarm::geom_beeswarm(aes(x=order2,y=value,col=assembly_level),show.legend = T,groupOnX = T,dodge.width = 0.5)+
+  facet_grid(~metric,scales = "free")+
+  theme_bw()+
+  scale_y_log10()+
+  labs(x="")
+
+
+write_excel_csv2(mammals_all_genomes,"C:/Users/Lucas/Documents/PostDoc/Marques_Bonet/Cryozoo_project/Species_list_with_Genome.csv")
+write_excel_csv2(selection,"C:/Users/Lucas/Documents/PostDoc/Marques_Bonet/Cryozoo_project/Pre_selection.rds")
+
+```
+

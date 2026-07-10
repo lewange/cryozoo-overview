@@ -1,0 +1,614 @@
+---
+title: "Cryozoo overview trees"
+output: html_notebook
+---
+
+This script was mostly written by claude to generate an overview style tree plot for the cryozoo. With one tree per class based on the Open tree of life topologies
+
+
+# Biobank Species Overview — Circular Phylogenetic Trees + PhyloPic silhouettes
+
+# Dependencies:
+#   install.packages(c("tidyverse", "rotl", "ape", "rphylopic",
+#                      "patchwork", "readxl", "RColorBrewer"))
+#   BiocManager::install(c("ggtree", "ggtreeExtra"))
+#
+# rphylopic >= 1.4.0 required (CRAN):  install.packages("rphylopic")
+
+```{r message=FALSE, warning=FALSE}
+
+library(tidyverse)
+library(rotl)
+library(ape)
+library(ggtree)
+library(ggtreeExtra)
+library(rphylopic)
+library(patchwork)
+library(RColorBrewer)
+library(googlesheets4)
+
+```
+
+
+# 0.  CONFIGURATION — tweak colours, paths, scaling here
+
+```{r}
+
+
+# Expected column names in your table :
+COL_SPECIES   <- "species_TOL"       # binomial name, e.g. "Homo sapiens"
+COL_CLASS     <- "common_group"         # e.g. "Mammalia", "Aves", "Actinopterygii"
+COL_ORDER     <- "order"         # e.g. "Carnivora", "Passeriformes"
+COL_IUCN      <- "iucn_status"   # LC / NT / VU / EN / CR / DD / NE
+COL_WGS       <- "wg_seq"           # TRUE/FALSE or 1/0
+COL_RNASEQ    <- "rna_seq"
+COL_ATAC      <- "atac_seq"
+COL_NANO      <- "wg_nanopore"
+COL_REFGENOME <- "genome_match"    # "own" / "closely_related" / "none"
+
+# Minimum species per order to attempt a PhyloPic silhouette
+PHYLOPIC_MIN_SPECIES <- 10
+
+# Panel layout: scale panel area by sqrt(n_species)
+SIZE_SCALE_FN <- sqrt
+
+
+
+# Colour palettes
+IUCN_COLOURS <- c(
+  LC = "#60C659",
+  NT = "#CCE226",
+  VU = "#F9E814",
+  EN = "#FC7F3F",
+  CR = "#D81E05",
+  EW = "#542344",
+  DD = "#D1D1C6",
+  NE = "#AAAAAA"
+)
+
+REFGENOME_COLOURS <- c(
+  species             = "#2166ac",
+  genus = "#92c5de",
+  family            = "#f4f4f4"
+)
+
+ASSAY_COLOURS <- c(
+  wg_seq     = "#7b2d8b",
+  rna_seq  = "#e08214",
+  atac_seq = "#1b7837",
+  wg_nanopore = "grey75"
+)
+
+path<-here::here()
+```
+
+
+# 1. Read table with all cryozoo species 
+
+columns: species, class, order, IUCN status
+
+```{r}
+
+species_list<-read_rds(paste0(path,"/output/Species_List_with_genome_and_cl_info.rds")) %>% 
+  mutate(common_group=if_else(is.na(class)|class %in%c("Lepidosauria"),"Reptilia",class)) %>% 
+  mutate(common_group=if_else(common_group %in%c("Actinopteri","Chondrichthyes"),"Fish",common_group)) %>% 
+  mutate(species_TOL=case_match(species,
+                                "Astur gentilis"~"Accipiter gentilis",
+                                "Caribicus warreni"~"Celestus warreni",
+                                .default=species))
+
+#colnames(species_list)
+#unique(species_list$species_TOL)
+
+seq_per_sp<-read_sheet("https://docs.google.com/spreadsheets/d/1YI-0bB7OFfjaUM4af9Lv3BAd1X0x9CoCTKZN3BQM4KA/edit?usp=sharing",
+            "Sequencing_per_species") %>% 
+  janitor::clean_names() %>% 
+  mutate(across(2:6,~if_else(.x=="sequenced",T,F))) %>% 
+  mutate(across(2:6,~if_else(is.na(.x),F,.)))
+
+species_list<-species_list %>% 
+  select(-rna_seq,-wgs_sequencing) %>% 
+  left_join(seq_per_sp) %>% 
+  mutate(across(79:83,~if_else(is.na(.x),F,.)))
+```
+
+```{r}
+library(rredlist)
+
+# Check / set your IUCN Red List API token (get one at https://api.iucnredlist.org)
+
+iucn_key <- "DkkVjMp69BoEpZXLicGLfmiHDBDuLdDBSoZG"
+iucn_status <- species_list %>%
+  mutate(
+    iucn_status = map_chr(species, function(sname) {
+      parts <- str_split(sname, " ")[[1]]
+      res <- tryCatch(
+        rl_species(genus = parts[1], species = parts[2], key = iucn_key)$assessments,
+        error = function(e) NULL
+      )
+      if (is.null(res) || !is.data.frame(res) || nrow(res) == 0) return(NA_character_)
+      res %>%
+        slice_max(assessment_id, n = 1,with_ties = F) %>%
+        pull(red_list_category_code)
+    })) %>% 
+  select(species,iucn_status) %>%
+  mutate(iucn_status = iucn_status %>%
+    na_if("NA") %>%
+    recode(
+      `LR/lc` = "LC",
+      `V`     = "VU",
+      `I`     = "DD"
+    ) %>%
+    factor(levels = names(IUCN_COLOURS))
+  )
+
+
+unique(iucn_status$iucn_status)
+
+species_list<- species_list %>% 
+  left_join(iucn_status)
+```
+
+
+# 2.  PHYLOPIC — fetch and cache silhouettes for qualifying orders
+
+
+```{r eval=FALSE, include=FALSE}
+# Orders with >= PHYLOPIC_MIN_SPECIES across the whole biobank
+order_summary <- species_list %>%
+  count(
+    class = !!sym(COL_CLASS),
+    order = !!sym(COL_ORDER),
+    name  = "n_species"
+  ) %>% 
+  filter(n_species >= PHYLOPIC_MIN_SPECIES)
+
+message("Orders qualifying for PhyloPic (>= ", PHYLOPIC_MIN_SPECIES, " species):")
+print(order_summary)
+```
+
+
+```{r eval=FALSE, include=FALSE}
+# Fetch one silhouette per qualifying order; cache as named list of raster imgs.
+# pick_phylopic() finds the best UUID match; get_phylopic() downloads the raster.
+fetch_phylopic_safe <- function(order_name) {
+  tryCatch({
+  uid <- rphylopic::get_uuid(name = order_name)
+    img <- rphylopic::get_phylopic(uuid = uid)
+    message("  OK: ", order_name)
+    img
+  }, error = function(e) {
+    message("  WARN: PhyloPic not found for '", order_name, "' — ", e$message)
+    NULL
+  })
+}
+
+message("\nFetching PhyloPic silhouettes...")
+phylopic_cache <- order_summary %>%
+  pull(order) %>%
+  set_names() %>%
+  map(fetch_phylopic_safe) %>%
+  compact()
+
+message(
+  length(phylopic_cache), " / ", nrow(order_summary),
+  " silhouettes fetched successfully."
+)
+
+```
+
+
+
+# 3.  HELPER — fetch OTL tree for one class
+
+```{r}
+
+fetch_class_tree <- function(species_vec, class_name) {
+
+  message("  Fetching OTL tree for ", class_name, " (", length(species_vec), " spp)")
+
+  matched <- tryCatch(
+    tnrs_match_names(species_vec, context_name = NULL),
+    error = function(e) { message("    OTL match failed: ", e$message); NULL }
+  )
+  if (is.null(matched)) return(NULL)
+
+  ott_ids <- matched %>%
+    filter(!is.na(ott_id), !flags %in% c("barren", "extinct")) %>%
+    pull(ott_id) %>%
+    unique()
+
+  if (length(ott_ids) < 3) {
+    message("    Too few resolved names (", length(ott_ids), "), skipping")
+    return(NULL)
+  }
+
+  tree <- tryCatch(
+    tol_induced_subtree(ott_ids = ott_ids, label_format = "name"),
+    error = function(e) { message("    Subtree fetch failed: ", e$message); NULL }
+  )
+  if (is.null(tree)) return(NULL)
+
+  tree$tip.label <- tree$tip.label %>%
+    str_replace_all("_", " ") %>%
+    str_remove("\\s+ott\\d+$")
+
+  tree <- compute.brlen(tree, method = "Grafen")
+  tree <- chronos(tree, quiet = TRUE)
+  tree
+}
+
+```
+
+
+# 4.  HELPER — compute angular midpoint for a set of tips in a circular tree
+#
+#   ggtree places n tips at equal angular spacing.
+#   We identify where our order's tips fall and take the circular mean angle,
+#   then convert to Cartesian (x, y) at the desired placement radius.
+
+```{r eval=FALSE, include=FALSE}
+
+
+tips_to_xy <- function(tree, tip_subset, radius) {
+
+  n          <- length(tree$tip.label)
+  tip_angles <- tibble(
+    label = tree$tip.label,
+    # ggtree default: 90° at top, counter-clockwise, in degrees
+    angle_deg = 90 - 360 * (seq_len(n) - 1) / n
+  )
+
+  subset_ang <- tip_angles %>%
+    filter(label %in% tip_subset) %>%
+    pull(angle_deg)
+
+  if (length(subset_ang) == 0) return(NULL)
+
+  # Circular mean (handles ±180° wrap-around correctly)
+  rad    <- subset_ang * pi / 180
+  mean_x <- mean(cos(rad))
+  mean_y <- mean(sin(rad))
+  mid_rad <- atan2(mean_y, mean_x)
+
+  tibble(
+    x         = radius * cos(mid_rad),
+    y         = radius * sin(mid_rad),
+    angle_deg = mid_rad * 180 / pi
+  )
+}
+
+```
+
+# 5.  HELPER — build one annotated circular ggtree plot with PhyloPics
+
+
+```{r}
+
+
+build_class_plot <- function(tree, meta_df, class_name, phylopic_imgs) {
+# tree          = trees[[1]]
+# meta_df       = species_list
+# class_name    = names(trees[1])
+# phylopic_imgs = phylopic_cache
+  # Radial offset where silhouettes are placed (beyond outermost ring).
+  # 5 annotation rings at offset ~0.08 each push the outer edge to ~1.6;
+  # place silhouettes at 2.0 with tip labels reaching ~1.7–1.8.
+  SILHOUETTE_RADIUS <- 2.0
+  SILHOUETTE_YSIZE  <- 0.12   # height relative to plot coordinates
+  LABEL_RADIUS_MULT <- 1.18   # order label placed slightly further out
+
+  tip_df <- tibble(species = tree$tip.label) %>%
+    left_join(meta_df, by = c("species" = COL_SPECIES))
+
+  # ── Base circular tree ──────────────────────────────────────────────────────
+  p <- ggtree(tree, layout = "circular", size = 0.35, colour = "grey40") +
+    geom_tiplab(size = 1.8, offset = 0.05, hjust = 0,
+                fontface = "italic", colour = "grey20") +
+    labs(title = class_name) +
+    theme(
+      plot.title      = element_text(face = "bold", size = 11,
+                                     hjust = 0.5, margin = margin(b = 4)),
+      legend.position = "none"
+    )
+
+  # ── Ring 1: IUCN status ─────────────────────────────────────────────────────
+  iucn_df <- tip_df %>%
+    select(species,all_of(c(COL_IUCN))) %>%
+    mutate(iucn_status = factor(iucn_status, levels = names(IUCN_COLOURS)))
+
+  p <- p +
+    geom_fruit(
+      data        = iucn_df,
+      geom        = geom_tile,
+      mapping     = aes(y = species, fill = iucn_status),
+      width       = 0.08, offset = 0.15,
+      colour      = "white", show.legend = FALSE
+    ) +
+    scale_fill_manual(values = IUCN_COLOURS, na.value = "grey90",
+                      name = "IUCN", drop = FALSE)
+
+  # ── Rings 2–4: Assay presence ───────────────────────────────────────────────
+  assay_long <- tip_df %>%
+    select(species,all_of(c( COL_WGS, COL_RNASEQ, COL_ATAC,COL_NANO))) %>% 
+    pivot_longer(-species, names_to = "assay", values_to = "present") %>% 
+    mutate(present=if_else(!is.na(present),T,F)) %>% 
+    mutate(
+      assay    = factor(assay, levels = c("wg_seq", "rna_seq", "atac_seq","wg_nanopore")),
+      present  = as.logical(present),
+      fill_col = if_else(present, ASSAY_COLOURS[as.character(assay)], NA_character_)
+    )
+
+  p <- p +
+    geom_fruit(
+      data        = assay_long,
+      geom        = geom_tile,
+      mapping     = aes(y = species, x = assay, fill = fill_col),
+      width       = 0.08, offset = 0.05,
+      colour      = "white", show.legend = FALSE
+    ) +
+    scale_fill_identity()
+
+  # ── Ring 5: Reference genome ────────────────────────────────────────────────
+  refg_df <- tip_df %>%
+    select(species, genome_match) %>%
+    mutate(genome_match = factor(genome_match, levels = names(REFGENOME_COLOURS)))
+
+  p <- p +
+    geom_fruit(
+      data        = refg_df,
+      geom        = geom_tile,
+      mapping     = aes(y = species, fill = genome_match),
+      width       = 0.08, offset = 0.05,
+      colour      = "white", show.legend = FALSE
+    ) +
+    scale_fill_manual(values = REFGENOME_COLOURS, na.value = "grey90",
+                      name = "Ref Genome", drop = FALSE)
+
+  # ── PhyloPic silhouettes outside the outermost ring ─────────────────────────
+  # Find orders in this class panel that have a cached silhouette
+  class_orders <- tip_df %>%
+    select(species, order = !!sym(COL_ORDER)) %>%
+    filter(order %in% names(phylopic_imgs)) %>%
+    distinct()
+
+  if (nrow(class_orders) > 0) {
+
+    # Compute placement position for each qualifying order
+    placement_df <- class_orders %>%
+      group_by(order) %>%
+      summarise(tip_list = list(species), .groups = "drop") %>%
+      mutate(
+        pos = map(tip_list, ~ tips_to_xy(tree, .x, SILHOUETTE_RADIUS))
+      ) %>%
+      filter(!map_lgl(pos, is.null)) %>%
+      unnest(pos) %>%
+      mutate(
+        x_lab = x * LABEL_RADIUS_MULT,
+        y_lab = y * LABEL_RADIUS_MULT,
+        img   = map(order, ~ phylopic_imgs[[.x]])
+      )
+
+    # Place each silhouette
+    for (i in seq_len(nrow(placement_df))) {
+      p <- p +
+        add_phylopic_base(
+          img   = placement_df$img[[i]],
+          x     = placement_df$x[i],
+          y     = placement_df$y[i],
+          ysize = SILHOUETTE_YSIZE,
+          alpha = 0.65,
+          color = "grey25"
+        )
+    }
+
+
+    # Order name labels just beyond each silhouette
+    p <- p +
+      geom_text(
+        data        = placement_df,
+        mapping     = aes(x = x_lab, y = y_lab, label = order),
+        size        = 2.0,
+        colour      = "grey35",
+        fontface    = "italic",
+        inherit.aes = FALSE
+      )
+  }
+
+  p
+}
+
+```
+
+
+
+# 6.  HELPER — shared legend panel
+
+
+```{r}
+
+build_legend <- function() {
+
+  p_iucn <- ggplot(
+    tibble(x = seq_along(IUCN_COLOURS),
+           s = factor(names(IUCN_COLOURS), levels = names(IUCN_COLOURS))),
+    aes(x = x, y = 1, fill = s)
+  ) +
+    geom_tile() +
+    scale_fill_manual(values = IUCN_COLOURS, name = "IUCN Status", drop = FALSE) +
+    guides(fill = guide_legend(nrow = 1, title.position = "top")) +
+    theme_void() +
+    theme(legend.position = "right",
+          legend.title    = element_text(size = 8, face = "bold"),
+          legend.text     = element_text(size = 7))
+
+  p_ref <- ggplot(
+    tibble(x = seq_along(REFGENOME_COLOURS),
+           g = factor(names(REFGENOME_COLOURS), levels = names(REFGENOME_COLOURS))),
+    aes(x = x, y = 1, fill = g)
+  ) +
+    geom_tile() +
+    scale_fill_manual(
+      values = REFGENOME_COLOURS,
+      name   = "Reference Genome",
+      labels = c("Own assembly", "Closely related", "None"),
+      drop   = FALSE
+    ) +
+    guides(fill = guide_legend(nrow = 1, title.position = "top")) +
+    theme_void() +
+    theme(legend.position = "right",
+          legend.title    = element_text(size = 8, face = "bold"),
+          legend.text     = element_text(size = 7))
+
+  p_assay <- ggplot(
+    tibble(x     = 1:3,
+           assay = factor(c("wgs", "rnaseq"),
+                          levels = c("wgs", "rnaseq"))),
+    aes(x = x, y = 1, fill = assay)
+  ) +
+    geom_tile() +
+    scale_fill_manual(
+      values = ASSAY_COLOURS,
+      name   = "Sequencing Assay",
+      labels = c("WGS", "RNA-seq"),
+      drop   = FALSE
+    ) +
+    guides(fill = guide_legend(nrow = 1, title.position = "top")) +
+    theme_void() +
+    theme(legend.position = "right",
+          legend.title    = element_text(size = 8, face = "bold"),
+          legend.text     = element_text(size = 7))
+
+  p_note <- ggplot() +
+    annotate("text",
+             x = 0.5, y = 0.5,
+             label = paste0(
+               "Silhouettes shown for orders\n",
+               "with \u2265 ", PHYLOPIC_MIN_SPECIES,
+               " species (via PhyloPic)"
+             ),
+             size = 2.8, colour = "grey40", hjust = 0.5) +
+    theme_void()
+
+  (p_iucn | p_ref | p_assay | p_note) +
+    plot_layout(guides = "keep", widths = c(2, 1.5, 1.5, 1.2))
+}
+
+
+```
+
+
+# 7.  plot Taxonomies
+
+```{r}
+
+# ── 7a. Class counts ──────────────────────────────────────────────────────────
+class_counts <- species_list %>%
+  count(class = !!sym(COL_CLASS), name = "n_species") %>%
+  
+  arrange(desc(n_species))
+
+message("\nSpecies per class:")
+print(class_counts)
+
+# ── 7b. Fetch OTL trees ───────────────────────────────────────────────────────
+message("\nFetching phylogenetic trees from Open Tree of Life...")
+
+trees <- class_counts %>%
+  pull(class) %>%
+  set_names() %>%
+  map(function(cls) {
+    sp_vec <- species_list %>%
+      filter(!!sym(COL_CLASS) == cls) %>%
+      pull(!!sym(COL_SPECIES))
+    fetch_class_tree(sp_vec, cls)
+  }) %>%
+  compact()
+
+if (length(trees) == 0) stop("No trees could be fetched. Check your species names.")
+message("Successfully fetched trees for: ", paste(names(trees), collapse = ", "))
+
+```
+
+```{r}
+
+# ── 7c. Build class plots ─────────────────────────────────────────────────────
+message("\nBuilding annotated tree plots...")
+
+class_plots <- trees %>%
+  imap(~ build_class_plot(
+    tree          = .x,
+    meta_df       = species_list,
+    class_name    = .y,
+    phylopic_imgs = phylopic_cache
+  ))
+
+```
+
+```{r}
+
+# ── 7d. Relative panel sizes (sqrt-scaled, largest first) ─────────────────────
+sizes_ordered <- class_counts %>%
+  filter(class %in% names(class_plots)) %>%
+  mutate(size_weight = SIZE_SCALE_FN(n_species)) %>%
+  arrange(desc(size_weight)) %>%
+  select(class, size_weight) %>%
+  deframe()
+
+class_plots   <- class_plots[names(sizes_ordered)]
+
+```
+
+
+```{r}
+
+
+# ── 7e. Multipanel layout: 2 rows, larger classes on top ──────────────────────
+n_plots      <- length(class_plots)
+n_top        <- ceiling(n_plots / 2)
+
+top_plots    <- class_plots[seq_len(n_top)]
+bottom_plots <- class_plots[seq(n_top + 1, n_plots)]
+top_sizes    <- sizes_ordered[seq_len(n_top)]
+bottom_sizes <- sizes_ordered[seq(n_top + 1, n_plots)]
+
+top_row    <- wrap_plots(top_plots,    widths = top_sizes,    nrow = 1)
+bottom_row <- wrap_plots(bottom_plots, widths = bottom_sizes, nrow = 1)
+legend_row <- build_legend()
+
+combined <- (top_row / bottom_row / legend_row) +
+  plot_layout(heights = c(
+    max(top_sizes),
+    max(bottom_sizes),
+    max(top_sizes) * 0.18
+  )) +
+  plot_annotation(
+    title    = "Biobank Species Overview",
+    subtitle = paste0(
+      "Annotation rings (inside \u2192 outside): ",
+      "IUCN status \u2502 WGS \u2502 RNA-seq \u2502 ATAC-seq \u2502 Reference genome\n",
+      "PhyloPic silhouettes shown outside outermost ring ",
+      "for orders with \u2265 ", PHYLOPIC_MIN_SPECIES, " species"
+    ),
+    theme = theme(
+      plot.title    = element_text(size = 16, face = "bold",    hjust = 0.5),
+      plot.subtitle = element_text(size = 8.5, colour = "grey40", hjust = 0.5)
+    )
+  )
+
+combined
+```
+
+
+```{r}
+
+# ── 7f. Save ──────────────────────────────────────────────────────────────────
+ggsave("biobank_overview.pdf", combined,
+       width = 24, height = 20, units = "in", device = cairo_pdf)
+
+ggsave("biobank_overview.png", combined,
+       width = 24, height = 20, units = "in", dpi = 300)
+
+message("\nDone! Saved to biobank_overview.pdf / .png")
+
+```
